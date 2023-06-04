@@ -1,0 +1,27 @@
+{%- if icon != nil -%}
+{%- capture minify -%}
+  
+{%- style -%}
+  .block-{{block.id}}_custom-icon {
+    display: inline-block;
+    vertical-align: top;
+    align-self: center;
+    position: relative;
+    overflow: hidden;
+    width: {{icon_size}}px;
+    height: {{icon_size}}px;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: {{icon_size}}px;
+    margin: 0 5px;
+  
+    background-image: url('{{icon | img_url}}');
+  }
+{%- endstyle -%}
+  
+  <span class="block-{{block.id}}_custom-icon"></span>
+
+{%- endcapture -%}
+{{ minify | strip_newlines }}
+{%- endif -%}
+  

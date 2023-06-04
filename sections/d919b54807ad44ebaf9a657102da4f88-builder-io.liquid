@@ -1,0 +1,42 @@
+{% if request.design_mode and section.settings.builder_content_entry_preview == 'ed14f89472c84fb6be6b9a1c392d9bad' %}
+{% include 'content.ed14f89472c84fb6be6b9a1c392d9bad.builder' %}
+  {% else %}
+    {% include 'model.sponge-n-go-kickstarter-popup.builder' %}
+  {% endif %}
+  
+  {% schema %}
+   {
+  "name": "Sponge n go kickstarter p",
+  "tag": "section",
+  "settings":[
+    {
+      "type": "header",
+      "content": "Custom Builder.io Section"
+    },
+    {
+      "type": "paragraph",
+      "content": "To edit and customize this section, visit the [model in Builder](https://builder.io/content?model=d919b54807ad44ebaf9a657102da4f88). To learn more about how sections in Builder work with Shopify, [visit the docs](https://www.builder.io/c/docs/shopify/sections-everywhere)."
+    },
+    {
+      "type": "select",
+      "id": "builder_content_entry_preview",
+      "label": "Content Entry Preview",
+      "info": "Targeting is not used while previewing sections in the Shopify theme editor, meaning this preview will not change based on the targeting you have set. If you are using targeting, you need to manually select an entry to preview it. This setting only affects the preview, not what displays on your live site.",
+      "options": [
+        { "value": "ed14f89472c84fb6be6b9a1c392d9bad", "label": "Sponge n' Go Kickstarter Popup - 5/12/20"}
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Builder entries used"
+    },
+    {
+    "type": "paragraph",
+    "content": "Name: Sponge n' Go Kickstarter Popup - 5/12/20. Targeting: no targeting. Visit the [entry in Builder](https://builder.io/content/ed14f89472c84fb6be6b9a1c392d9bad)"
+  }
+  ],
+  "presets":[{
+    "name": "Sponge n go kickstarter p"
+  }]
+}
+  {% endschema %}

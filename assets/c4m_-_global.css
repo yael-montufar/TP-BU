@@ -1,0 +1,217 @@
+/* ≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡ GUIDELINES/ ≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡ */
+
+
+
+/* ≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡ /GUIDELINES ≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡ */
+
+
+
+
+
+
+
+
+/* ================ FONT-FACE/ ================ */
+
+/* Fonts hosted on Shopify Files */
+@font-face {
+  font-family: "Averta Cyrillic";
+  src: url("//cdn.shopify.com/s/files/1/2609/5282/files/Averta_Cyrillic_ExtraBold.woff2?v=13539420770521196556") format("woff2");
+  font-weight: 800;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Averta Cyrillic";
+  src: url("//cdn.shopify.com/s/files/1/2609/5282/files/Averta_Cyrillic_SemiBold.woff2?v=14817557062528161800") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Averta Cyrillic";
+  src: url("//cdn.shopify.com/s/files/1/2609/5282/files/Averta_Cyrillic_Regular.woff2?v=15208302040210006308") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Averta Cyrillic";
+  src: url("//cdn.shopify.com/s/files/1/2609/5282/files/Averta_Cyrillic_Thin.woff2?v=13184816486006547816") format("woff2");
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Klarheit Kurrent";
+  src: url("//cdn.shopify.com/s/files/1/2609/5282/files/Klarheit_Kurrent_Bold.woff2?v=11906741472174420121") format("woff2");
+  font-weight: 800;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Klarheit Kurrent";
+  src: url("//cdn.shopify.com/s/files/1/2609/5282/files/Klarheit_Kurrent_Medium.woff2?v=16441105651499248651") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Klarheit Kurrent";
+  src: url("//cdn.shopify.com/s/files/1/2609/5282/files/Klarheit_Kurrent_Regular.woff2?v=15816647198431510002") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Klarheit Kurrent";
+  src: url("//cdn.shopify.com/s/files/1/2609/5282/files/Klarheit_Kurrent_Extralight.woff2?v=1236898361798378620") format("woff2");
+  font-weight: 200;
+  font-style: normal;
+}
+
+/* Override default font :root variables */
+:root {
+    --font-body-family: "Averta Cyrillic", sans-serif;
+/*     --font-body-style: normal; */
+/*     --font-body-weight: 400; */
+/*     --font-body-weight-bold: 700; */
+    --font-heading-family: "Klarheit Kurrent", sans-serif;
+/*     --font-heading-style: normal; */
+    --font-heading-weight: 700;
+    --font-heading-weight-light: 600;
+/*     --font-body-scale: 1.0; */
+/*     --font-heading-scale: 1.0; */
+}
+
+/* ================ /FONT-FACE ================ */
+
+
+
+
+
+
+
+
+/* ================ TEXT-COLOR/ ================ */
+
+/* Override default text colors */
+:root {
+  --color-base-text: 46, 48, 84;
+  --color-foreground: var(--color-base-text);
+}
+
+/* ================ /TEXT-COLOR ================ */
+
+
+
+
+
+
+
+
+/* ================ CART-BADGE-COLOR/ ================ */
+
+.cart-count-bubble {
+--color-button: 58, 184, 241;
+}
+
+/* ================ /CART-BADGE-COLOR ================ */
+
+
+
+
+
+
+
+
+/* ================ DEFAULT DAWN CART DRAWER/ ================ */
+
+cart-drawer.drawer {
+  display: none !important;
+}
+
+/* ================ /DEFAULT DAWN CART DRAWER ================ */
+
+
+
+
+
+
+
+
+/* ================ MAIN-CONTENT-CONTAINER/ ================ */
+
+#MainContent {
+  overflow: hidden;
+}
+
+/* ================ /MAIN-CONTENT-CONTAINER ================ */
+
+
+
+
+
+
+
+
+/* ================ ADD-TO-CART-BUTTON/ ================ */
+
+product-form.product-form button {
+    padding: 1rem;
+    background: #77D3AF;
+    border-radius: 6px;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+}
+product-form.product-form button:after {
+  box-shadow: unset;
+}
+.button:not([disabled]):hover:after {
+  box-shadow: unset;
+}
+
+/* ================ /ADD-TO-CART-BUTTON ================ */
+
+
+
+
+
+
+
+
+/* ================ ICON-WITH-TEXT/ ================ */
+
+ul.icon-with-text {
+  --icon-size: 6rem;
+}
+ul.icon-with-text .h4 {
+  font-weight: var(--font-body-weight);
+}
+
+/* ================ /ICON-WITH-TEXT ================ */
+
+
+
+
+
+
+
+
+/* ================ QUICK-ADD-BUTTON/ ================ */
+
+button.quick-add__submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: 1px solid black;
+  color: black;
+  padding: 0;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+button.quick-add__submit:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* ================ /QUICK-ADD-BUTTON ================ */

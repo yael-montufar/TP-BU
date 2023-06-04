@@ -1,0 +1,165 @@
+.global-media-settings {
+  border: unset;
+}
+.image-with-text img {
+  object-fit: contain;
+}
+
+.image-with-text a:after,
+.image-with-text a:before {
+  display: none !important;
+}
+
+.image-with-text a {
+  color: rgb(var(--color-foreground));
+  border: 1px solid currentcolor;
+  background: white;
+  border-radius: 6px;
+}
+.image-with-text a:hover {
+  color: #3ab8f1;
+  border: 1px solid #3AB8F1;
+}
+.image-with-text a:hover > svg {
+  transform: translate(0.5rem, 0%)
+}
+
+
+.multicolumn-card__info {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  padding: 0 !important;
+/*   left: 50%;
+  transform: translateX(-50%);
+  width: 100%; */
+}
+.multicolumn-card__info h3 {
+  font-size: 3rem;
+  text-align: center;
+  align-self: flex-end;
+  width: 100%;
+  margin-bottom: 25% !important;
+}
+
+.multicolumn-card__info .link {
+  position: absolute;
+  content: "";
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  visibility: hidden;
+  margin: 0;
+  margin-top: 0rem !important;
+}
+.multicolumn-card__info .link:before {
+  position: absolute;
+  content: "";
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  visibility: visible;
+}
+
+.multicolumn-card__image-wrapper {
+  margin: 0 !important;
+}
+
+
+.multicolumn-list {
+  gap: 2rem;
+}
+.multicolumn-list .multicolumn-list__item {
+  flex: 1;
+  width: unset!important;
+}
+
+
+
+
+
+/* .collection__view-all .button:before,
+.collection__view-all .button:before {
+  content: unset;
+} */
+.collection__view-all .button:before {
+  background-color: #77D3AF;
+}
+.collection__view-all .button {
+  --icon-offset: 1.5rem;
+  
+  background-color: unset;
+  border-radius: 4px;
+  overflow: hidden;
+  color: white;
+
+  padding-left: calc(30px + var(--icon-offset) + 1rem);
+}
+.collection__view-all .button:after {
+  content: "";
+    position: absolute;
+    left: calc(30px); /* Adjust this value as needed */
+    top: 50%;
+    width: var(--icon-offset); /* Set the width of the icon */
+    height: var(--icon-offset); /* Set the height of the icon */
+    background-image: url('{{ 'cart-icon.svg' | asset_url }}');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transform: translateY(-50%) translateX(0%);
+  
+    box-shadow: unset;
+    filter: invert(100%) sepia(0%) saturate(7479%) hue-rotate(70deg) brightness(99%) contrast(107%);
+}
+
+
+
+
+
+
+
+.slide-cta:before {
+  content: "";
+  background-color: #3ab8f1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+}
+.slide-cta:hover:before {
+  background-color: #2e3054;
+}
+.slide-cta {
+  --icon-offset: 1.5rem;
+  
+  background-color: unset;
+  border-radius: 4px;
+  overflow: hidden;
+  color: white;
+
+  padding-right: calc(30px + var(--icon-offset) + 1rem);
+  position: relative;
+}
+.slide-cta:after {
+    content: "";
+    position: absolute;
+    right: calc(30px); /* Adjust this value as needed */
+    top: 50%;
+    width: var(--icon-offset); /* Set the width of the icon */
+    height: var(--icon-offset); /* Set the height of the icon */
+    background-image: url('{{ 'arrow-icon.svg' | asset_url }}');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transform: translateY(-50%) translateX(0%);
+  
+    box-shadow: unset;
+/*     filter: invert(100%) sepia(0%) saturate(7479%) hue-rotate(70deg) brightness(99%) contrast(107%); */
+}

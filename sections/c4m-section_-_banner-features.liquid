@@ -1,0 +1,82 @@
+{% schema %}
+{
+  "name": "⚒️ More than",
+  "class": "more-than-just-a-bag",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title",
+      "default": "More than just a bag"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background Image"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "morethen-item",
+      "name": "Feature",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "morethen_image",
+          "label": "Feature Icon"
+        },
+        {
+          "type": "text",
+          "id": "morethen_description",
+          "label": "Feature Description"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "⚒️ More than",
+      "category": "Custom",
+      "settings": {
+        "section_title": "More than just a bag"
+      },
+      "blocks": []
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+.morethen_wrapp {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  background-image: url('{{ section.settings.background_image | img_url: '1x1' }}');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.morethen-item {
+  display: flex;
+  align-items: center;
+}
+
+.morethen-item img {
+  margin-right: 1rem;
+}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
+
+<div class="section">
+  <h2>{{ section.settings.section_title }}</h2>
+  <div class="morethen_wrapp">
+    {% for block in section.blocks %}
+      <div class="{% cycle 'morethen-item', 'morethen-item' %}" data-index="{{ forloop.index }}">
+        <img src="{{ block.settings.morethen_image | img_url: '1x1' }}" alt="{{ block.settings.morethen_description }}">
+        {{ block.settings.morethen_description }}
+      </div>
+    {% endfor %}
+  </div>
+</div>

@@ -1,0 +1,370 @@
+.recipe_product_banner .mobile-block {
+  display: none !important;
+}
+
+.c2_popup.hide {
+  display: none !important;
+}
+
+.c2_popup {
+  width: 100% !important;
+  left: 0px !important;
+}
+
+.viewd a {
+  color: black !important;
+}
+
+
+.recipe_main {
+  flex-wrap: nowrap !important;
+  gap: 3rem;
+  padding-top: 3.2rem;
+  padding-bottom: 6.4rem;
+}
+.recipe_info {
+    padding-left: unset !important;
+  }
+
+
+@media only screen and (max-width: 989px) {
+  .recipe_main {
+      width: 100%;
+      display: flex;
+      /* max-width: 1128px; */
+      /* margin: 0 auto; */
+      /* margin-bottom: 130px; */
+  }
+
+  .recipe_image {
+    display: flex;
+    flex: 1;
+    margin-bottom: 0px;
+  }
+  .recipe_image img {
+/*     width: unset;
+    height: unset; */
+    object-fit: contain;
+  }
+
+  .recipe_info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+/*     padding-left: unset !important; */
+  }
+}
+
+@media only screen and (max-width: 749px) {
+  .recipe_main {
+    flex-direction: column;
+  }
+  .recipe_info {
+    width: unset !important;
+    align-items: center;
+  }
+  .recipe_image {
+    align-self: center;
+    width: unset !important;
+  }
+
+  .recipe_param {
+    width: 75%;
+  }
+  .recipe_param_item_text {
+    width: 100%;
+  }
+/*   .recipe_param_item {
+    justify-content: unset !important;
+  } */
+}
+
+
+
+
+
+
+
+
+.recipe_param {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+.recipe_param_item_text {
+  display: flex;
+  flex-grow: 1;
+/*   min-width: 50%; */
+}
+.recipe_param_item {
+  display: flex;
+  flex: 1;
+  width: unset;
+/*   justify-content: center; */
+/*   text-align: unset !important; */
+/*   padding: 8px !important; */
+  padding: 16px 8px 0px 8px !important;
+}
+
+
+
+
+.recipe_image img {
+  max-width: 48rem;
+}
+
+
+
+
+@media screen and (max-width: 1109px) {
+  .recipe_param {
+    flex-direction: column;
+    gap: 3rem;
+  }
+  .recipe_param_item {
+    width: 24rem !important;
+  }
+  .recipe_param_item_text {
+    width: 100%;
+  }
+
+}
+
+@media screen and (max-width: 1110px) {
+  .recipe_param {
+    gap: 3rem;
+  }
+}
+
+
+
+
+
+/* ≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡ SECOND-PART(SP)/ ≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡ */
+
+
+{% comment %} Fix section 2 inner layout {% endcomment %}
+.sp-in-list, .sp-ga-list {
+  margin: unset !important;
+  padding: unset !important;
+}
+.sp-in-list, .sp-ga-list {
+  align-items: center;
+  padding-inline-start: 4rem !important;
+  padding-inline-end: 4rem !important;
+  display: flex;
+  flex-direction: column;
+}
+.sp-in-item {
+  width: 100%;
+/*   flex-grow: 1; */
+}
+.sp-in-item .sp-in-text {
+  flex-grow: 1;
+}
+{% comment %} Fix section 2 inner layout {% endcomment %}
+
+
+
+
+{% comment %} Fix section 2 outer layout desktop {% endcomment %}
+@media only screen and (min-width: 750px) {
+  .sp-container {
+    display: flex !important;
+    gap: 3rem;
+    padding: 0 1.5rem;
+  
+    width: unset !important;
+    grid-template-columns: unset;
+    grid-column-gap: unset;
+  }
+  
+  /* .sp1c-desktop,
+  {
+      display: flex;
+      flex-direction: column;
+  } */
+}
+{% comment %} Fix section 2 outer layout desktop {% endcomment %}
+
+
+
+
+@media only screen and (max-width: 749px) {
+  {% comment %} Fix section 2 outer layout mobile {% endcomment %}
+  .sp-block {
+    margin: 0!important;
+  }
+  
+  .sp-container {
+    gap: 3rem;
+    display: unset !important;
+    grid-template-columns: unset !important;
+    width: 100%;
+    max-width: unset !important;
+  }
+  
+  .sp1c.desktop,
+  .sp2c.desktop {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+  {% comment %} Fix section 2 outer layout mobile {% endcomment %}
+
+  .sp-container {
+    padding: 0 1.5rem;
+  }
+}
+
+/* ≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡ /SECOND-PART(SP) ≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡ */
+
+
+
+
+
+
+/* ≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡ WHAT-YOU-NEED/ ≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡ */
+
+
+@media only screen and (max-width: 749px) {
+  .wyn-container {
+    display: flex;
+    flex-direction: column;
+    padding: 0 1.5rem;
+}
+   .wyn-title {
+     	margin: 80px 0 40px;
+        font-size: 20px;
+        line-height: 30px;
+        letter-spacing: -0.02em;
+        text-transform: unset; 
+    }
+    .wyn-block {
+/*       align-self:center; */
+/*       	width: 290px; */
+        flex-direction: column !important;
+/*       margin: 0 !important; */
+/*       width: fit-content; */
+      margin-bottom: 120px;
+      width: fit-content;
+
+          margin-inline-start: auto;
+    margin-inline-end: auto;
+    }
+    .wyn-text {
+        max-width: 320px !important;
+        margin-left: 16px;
+        margin-right: 16px;
+    }
+    .wyn-text a {
+    	margin-top: 24px;
+		margin-bottom: 12px;
+    }
+    .wyn-image {
+    	height: 420px !important;
+      	width: fit-content !important;
+    }
+      .wyn-image img {
+/*         width: unset !important; */
+    }
+    .wyn-text p {
+    	margin-top: 16px;
+        padding-top: 16px;
+      	font-size: 12px;
+		line-height: 20px;
+    }
+    .wyn-text button {
+    	border-radius: 4px;
+		margin-bottom: 24px;
+    }
+}
+
+
+/* ≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡ /WHAT-YOU-NEED ≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡ */
+
+
+
+
+
+
+
+.rec-slide-desc > h4,
+.rec-slide-desc .rec-slide-badge .rec-slide-person,
+.rec-slide-desc .rec-slide-badge .rec-slide-time {
+  font-family: unset !important;
+}
+.rec-slide a {
+  text-decoration: none;
+}
+
+
+
+.recipe-rec .rec-slide-img {
+  width: 100% !important;
+}
+
+/* .recipe-rec .rec-slide {
+  min-width: 360px;
+} */
+
+
+
+
+
+
+/* @media only screen and (max-width: 749px) {
+    .recipe-rec .rec-container {
+    	max-width: 320px;
+    }
+    .recipe-rec {
+        padding: 50px 0 96px;
+    }
+    .recipe-rec .rec-slide-badge {
+     	flex-direction: column-reverse; 
+    }
+    .recipe-rec .rec-title {
+        font-size: 20px;
+        line-height: 150%;
+        text-align: center;
+        letter-spacing: -0.02em;
+      	margin-bottom: 40px;
+    }
+    .recipe-rec .rec-slide-img {
+    	height: 200px;
+    }
+    .recipe-rec .rec-slide-desc {
+        margin: 0 16px;
+    }
+    .recipe-rec .rec-slide-desc h4 {
+      	margin: 20px 0;
+      	font-size: 16px;
+		line-height: 24px;
+    }
+    .recipe-rec .rec-slide-badge {
+      	margin-bottom: 20px;
+    }
+    .swiper-horizontal > .swiper-scrollbar { 
+      	width: 320px!important;
+      	left: unset !important;
+      	bottom: 60px!important;
+		margin: 0 !important;
+    }
+    .recipe-rec .rec-slider .custom-swiper-button-prev, .recipe-rec .rec-slider .custom-swiper-button-next {
+      	display: none!important;
+    }
+  }
+} */
+
+
+
+
+
+.add_to_cart-wyn {
+    border-width: unset !important;
+    border-style: unset !important;
+    border-color: unset !important;
+    border-image: unset !important;
+  
+}

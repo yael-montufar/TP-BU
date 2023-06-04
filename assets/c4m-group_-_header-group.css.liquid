@@ -1,0 +1,269 @@
+{% comment %} TODO: Comment Blocks {% endcomment %}
+
+/* ≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡ ANNOUNCEMENT-BAR/ ≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡ */
+
+
+/* Set section colors */
+.announcement-bar {
+  --color-foreground: 255 255 255;
+  background-color: #77D3AF;
+}
+
+
+/* ≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡ /ANNOUNCEMENT-BAR ≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡ */
+
+
+
+
+
+
+
+
+/* ≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡ HEADER/ ≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡ */
+
+
+/* Adjust layout */
+.header {
+  grid-template-columns: 1fr auto 1fr;
+}
+
+
+
+
+/* ================ MOBILE-MENU-DRAWER/ ================ */
+
+/* Hide utility links container if empty */
+#menu-drawer .menu-drawer__utility-links:has(.list-social:empty) {
+  display: none;
+}
+
+/* ================ /MOBILE-MENU-DRAWER ================ */
+
+
+
+
+/* ================ DESKTOP-MEGA-MENU/ ================ */
+
+/* DESKTOP/ -------- */
+/* Adjust whitespace */
+@media screen and (max-width: 1240px) {
+  .mega-menu .mega-menu__content {
+    padding: 0px;
+  }
+  .mega-menu .mega-menu__content ul {
+    margin: 0px;
+    padding: 0px;
+  }
+}
+/* -------- /DESKTOP */
+
+/* ================ /DESKTOP-MEGA-MENU ================ */
+
+
+
+
+/* ================ BLOCK-ROOT/ ================ */
+  
+.header_-_block-root {
+  --gradient-background: transparent;
+  padding: 3rem 2rem;
+
+  display: grid;
+  gap: 3rem;
+
+  position: relative;
+/*   border-top: 1px solid #7F8F9EBF; */
+}
+
+.header_-_block-root::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 15%;
+  right: 15%;
+  border-top: 0.5px solid #7F8F9EBF;
+}
+
+.header_-_block-root a {
+  width: fit-content;
+  height: fit-content;
+  
+  white-space: nowrap;
+}
+
+
+
+
+/* DESKTOP/ -------- */
+@media screen and (min-width: 990px) {
+.header_-_block-root:before {
+    display: none;
+  }
+}
+/* -------- /DESKTOP */
+  
+/* ================ BLOCK-ROOT/ ================ */
+
+
+
+
+/* ================ DETAILS-BLOCK/ ================ */
+
+.header_-_block-root.details-block h2 {
+  font-weight: 600;
+  margin: 0px;
+}
+
+.header_-_block-root.details-block p {
+  color: #7F8F9E;
+  margin: 0px;
+}
+
+.header_-_block-root.details-block a {
+    padding: 1rem;
+    background: #77D3AF;
+    border-radius: 6px;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+
+
+
+/* HOVER/ -------- */
+@media (hover: hover) {
+  .header_-_block-root.details-block a:hover {
+    filter: brightness(85%);
+  }
+}
+/* -------- /HOVER */
+
+/* ================ /DETAILS-BLOCK ================ */
+
+
+
+
+/* ================ RESOURCE-BLOCK/ ================ */
+
+.header_-_block-root.resource-block .media.media--transparent.media--hover-effect {
+  position: unset;
+}
+
+.header_-_block-root.resource-block h2 {
+  font-size: 14px;
+  font-weight: 400;
+  margin: 0px;
+}
+
+.header_-_block-root.resource-block a {
+    padding: 1rem;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 6px;
+    background: white;
+    color: #2E3054;
+    border: 1px solid #2E3054;
+    text-decoration: none;
+}
+
+
+/* HOVER/ -------- */
+@media (hover: hover) {
+  .header_-_block-root.resource-block a:hover {
+    background: #3AB8F1;
+    color: white;
+    border: 1px solid #3AB8F1;
+  }
+}
+/* -------- /HOVER */
+
+.header_-_block-root.resource-block a {
+  align-self: end;
+}
+
+/* ================ /RESOURCE-BLOCK ================ */
+
+
+
+
+/* ================ DEFAULT-BLOCK/ ================ */
+
+.header_-_block-root.default-block h2 {
+  color: #2E3054;
+  font-size: 14px;
+  font-weight: 400;
+  margin: 0px;
+}
+
+.header_-_block-root.default-block a {
+  font-size: 16px;
+  font-weight: 600;
+  color: #2E3054;
+  text-decoration: none;
+}
+
+.header_-_block-root.default-block .banner__media {
+  background-color: transparent;
+}
+
+
+/* If stack_layout_mobile block schema setting == true, adjust layout (stacked)  */
+.header_-_block-root.default-block.banner--mobile-bottom .banner__media img {
+  position: inherit;
+}
+
+
+/* If stack_layout_mobile block schema setting == false, adjust layout (background image) */
+.header_-_block-root.default-block:not(.banner--mobile-bottom) .banner__media {
+  width: 100%;
+  position: absolute;
+  height: 100%;
+}
+.header_-_block-root.default-block:not(.banner--mobile-bottom) .banner__media img {
+  object-fit: contain;
+  opacity: 0.5;
+}
+
+
+
+
+/* DESKTOP/ -------- */
+@media screen and (min-width: 990px) {
+  .header_-_block-root.default-block {
+    display: flex !important;
+    flex-direction: row-reverse;
+  }
+
+  .header_-_block-root.default-block .banner__media {
+    flex: 1;
+    position: inherit;
+  }
+  .header_-_block-root.default-block .banner__media img {
+    object-fit: contain;
+    max-height: 20rem;
+  }
+
+  .header_-_block-root.default-block .banner__content {
+    flex: 2;
+    padding: 0px;
+  }
+  .header_-_block-root.default-block .banner__content p {
+    font-size: 14px;
+  }
+
+  
+  /* If stack_layout_mobile block schema setting == true | false, maintain layout (stacked) */
+  .header_-_block-root.default-block:not(.banner--mobile-bottom) .banner__media {
+    position: relative;
+  }
+  .header_-_block-root.default-block:not(.banner--mobile-bottom) .banner__media img {
+    opacity: 1;
+  }
+}
+/* -------- /DESKTOP */
+
+/* ================ /DEFAULT-BLOCK ================ */
+
+
+/* ≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡ /HEADER ≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡ */

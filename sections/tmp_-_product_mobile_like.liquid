@@ -1,0 +1,328 @@
+<div class="section_like-product mobile-block">
+  <h5>{{section.settings.title}}</h5>
+  
+  <!-- Slider main container -->
+  <div class="swiper LikeSwiper LikeSwiperMobile">
+    <!-- Additional required wrapper -->
+    <div class="swiper-wrapper">
+      <!-- Slides -->
+      
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'slide' %}
+      		<div class="swiper-slide">
+              <div class="section_like-item">
+            
+                <h3 class="like-title">{{block.settings.product_slide.title}}<span class="devider"></span>{{block.settings.product_slide.price | money }}</h3>
+                <a href="{{block.settings.product_slide.url}}" class="like-img" style="background-image: url({{block.settings.product_slide | img_url: '360x'}})"></a>
+                <form action="/cart/add" method="post" enctype="multipart/form-data">
+                  <div class="like_button-block">
+                    <div class="like-option">
+                      {% for color_option in block.settings.product_slide.variants %}
+                      	<label>
+                          <input class="like_input_color" type="radio" {% if forloop.first%}checked{% endif %} name="id" value="{{color_option.id}}" data-image="{{ color_option.featured_image | product_img_url: '600x' }}">
+                          <span class="{{ color_option.title | downcase | truncatewords: 1, ""}}-color"><i></i></span>
+                      	</label>
+                      {% endfor %}
+                    </div>
+                    <div class="like_button-block-right">
+                       <button type="button" name="add" class="add_to_cart ajax-submit like__btn_cart" data-label="Add to Cart">
+                        <i><img src="{{'cart_bg_btn.svg' | asset_url }}"></i>Add to Cart
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+      
+        {% endcase %}
+      {% endfor %}
+      
+      
+    <!--  <div class="swiper-slide">
+      	<div class="section_like-item">
+          <h3 class="like-title">Title 1</h3>
+          <div class="like-img"><img src="//cdn.shopify.com/s/files/1/2609/5282/products/ShopifyPhotos-1024x700_4bb664c6-c8e8-40ce-8925-361bd4226d89_1600x.png?v=1606965798"></div>
+          <form>
+            <div class="like_button-block">
+              <div class="like-option">
+                <label>
+                  <input type="radio" checked name="color-like" value="">
+                  <span class="blue"><i></i></span>
+                </label>
+                <label>
+                  <input type="radio" name="color-like" value="">
+                  <span class="white"><i></i></span>
+                </label>
+              </div>
+              <div class="like_button-block-right">
+                 <button type="button" name="add" class="add_to_cart ajax-submit like__btn_cart" data-label="Add to Cart">
+                  <i><img src="{{'cart_bg_btn.svg' | asset_url }}"></i>Add to Cart
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div> -->
+     
+     
+      </div>
+		
+    
+  	<div class="swiper-pagination"></div>
+    <!-- If we need navigation buttons -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+    
+    </div>
+</div>
+
+<link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+<script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+
+{% schema %}
+  {
+    "name": "Mobile Like Products",
+	"class": "prod_mobLike",
+    "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Like Products Title"
+    }
+  ],
+  "blocks": [
+     {
+       "name": "Product",
+       "type": "slide",
+       "settings": [
+         {
+           "type": "product",
+           "id": "product_slide",
+           "label": "product"
+         }
+       ]
+     }
+   ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+
+.section_like-product{
+	padding: 80px 0 100px;
+	background: #D8EBFB;
+}
+.section_like-product h5{
+	text-align: center;
+/* 	font-family: KlarheitKurrent; */
+  	font-weight: 700;
+  	margin-bottom: 50px;
+  	text-transform: capitalize;
+  	font-size: 32px;
+}
+.LikeSwiper.swiper{
+	height: 400px;
+	max-width: 1280px;
+	margin: 0 auto;
+	padding: 0 80px;
+}
+.LikeSwiper.swiper::before, .LikeSwiper.swiper::after{
+	content: '';
+	background: #D8EBFB;
+	position: absolute;
+	height: 100%;
+	top: 0;
+	bottom: 0;
+	width: 80px;
+	z-index: 2;
+}
+.LikeSwiper.swiper::before{
+	left: 0;
+}
+.LikeSwiper.swiper::after{
+	right: 0;
+}
+.section_like-item{
+	max-width: 365px;
+	margin: 0 auto;
+}
+.section_like-item .like-img{
+	width: 100%;
+	height: 260px;
+    background-repeat: no-repeat;
+    background-size: cover;
+	display: block;
+}
+.like-title{
+/*     font-family: AvertaCY; */
+    font-size: 18px;
+    color: #2e3054;
+    text-transform: inherit;
+    letter-spacing: .04em;
+    padding: 0;
+    font-weight: 600;
+}
+.devider {
+	border-left: 1px solid #2E3054;
+	margin: 0 15px;
+}
+.like__btn_cart {
+    width: 140px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+/*     font-family: AvertaCY; */
+    color: #2E3054;
+    margin-top: auto;
+	border: 1px solid #2E3054;
+	transition: all 0.4s ease;
+}
+.like__btn_cart:hover{
+	background: #fff;
+}
+.like__btn_cart i {
+    display: flex;
+    margin-right: 8px;
+}
+.like-img {
+  background-color: #f8f9fd;
+  background-position: center;
+}
+.like_button-block{
+	display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+	margin-top: 20px;
+}
+.like_button-block label{
+	margin-right: 10px;
+	cursor: pointer;
+	position: relative
+	margin-bottom: 0;
+}
+.like_button-block label input{
+	display: none;
+}
+.like_button-block label span{
+	border: #e2e2e2 1px solid;
+	width: 55px;
+	height: 25px;
+	display: flex;
+	position: relative;
+}
+.like_button-block label input + span i{
+	display: none
+}
+.like_button-block label input:checked + span i{
+	display: block;
+	background: #2E3054;
+	height: 2px;
+	width: 100%;
+	position:absolute;
+	bottom: -10px;
+}
+.like_button-block label span.blue-color{
+	background: #a3cbf1;
+}
+.like_button-block label span.white-color{
+	background: #fff;
+}
+.like_button-block label span.clear-color{
+	background: #D7E5F1;
+}
+.like_button-block label span.green-color{
+	background: green;
+}
+
+.like-option{
+	display: flex;
+    flex-wrap: wrap;
+	align-items: center;
+}
+
+.LikeSwiper .swiper-button-prev {
+ 	background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg width='18' height='18' viewBox='0 0 18 18' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M8.78033 3.96967C9.07322 4.26256 9.07322 4.73744 8.78033 5.03033L5.56066 8.25H14.25C14.6642 8.25 15 8.58579 15 9C15 9.41421 14.6642 9.75 14.25 9.75H5.56066L8.78033 12.9697C9.07322 13.2626 9.07322 13.7374 8.78033 14.0303C8.48744 14.3232 8.01256 14.3232 7.71967 14.0303L3.21967 9.53033C2.92678 9.23744 2.92678 8.76256 3.21967 8.46967L7.71967 3.96967C8.01256 3.67678 8.48744 3.67678 8.78033 3.96967Z' fill='%232E3054'/%3e%3c/svg%3e ") !important;
+	background-repeat: no-repeat;
+    background-position: center;
+} 
+.LikeSwiper .swiper-button-next {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg width='18' height='18' viewBox='0 0 18 18' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M9.21967 3.96967C8.92678 4.26256 8.92678 4.73744 9.21967 5.03033L12.4393 8.25H3.75C3.33579 8.25 3 8.58579 3 9C3 9.41421 3.33579 9.75 3.75 9.75H12.4393L9.21967 12.9697C8.92678 13.2626 8.92678 13.7374 9.21967 14.0303C9.51256 14.3232 9.98744 14.3232 10.2803 14.0303L14.7803 9.53033C15.0732 9.23744 15.0732 8.76256 14.7803 8.46967L10.2803 3.96967C9.98744 3.67678 9.51256 3.67678 9.21967 3.96967Z' fill='%232E3054'/%3e%3c/svg%3e ") !important;
+	background-repeat: no-repeat;
+    background-position: center;
+}
+.LikeSwiper .swiper-button-prev::after, .LikeSwiper .swiper-button-next::after{
+	display: none;
+}
+.LikeSwiper .swiper-button-prev, .LikeSwiper .swiper-button-next{
+	width: 48px;
+    height: 48px;
+    background-color: #fff;
+    border-radius: 50%;
+}
+
+.LikeSwiper .swiper-pagination-bullet {
+    background: white;
+    opacity: 1;
+    width: 8px;
+}
+
+.LikeSwiper .swiper-pagination-bullet.swiper-pagination-bullet-active {
+	border: 2px solid #2E3054;
+}
+
+{% endstylesheet %}
+
+{% javascript %}
+
+	const swiper = new Swiper('.LikeSwiper.LikeSwiperMobile', {
+      // Optional parameters
+      loop: true,
+        spaceBetween: 5,
+         autoplay: {
+           delay: 5000,
+         },
+
+          breakpoints: {
+            100: {
+              slidesPerView: 1,
+              spaceBetween: 40,
+			  navigation: false,
+		      pagination: {
+                el: '.swiper-pagination',
+              },
+            },
+            1000: {
+              slidesPerView: 1,
+              spaceBetween: 40,
+              navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+              }
+            }
+          },
+ 
+
+      // Navigation arrows
+
+
+      },
+    );	
+
+
+	const inputColorBtns = document.querySelectorAll(".prod_mobLike .like_input_color");
+
+    inputColorBtns.forEach((buttonColor) => {
+      buttonColor.onclick = function () {
+		const imgUrl = buttonColor.getAttribute('data-image');
+       	buttonColor.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.querySelector(".like-img").style.backgroundImage = "url('"+imgUrl+"')"; ;
+
+      };
+    }); 
+
+{% endjavascript %}

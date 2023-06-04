@@ -1,0 +1,25 @@
+{% comment %} DYNAMIC SETTINGS {% endcomment %}
+{%- assign section_id = section_id -%}
+{%- assign block_id = block_id -%}
+
+{%- assign block_title = block_title -%}
+{%- assign block_text = block_text -%}
+{%- assign block_button-link = block_button-link -%}
+{%- assign block_button-text = block_button-text -%}
+{%- assign block_data-id = block_data-id -%}
+
+{%- assign block_shopify-attributes = block_shopify-attributes -%}
+
+
+
+
+<div class="header_-_block-root details-block" data-root-element-id="{{ block_data-id }}" {{ block_shopify-attributes }}>
+  <h2>{{ block_title }}</h2>
+  <p>{{ block_text }}</p>
+  <a href="{{ block_button-link }}" {% if block_button-link == request.path %} aria-current="page"{% endif %}>
+    <span>{{ block_button-text | escape }}</span>
+    <svg viewBox="0 0 14 10" fill="none" aria-hidden="true" focusable="false" class="icon icon-arrow" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M8.537.808a.5.5 0 01.817-.162l4 4a.5.5 0 010 .708l-4 4a.5.5 0 11-.708-.708L11.793 5.5H1a.5.5 0 010-1h10.793L8.646 1.354a.5.5 0 01-.109-.546z" fill="currentColor"></path>
+    </svg>
+  </a>
+</div>

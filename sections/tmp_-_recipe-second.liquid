@@ -1,0 +1,93 @@
+
+    <div class="secondpart">
+      <div class="sp-container">
+
+
+
+        
+          <div class="sp1c desktop">
+            <div class="sp-block">
+              <h3 class="sp-title">Ingredients</h3>
+              <ul class="sp-in-list">
+                {% assign ingredients = page.metafields.global.ingredients.value | split: "," %}
+                {% for ingre in ingredients %}
+                	{% assign ingre_array = ingre | split: ";" %}
+                	<li class="sp-in-item">
+                  <span class="sp-in-number">{{ ingre_array[0] | strip }}</span>
+                  <div class="sp-in-text">{{ ingre_array[1] | strip }}</div>
+                </li>
+                {% endfor %}
+              </ul>
+            </div>
+            {% if page.metafields.global.garnishes.value != blank %}
+            <div class="sp-block">
+              <h3 class="sp-title">Garnishes</h3>
+              <ul class="sp-ga-list">
+                {% assign garnishes = page.metafields.global.garnishes.value | split: "," %}
+                {% for garn in garnishes %}
+                    <li class="sp-ga-item">
+                      <div class="sp-ga-text">{{ garn | strip }}</div>
+                    </li>
+                {% endfor %}
+              </ul>
+            </div>
+            {% endif %}
+          </div>
+          <div class="sp2c desktop">
+            <div class="sp-block">
+           {% for step in page.metafields.global.steps.value.steps %}
+              <div class="sp-step">
+                <div class="sp-st-text">
+                  <h3>{{ step.title}}</h3>
+                  <p>
+                  	{{ step.text}}
+                  </p>
+                </div>
+           <!--     <div class="sp-st-img">
+                	<img src="{{ step.img}}" />
+                </div>-->
+              </div>
+           {% endfor %}
+              
+            </div>
+            {% if page.metafields.global.tips_show.value == true %}
+            <div class="sp-block">
+              <h3 class="sp-title">Guidelines & Tips</h3>
+              
+              {% assign tips = page.metafields.global.tips.value | split: "|" %}
+              {% for tip in tips %}
+              	<p class="sp-tip">
+                <svg version="1.1" width="20px" height="20px" id="Слой_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                     viewBox="0 0 20 20" style="enable-background:new 0 0 20 20;" xml:space="preserve">
+                  <style type="text/css">
+                    .st0{fill:#FFDC64;}
+                  </style>
+                  <path class="st0" d="M19.5,7.4l-6.5-0.6l-2.6-6c-0.2-0.4-0.8-0.4-1,0l-2.6,6L0.5,7.4C0,7.4-0.2,8,0.2,8.3l4.9,4.3l-1.4,6.3
+                                       c-0.1,0.4,0.4,0.8,0.8,0.6l5.6-3.3l5.6,3.3c0.4,0.2,0.9-0.1,0.8-0.6l-1.4-6.3l4.9-4.3C20.2,8,20,7.4,19.5,7.4z"/>
+                </svg>
+
+               	{{ tip | strip }}
+              </p>  
+              {% endfor %}   
+            </div>
+            {% endif %}
+          </div>
+
+
+
+                    
+      </div>
+    </div>
+
+{% schema %}
+  {
+    "name": "Second Section Recipe",
+    "settings": []
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

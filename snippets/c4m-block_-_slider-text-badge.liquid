@@ -1,0 +1,246 @@
+{%- comment -%} Text: custom font_picker values {%- endcomment -%}
+{%- capture font_settings_list -%}
+/* Normal */
+{{ block.settings.outer_font | font_face: font_display: 'swap' }}~
+{{ block.settings.center_font | font_face: font_display: 'swap' }}~
+
+/* Bold */
+{{ block.settings.outer_font | font_modify: 'weight', 'bolder' | font_face: font_display: 'swap' }}~
+{{ block.settings.center_font | font_modify: 'weight', 'bolder' | font_face: font_display: 'swap' }}~
+  
+{%- comment -%}
+/* Italic */
+{{ block.settings.outer_font | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}~
+{{ block.settings.center_font | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}~
+/* Italic & Bold */
+{{ block.settings.outer_font | font_modify: 'style', 'italic' | font_modify: 'weight', 'bolder' | font_face: font_display: 'swap' }}
+{{ block.settings.center_font | font_modify: 'style', 'italic' | font_modify: 'weight', 'bolder' | font_face: font_display: 'swap' }}
+{%- endcomment -%}
+{%- endcapture -%}
+{%- assign font_array = font_settings_list | split: '~' -%}
+
+
+{%- comment -%} Text: center text size based on word length {%- endcomment -%}
+{%- assign center_text_value = 1.00 | divided_by: block.settings.center_text.size | times: 230.00 -%}
+{%- if center_text_value < 55 -%}
+  {%- assign center_font_size = center_text_value -%}
+{%- else -%}
+  {%- assign center_font_size = 55 -%}
+{%- endif -%}
+
+{%- comment -%} Text: outer text size based on word length {%- endcomment -%}
+{%- assign upper_text_value = 1.00 | divided_by: block.settings.upper_text.size | times: 240.00 -%}
+{%- assign lower_text_value = 1.00 | divided_by: block.settings.lower_text.size | times: 240.00 -%}
+{%- if upper_text_value < 16 and upper_text_value < lower_text_value -%}
+  {%- assign font_size = upper_text_value -%}
+{%- elsif lower_text_value < 16 and lower_text_value < upper_text_value -%}
+  {%- assign font_size = lower_text_value -%}
+{%- else -%}
+  {%- assign font_size = 16 -%}
+{%- endif -%}
+
+
+
+
+
+
+
+
+<style>
+{%- for font in font_array -%}
+  {%- unless font contains 'error' -%}{{ font }}{%- endunless -%}
+{%- endfor -%}
+
+#block-{{ block.id }}.block-root--{{ section.id }}[data-block-type="slider-text-badge"] {
+/*   height: 0 !important; */
+  padding: 0 !important;
+  z-index: 10;
+
+  position: absolute;
+  z-index: 2;
+  top: {{ block.settings.badge_vertical_position }}%;
+  left: {{ block.settings.badge_horizontal_position }}%;
+  transform: translate(-50%, -50%);
+}
+
+#block-{{ block.id }} .slider-text-badge__badge {
+  margin: 0;
+}
+
+#block-{{ block.id }} .slider-text-badge__badge___upper-text,
+#block-{{ block.id }} .slider-text-badge__badge___lower-text {
+  font-size: {{ font_size }}px;
+  fill: {{ block.settings.text_color }};
+  font-family: var(--font-body-family);
+  font-style: var(--font-body-style);
+  font-weight: var(--font-heading-weight);
+  {%- if block.settings.show_text_shadow != blank -%}
+    text-shadow: 1px 1px 5px #847d7da8;
+  {%- endif -%}
+}
+
+#block-{{ block.id }} .slider-text-badge__badge___lower-text {
+  letter-spacing: 2px;
+}
+
+#block-{{ block.id }} .slider-text-badge__badge___center-text {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: {{ block.settings.text_color }};
+  font-family: var(--font-heading-family);
+  font-style: var(--font-heading-style);
+  font-weight: var(--font-heading-weight);
+  font-size: {{ center_font_size }}px;
+  {%- if block.settings.show_text_shadow != blank -%}
+    text-shadow: 1px 1px 10px #847d7da8;
+  {%- endif -%}
+
+  line-height: {{ center_font_size }}px;;
+}
+
+#block-{{ block.id }} .slider-text-badge__badge-rotate {
+  position: relative;
+  transform-origin: center;
+  transform: rotate({{ block.settings.angle }}deg);
+  width: 140px;
+  height: 140px;
+  {%- if block.settings.rotation_speed > 0 -%}
+  -webkit-animation:spin {{ block.settings.rotation_speed }}s linear infinite;
+  -moz-animation:spin {{ block.settings.rotation_speed }}s linear infinite;
+  animation:spin {{ block.settings.rotation_speed }}s linear infinite;
+  {%- endif -%}
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@-moz-keyframes spin {
+  100% { -moz-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+  100% { -webkit-transform: rotate(360deg); }
+}
+@keyframes spin {
+  100% {
+      -webkit-transform: rotate(360deg);
+      transform:rotate(360deg);
+  }
+}
+
+{%- if block.settings.custom_css != blank -%}
+  {%- assign custom_section_declarations = block.settings.custom_css | split: '}' -%}
+  {%- for declaration in custom_section_declarations -%}
+    {%- if declaration contains '{' -%}
+      #block-{{ block.id }} {{ declaration }} }
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+
+#block-{{ block.id }} .slider-text-badge__sizer {
+  position: relative;
+  transform: scale({{ block.settings.badge_scale | times: 0.8 }});
+}
+@media screen and (min-width: 750px) {
+  #block-{{ block.id }} .slider-text-badge__sizer {
+    transform: scale({{ block.settings.badge_scale }});
+  }
+}
+/* [id^=QuickAddInfo-] is parent of [custom-slider-component] */
+[id^=QuickAddInfo-] #block-{{ block.id }} .slider-text-badge__sizer {
+  transform: scale({{ block.settings.badge_scale | times: 0.8 }});
+}
+  
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) {
+  {%- if block.settings.hide_on_mobile != blank -%}
+    #block-{{ block.id }} {
+      display: none;
+    }
+  {%- endif -%}
+}
+
+/* Landscape phones and down */
+@media (max-width: 480px) {
+  {%- if block.settings.mobile_custom_css != blank -%}
+    {%- assign mobile_custom_declarations = block.settings.mobile_custom_css | split: '}' -%}
+    {%- for declaration in mobile_custom_declarations -%}
+      {%- if declaration contains '{' -%}
+        #block-{{ block.id }} {{ declaration }} }
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+}
+
+
+
+
+
+
+
+
+/* Fix Badge Upper & Lower Text */
+.slider-text-badge__sizer svg text{
+  font-size: 24px !important;
+}
+.slider-text-badge__badge-rotate svg {
+  width: 100%;
+  height: 100%;
+}
+
+
+
+
+
+
+@media screen and (min-width: 990px) {
+    #block-{{ block.id }}.block-root--{{ section.id }}[data-block-type="slider-text-badge"] {
+    top: {{ block.settings.badge_vertical_position_desktop }}%;
+    left: {{ block.settings.badge_horizontal_position_desktop }}%;
+  }
+}
+</style>
+
+
+
+
+
+
+
+
+<div
+  id="block-{{ block.id }}"
+  class="block-root--{{ section.id }}"
+  data-block-type="slider-text-badge"
+  {{ block.settings.custom_block_attributes }}
+  {{ block.shopify_attributes }}
+>
+  <div class="slider-text-badge__sizer">
+    <div class="slider-text-badge__badge-rotate">
+      <svg class="slider-text-badge__badge" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="32 32 140 140">
+        <defs>
+            <path id="badge-upper-{{ section.id }}" d="M49.78,100c0-27.74,22.49-50.22,50.22-50.22s50.22,22.49,50.22,50.22"/>
+        </defs>
+        <text class="slider-text-badge__badge___upper-text">
+            <textPath xlink:href="#badge-upper-{{ section.id }}" startOffset="50%" text-anchor="middle">
+              {{ block.settings.upper_text }}
+            </textPath>
+        </text>
+        <defs>
+          <path id="badge-lower-{{ section.id }}" d="M33.26,100c0,36.86,29.88,66.74,66.74,66.74s66.74-29.88,66.74-66.74"/>
+        </defs>
+        <text class="slider-text-badge__badge___lower-text">
+            <textPath xlink:href="#badge-lower-{{ section.id }}" startOffset="50%" text-anchor="middle">
+              {{ block.settings.lower_text }}
+            </textPath>
+        </text>
+      </svg>
+      <div class="slider-text-badge__badge___center-text">
+        {{ block.settings.center_text }}
+      </div>
+    </div>
+  </div>
+</div>

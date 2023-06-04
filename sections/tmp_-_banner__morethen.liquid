@@ -1,0 +1,78 @@
+<div class="section" >
+  
+  {% if section.settings.banner_title.size != 0 %}
+  <h2>{{section.settings.banner_title}}</h2>
+  {% else %}
+  <h2>More than <br/> just a bag</h2>
+  {% endif %}
+  <div class="morethen_wrapp">
+    <div class="morethen-item">
+      <img src="{{ 'morethen_ico1.svg' | asset_url  }}" alt="">
+      Food Safe
+    </div>
+    <div class="morethen-item">
+      <img src="{{ 'morethen_ico3.svg' | asset_url  }}" alt="">
+      Durable & Reusable
+    </div>
+    <div class="morethen-item">
+      <img src="{{ 'morethen_ico5.svg' | asset_url  }}" alt="">
+      Non-toxic
+    </div>
+    <div class="morethen-item">
+      <img src="{{ 'morethen_ico2.svg' | asset_url  }}" alt="">
+      Microwave Safe
+    </div>
+    <div class="morethen-item">
+      <img src="{{ 'morethen_ico4.svg' | asset_url  }}" alt="">
+      Oven Safe
+    </div>
+    <div class="morethen-item">
+      <img src="{{ 'morethen_ico6.svg' | asset_url  }}" alt="">
+      Fridge & Freezer Safe
+    </div>
+  </div>
+</div>
+
+{% if section.settings.banner_bg.size %}
+<style>
+  #shopify-section-banner__morethen{
+    background: #f7f9fc url({{section.settings.banner_bg | img_url: 'master' }}) no-repeat right center !important;
+    background-size: contain !important;
+  }
+  @media only screen and (max-width:1024px) {
+    #shopify-section-banner__morethen {
+      background: #f7f9fc url({{section.settings.banner_bg | img_url: 'master' }}) no-repeat center 540px !important;
+      background-size: auto;
+      padding: 60px 0 396px !important;
+      background-size: 320px !important;
+    }
+  }
+</style>
+{% endif %}
+{% schema %}
+  {
+    "name": "Banner",
+    "settings": [
+		{
+        "type": "header",
+        "content": "Background Banner"
+      },
+      {
+        "type": "image_picker",
+        "id": "banner_bg",
+        "label": "img background"
+      },
+      {
+        "type": "html",
+        "id": "banner_title",
+        "label": "Title"
+      }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

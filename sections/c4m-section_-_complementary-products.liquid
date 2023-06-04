@@ -1,0 +1,305 @@
+<style>
+.auto-carousel {
+  display: grid;
+  grid-template-columns: 4rem auto 4rem;
+  gap: 1em;
+  margin: 2em 0;
+  position: relative;
+}
+
+h2:has(+ c4m-complementary-products) {
+  text-align: center;
+}
+
+.carousel-container {
+  grid-column: 2;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: auto;
+  overflow: hidden;
+  position: relative;
+
+  gap: 4rem;
+}
+
+.slide {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+  padding: 1em;
+
+  display: none;
+}
+
+.slide img {
+/*   height: 16em; */
+  width: 100%;
+/*   object-fit: cover; */
+}
+
+/* .slide[style*="order: 0"],
+.slide[style*="order: 1"],
+.slide[style*="order: 2"] {
+  display: flex;
+} */
+
+@media screen and (min-width: 990px) {
+  .carousel-container {
+    grid-template-columns: repeat({{ section.settings.products_shown }}, 1fr);
+  }
+
+
+  
+  {% capture selectors %}
+    {% for i in (1..section.settings.products_shown) %}
+      .slide[style*="order: {{ i | minus: 1 }}"]{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  {% endcapture %}
+  {{ selectors }} {
+    display: flex;
+  }
+}
+
+/* .slide:not([style*="order: 0"]):not([style*="order: 1"]):not([style*="order: 2"]) {
+  display: none;
+} */
+
+
+/*Fixed shown product count on smaller screens*/
+@media screen and (max-width: 749px) {
+  .carousel-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  
+  .slide[style*="order: 0"] {
+    display: flex;
+  }
+}
+@media screen and (min-width: 750px) and (max-width: 989px) {
+  .carousel-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .slide[style*="order: 0"],
+  .slide[style*="order: 1"] {
+    display: flex;
+  }
+}
+.card-wrapper {
+  width: 100%;
+}
+/* .card-wrapper .card {
+  width: 100%;
+  flex-direction: column-reverse !important;
+} */
+
+
+
+
+.carousel-control {
+  background: #ffffff;
+  border: none;
+  font-size: 2em;
+  cursor: pointer;
+  color: #333;
+  padding: 0.5em; /* Adjust the padding */
+  border-radius: 50%; /* Add this line to create a circular shape */
+  text-align: center; /* Add this line to center the arrow symbol */
+  width: 40px; /* Add this line to set a fixed width */
+  height: 40px; /* Add this line to set a fixed height */
+  line-height: 30px; /* Add this line to vertically align the arrow symbol */
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: center; /* Add this line to vertically align the buttons */
+}
+.carousel-control svg {
+  flex-shrink: 0;
+}
+
+  
+.carousel-wrapper {
+  flex-grow: 1;
+  overflow: hidden;
+  position: relative;
+  height: 100%;
+}
+
+.carousel-control[aria-label="Previous"] {
+  left: 1em;
+  justify-self: end; /* Add this line to vertically align the arrow symbol */
+}
+
+.carousel-control[aria-label="Next"] {
+  right: 1em;
+  justify-self: start; /* Add this line to vertically align the arrow symbol */
+}
+
+
+
+
+.color-swatches {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: .5em;
+}
+
+.color-swatch {
+  width: 40px;
+  height: 16px;
+  cursor: pointer;
+
+  white-space: nowrap;
+}
+
+</style>
+
+<div style="background-color: {{ section.settings.section_background }}; padding-top: 4rem;">
+  <h2 style="margin: 0;">{{ section.settings.title }}</h2>
+  
+  <c4m-complementary-products
+    class="complementary-products quick-add-hidden no-js-hidden{% if section.settings.enable_quick_add %} complementary-products-contains-quick-add{% endif %}"
+    data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ section.settings.products_per_page }}&intent=complementary"
+    data-interval="{{ section.settings.interval_duration }}"
+    data-direction="{{ section.settings.carousel_direction }}"
+  > 
+    {%- if recommendations.performed and recommendations.products_count > 0 -%}
+      <aside aria-label="{{ 'accessibility.complementary_products' | t }}" {{ section.shopify_attributes }}>
+        <div class="complementary-products__container page-width">
+          <div
+            class="auto-carousel"
+            {{ section.settings.custom_section_attributes }}
+          >
+  
+  
+  
+      
+            <button class="carousel-control" aria-label="Previous">
+              <svg viewBox="0 0 14 10" fill="none" aria-hidden="true" focusable="false" class="icon icon-arrow" xmlns="http://www.w3.org/2000/svg">
+                <g transform="translate(14, 0) scale(-1, 1)"> <!-- Add this line to apply the horizontal flip -->
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M8.537.808a.5.5 0 01.817-.162l4 4a.5.5 0 010 .708l-4 4a.5.5 0 11-.708-.708L11.793 5.5H1a.5.5 0 010-1h10.793L8.646 1.354a.5.5 0 01-.109-.546z" fill="currentColor"></path>
+                </g> <!-- Close the <g> element -->
+              </svg>
+            </button>
+          
+             <div class="carousel-wrapper">
+  
+               
+                <ul class="carousel-container list-unstyled" role="list">
+                  {%- for product in recommendations.products limit: section.settings.products_per_page offset: continue -%}
+                    <li class="slide" style="order: {{ forloop.index0 }}">
+                      {% render 'card-product',
+                        card_product: product,
+                        media_aspect_ratio: section.settings.image_ratio,
+                        show_secondary_image: section.settings.show_secondary_image,
+                        show_vendor: section.settings.show_vendor,
+                        show_rating: section.settings.show_rating,
+                        show_quick_add: section.settings.enable_quick_add,
+                        section_id: section.id
+                      %}
+                  {%- else -%}
+                    {%- for i in (1..4) -%}
+                      <li class="slide" style="order: {{ forloop.index0 }}">
+                        {% render 'card-product', show_vendor: section.settings.show_vendor %}
+                      </li>
+                    {%- endfor -%}
+                  {%- endfor -%}
+                </ul>
+  
+               
+             </div>
+          
+            <button class="carousel-control" aria-label="Next">
+              <svg viewBox="0 0 14 10" fill="none" aria-hidden="true" focusable="false" class="icon icon-arrow" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.537.808a.5.5 0 01.817-.162l4 4a.5.5 0 010 .708l-4 4a.5.5 0 11-.708-.708L11.793 5.5H1a.5.5 0 010-1h10.793L8.646 1.354a.5.5 0 01-.109-.546z" fill="currentColor"></path>
+              </svg>
+            </button>
+          </div>
+  
+  
+  
+          
+        </div>
+      </aside>
+    {%- endif -%}
+    {{ 'component-card.css' | asset_url | stylesheet_tag }}
+    {{ 'component-complementary-products.css' | asset_url | stylesheet_tag }}
+    {%- if section.settings.enable_quick_add -%}
+      {{ 'quick-add.css' | asset_url | stylesheet_tag }}
+      <script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
+    {%- endif -%}
+  </c4m-complementary-products>
+</div>
+
+
+
+{% schema %}
+{
+  "name": "⚒️ Complementary Products",
+  "settings": [
+    {
+      "type": "range",
+      "id": "interval_duration",
+      "label": "Interval duration (seconds)",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Item count",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "products_shown",
+      "label": "Products shown",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "radio",
+      "id": "carousel_direction",
+      "label": "Carousel direction",
+      "options": [
+        { "value": "1", "label": "Forward" },
+        { "value": "-1", "label": "Backward" }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "color",
+      "id": "section_background",
+      "label": "Section Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_quick_add",
+      "label": "Enable Quick Add",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    }
+  ],
+  "presets": [
+    {
+      "name": "⚒️ Complementary Products"
+    }
+  ]
+}
+{% endschema %}

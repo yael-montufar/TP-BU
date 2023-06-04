@@ -1,0 +1,200 @@
+{% schema %}
+{
+  "name": "Feature Grid",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "middle_image",
+      "label": "Middle Image"
+    },
+    {
+      "type": "range",
+      "id": "top_padding",
+      "label": "Top Padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "bottom_padding",
+      "label": "Bottom Padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "label": "Content Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "grid_item",
+      "name": "Grid Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Block Name (optional)"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Title"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "<p>Description...<p>"
+        },
+        {
+          "type": "textarea",
+          "id": "custom_block_attributes",
+          "label": "Custom Block Attributes",
+          "info": "Use this field to declare custom attributes (e.g., data-<key>=\"<value>\") for the block's root element."
+        }
+      ],
+      "limit": 6
+    }
+  ],
+  "presets": [
+    {
+      "name": "Feature Grid"
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+  .container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas:
+    "left middle right";
+  gap: 2rem;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+block-root--{{ section.id }} {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+block-root--{{ section.id }} h3 {
+  margin: 0px;
+}
+
+/* .icon {
+  width: 40px;
+  height: 40px;
+} */
+
+.circular-image {
+  width: 100%;
+  border-radius: 50%;
+  grid-area: middle;
+}
+
+.left {
+  grid-area: left;
+}
+
+.middle {
+  grid-area: middle;
+}
+
+.right {
+  grid-area: right;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .container {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "middle middle"
+      "left right";
+  }
+
+  .left,
+  .right {
+    width: 100%;
+  }
+
+  .middle {
+    width: 100%;
+  }
+}
+</style>
+
+
+<div class="container page-width" style="padding-top: {{ section.settings.top_padding }}px; padding-bottom: {{ section.settings.bottom_padding }}px;">
+  <div class="column left">
+    {% for block in section.blocks %}
+      {%- assign mod = forloop.index0 | modulo: 2 -%}
+      {% if mod == 0 %}
+        <div style="text-align: {{ section.settings.content_alignment }}"
+          id="block-{{ block.id }}"
+          class="block-root--{{ section.id }}"
+          data-block-type="product-rating"
+          {{ block.settings.custom_block_attributes }}
+          {{ block.shopify_attributes }}
+        >
+          <img src="{{ block.settings.icon | img_url: '40x40' }}" alt="{{ block.settings.title }}" class="icon">
+          <h3>{{ block.settings.title }}</h3>
+          <p>{{ block.settings.description }}</p>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <div class="column middle">
+    <img src="{{ section.settings.middle_image | img_url: 'master' }}" alt="Circular Image" class="circular-image">
+  </div>
+
+  <div class="column right">
+    {% for block in section.blocks %}
+      {%- assign mod = forloop.index0 | modulo: 2 -%}
+      {% if mod == 1 %}
+        <div style="text-align: {{ section.settings.content_alignment }}"
+          id="block-{{ block.id }}"
+          class="block-root--{{ section.id }}"
+          data-block-type="product-rating"
+          {{ block.settings.custom_block_attributes }}
+          {{ block.shopify_attributes }}
+        >
+          <img src="{{ block.settings.icon | img_url: '40x40' }}" alt="{{ block.settings.title }}" class="icon">
+          <h3>{{ block.settings.title }}</h3>
+          <p>{{ block.settings.description }}</p>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>

@@ -1,0 +1,69 @@
+{%- if product.metafields.reviews.rating.value != blank -%}
+  {% liquid
+    assign rating_decimal = 0
+    assign decimal = product.metafields.reviews.rating.value.rating | modulo: 1
+    if decimal >= 0.3 and decimal <= 0.7
+      assign rating_decimal = 0.5
+    elsif decimal > 0.7
+      assign rating_decimal = 1
+    endif
+  %}
+
+  <style>
+    .block-root--{{ section.id }} {
+      {%- if product.metafields.reviews.rating_count < 30 -%}
+        display: none;
+      {%- endif -%}
+    }
+  </style>
+
+
+
+
+
+
+  
+  <div
+    id="block-{{ block.id }}"
+    class="block-root--{{ section.id }}"
+    data-block-type="product-rating"
+    {{ block.settings.custom_block_attributes }}
+    {{ block.shopify_attributes }}
+    
+    role="img"
+    aria-label="{{ 'accessibility.star_reviews_info' | t: rating_value: product.metafields.reviews.rating.value, rating_max: product.metafields.reviews.rating.value.scale_max }}"
+  >
+    {%- comment -%}
+    {%- endcomment -%}
+    {%- unless block.settings.hide_stars -%}
+    <span
+      aria-hidden="true"
+      class="product-rating__star color-icon-{{ settings.accent_icons }}"
+      style="--rating: {{ product.metafields.reviews.rating.value.rating | floor }}; --rating-max: {{ product.metafields.reviews.rating.value.scale_max }}; --rating-decimal: {{ rating_decimal }}; --color-icon: {{ block.settings.star_color }}"
+    ></span>
+    <p class="product-rating__star-caption">
+      <span aria-hidden="true">
+        {{- product.metafields.reviews.rating.value }} /
+        {{ product.metafields.reviews.rating.value.scale_max -}}
+      </span>
+    </p>
+    {%- endunless -%}
+    <p class="product-rating__count">
+      {%- capture count -%}
+        {%- if block.settings.count and block.settings.count != blank -%}
+          {{ block.settings.count }}
+        {%- else -%}
+          {{ product.metafields.reviews.rating_count }}
+        {%- endif -%}
+      {%- endcapture -%}
+      <span aria-hidden="true">{{ count }}</span>
+      <span class="visually-hidden">
+        {{- count }}
+        {{ 'accessibility.total_reviews' | t -}}
+      </span>
+    </p>
+    <p class="product-rating__text">
+      {{ block.settings.title }}
+    </p>
+  </div>
+{%- endif -%}

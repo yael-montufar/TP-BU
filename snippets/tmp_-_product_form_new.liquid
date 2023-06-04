@@ -1,0 +1,398 @@
+{% if section.settings.show_payment_button %}
+  {% assign show_payment_button = true %}
+{% elsif show_payment_button_quickshop %}
+  {% assign show_payment_button = true %}
+{% else %}
+  {% assign show_payment_button = false %}
+{% endif %}
+
+{% assign variant = product.selected_or_first_available_variant %}
+
+{%- assign checkout_url = '/checkout' -%}
+  {% for locale in shop.enabled_locales %}
+    {% if locale.primary == true %}
+      {%- assign defaultLocale = locale.iso_code -%}
+      {% if defaultLocale != request.locale.iso_code %}
+        {%- assign checkout_url = request.locale.iso_code | append: '/checkout' -%}
+    {% endif %}
+  {% endif %}
+{% endfor %}
+
+<div class="init smart-payment-button--{{ show_payment_button }} {% if product.variants.size > 1 or product.options.size > 1 %}product_form_options{% endif %} product_form--{{ settings.product_form_style }}"
+      id="product-form-{{ product.id }}"
+      data-product-form
+      data-options-size="{{ product.options.size }}"
+      data-money-format="{{ shop.money_format | strip_html }}"
+      data-shop-currency="{{ shop.currency }}"
+      data-select-id="product-select-{{ product.id }}{{ product-form }}{{ section.id }}{{ block.id }}"
+      data-enable-state="{% if template contains 'product' %}true{% else %}false{% endif %}"
+      data-product="{{ product | json | escape }}"
+      {% if settings.limit_quantity or settings.display_inventory_left %}
+        data-variant-inventory='[{%- for v in product.variants -%}{"id":{{v.id}},"inventory_quantity":{{v.inventory_quantity}},"inventory_management":"{{v.inventory_management}}","inventory_policy":"{{v.inventory_policy}}"}{% if forloop.last == false %},{% endif %}{%- endfor -%}]'
+      {% endif %}
+      data-product-id="{{ product.id }}"
+      >
+  {% form 'product', product , class: 'custom-form' %}
+	
+  {% if product.options.size > 1 %}
+    <div class="select__form-product">
+      	{% for v in product.variants %}
+        {%- if v.available -%}
+      	<label 
+               data-positionSlider="{{v.featured_image.position}}" 
+               data-pricep="{{ v.price | money }}"
+               {% if v.available == false %}
+                 	data-outst="true"
+                 	data-outid="{{ v.id }}"
+                {% endif %}
+         >
+          <input type="radio" name="id">
+          <div class="select__form-product-radio">
+            
+            <div class="select__form-product-radio-left">
+              <img src="{{ v.featured_media | product_img_url: '600x' }}" alt="{{ v.title }}">
+            </div>
+            <div class="select__form-product-radio-right">
+              <h6>{{ v.title }}</h6>
+              {% if v.available == false %}
+            	<!-- <img class="crossed-out" src="//cdn.shopify.com/s/files/1/2609/5282/t/22/assets/soldout.png?v=1203348852561544404" aria-label="sold out" alt="sold out">-->
+              <p class="crossed-sold_out">Sold Out</p>
+              {% else %}
+              <p class="select__form-product-radio-price">{{ v.price | money }}</p>
+              {% endif %}
+            </div>
+          </div>
+         <!-- <option {% if v == variant %}selected="selected"{% endif %} value="{{ v.id }}" data-featured-image="{{ v.featured_media }}" data-image="{{ v.featured_media | product_img_url: '600x' }}" data-sku="{{ v.sku }}">{{ v.title }}</option> -->
+      	</label>
+          {%- endif -%}
+        {% endfor %}
+      
+      <select id="product-select-{{ product.id }}{{ product-form }}{{ section.id }}{{ block.id }}" name="id" class="multi_select" data-variants>
+        {% for v in product.variants %}
+          <option {% if v == variant %}selected="selected"{% endif %} value="{{ v.id }}" data-featured-image="{{ v.featured_media }}" data-image="{{ v.featured_media | product_img_url: '600x' }}" data-sku="{{ v.sku }}">{{ v.title }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  {% elsif product.options.size == 1 and product.variants.size > 1 or product.options.size == 1 and product.options[0] != "Title" %}
+     
+  	<div class="select__form-product">
+      {% for v in product.variants %}
+      {%- if v.available -%}
+      
+        {% comment %}
+         Old under
+          <label {% if v.available == true %}data-positionSlider="{{v.featured_image.position}}"data-pricep="{{ v.price | money }}"{% endif %}>
+          {% if v.available == true %} <input type="radio" name="id" value="{{ v.id }}" {% if forloop.first %}checked{%endif%}> {% endif %}
+        {% endcomment %}
+      	<label 
+               data-positionSlider="{{v.featured_image.position}}" 
+               data-pricep="{{ v.price | money }}"
+               {% if v.available == false %}
+                 	data-outst="true"
+                 	data-outid="{{ v.id }}"
+                 {% endif %}
+        >
+         <input type="radio" name="id" value="{{ v.id }}" {% if forloop.first %}checked{%endif%}>
+        
+         {% comment %}
+          Old under
+          <div class="select__form-product-radio {% if v.available == false %}disabled {% endif %}">
+        {% endcomment %}
+          <div class="select__form-product-radio ">
+            <div class="select__form-product-radio-left">
+              <img src="{{ v.featured_media | product_img_url: '200x'}}" alt="{{ v.title }}">
+            </div>
+            <div class="select__form-product-radio-right">
+              <h6>{{ v.title }}</h6>
+               {% if v.available == false %}
+            	<!-- <img class="crossed-out" src="//cdn.shopify.com/s/files/1/2609/5282/t/22/assets/soldout.png?v=1203348852561544404" aria-label="sold out" alt="sold out"> -->
+            	 <p class="crossed-sold_out">Sold Out</p>
+              {% else %}
+              <p class="select__form-product-radio-price">{{ v.price | money }}</p>
+              {% endif %}
+            </div>
+          </div>
+       	</label>
+        {%- endif -%}
+       {% endfor %}
+      </div>
+  {% else %}
+    <input type="hidden" name="id" value="{{ variant.id }}" />
+  {% endif %}
+  
+  
+     <div {% if section.settings.show_what_included %} style="display: none!important;" {% endif %}>
+        <div class="Included_title desktop">What's Included?</div>
+        <div class="img_included desktop">
+            {%if product.handle=='duocover-for-microwave'%} 
+              <div class="inc_imgs">
+				<img src="{{ 'icon_duocover.svg' | asset_url }}" alt="DuoCover">
+                <p>DuoCover</p>
+              </div>
+            {%else%}
+              {% if product.handle=='unilid-set-of-5'%}
+                <div class="inc_imgs">
+                  <img src="{{ 'el.svg' | asset_url }}" alt="bag">
+                  <p>Extra Large Lid 21cm</p>
+                </div>
+                <div class="inc_imgs">
+                  <img src="{{ 'l.svg' | asset_url }}" alt="bag">
+                  <p>Large Lid 16.5cm</p>
+                </div>
+                <div class="inc_imgs">
+                  <img src="{{ 'm.svg' | asset_url }}" alt="bag">
+                  <p>Medium Lid 12cm</p>
+                </div>
+                <div class="inc_imgs">
+                  <img src="{{ 's.svg' | asset_url }}" alt="bag">
+                  <p>Small Lid 9.5cm</p>
+                </div>
+                <div class="inc_imgs">
+                  <img src="{{ 'es.svg' | asset_url }}" alt="bag">
+                  <p>Extra Small Lid 6.5cm</p>
+                </div>
+              {%else%}
+                    {%if product.handle=='mini-unilid-set-of-5'%}
+					  <div class="inc_imgs">
+                        <img src="{{ 'ico_included_unulidset4-1.svg' | asset_url }}" alt="bag">
+                        <p>Squared Lid</p>
+                      </div>
+                      <div class="inc_imgs">
+                        <img src="{{ 'ico_included_unulidset4-2.svg' | asset_url }}" alt="bag">
+                        <p>Rectangle Lid</p>
+                      </div>
+                    {%else%}
+                        {%if product.handle=='snack-zipbag'%}
+                            <div class="inc_imgs">
+                              {%if product.handle=='snack-zipbag'%} 
+                                 <img src="https://cdn.shopify.com/s/files/1/2609/5282/files/snack_bag-01.svg?v=1636106245" alt="bag">
+                              {%else%}
+                                 <img src="{{ 'ico_included1_1.svg' | asset_url }}" alt="bag">
+                              {%endif%}
+                              <p>{{product.title}}</p>
+                            </div>
+                          {% else %}
+          						{%if product.handle=='sandwich-zipbag'%} 
+                                 	<div class="inc_imgs">
+                                      <img src="{{ 'ico_included1_1.svg' | asset_url }}" alt="spork">
+                                      <p>{{product.title}}</p>
+                                    </div>
+
+                                    <div class="inc_imgs">
+                                        <img src="{{ 'ico_included2_2.svg' | asset_url }}" alt="spork">
+                                        <p>Bamboo Spork</p>
+                                    </div>
+
+                                    <div class="inc_imgs">
+                                        <img src="{{ 'ico_included3_3.svg' | asset_url }}" alt="hot_cold_pack">
+                                        <p>Hot+Cold Pack</p>
+                                    </div>
+          						{%else%}
+          							{%if product.handle=='bakeware-unilid-universal-silicone-lids'%} 
+                                          <div class="inc_imgs">
+                                            <img src="{{ 'icon_Bakeware-UniLid.svg' | asset_url }}" alt="">
+                                            <p>{{product.title}}</p>
+                                          </div>
+
+                                      {%else%}
+          									{%if product.handle=='mini-unilid-set-of-5'%} 
+                                                <div class="inc_imgs">
+                                                  <img src="{{ 'icon_miniset-UniLid1_1.svg' | asset_url }}" alt="">
+                                                  <p>Squared Lid</p>
+                                                </div>
+												<div class="inc_imgs">
+                                                  <img src="{{ 'icon_miniset-UniLid1_2.svg' | asset_url }}" alt="">
+                                                  <p>Rectangle Lid</p>
+                                                </div>
+                                            {%else%}
+          
+                                              <div class="inc_imgs">
+                                                <img src="{{ 'ico_included1_1.svg' | asset_url }}" alt="spork">
+                                                <p>Everything ZipBag</p>
+                                              </div>
+
+                                              <div class="inc_imgs">
+                                                  <img src="{{ 'ico_included2_2.svg' | asset_url }}" alt="spork">
+                                                  <p>Bamboo Spork</p>
+                                              </div>
+
+                                              <div class="inc_imgs">
+                                                  <img src="{{ 'ico_included3_3.svg' | asset_url }}" alt="hot_cold_pack">
+                                                  <p>Hot+Cold Pack</p>
+                                              </div>
+          									{%endif%}
+          							 {%endif%}
+                                {%endif%}
+                               
+                         {% endif %}
+          			{% endif %}
+          		{% endif %}
+          	{% endif %}
+        </div>
+		
+        <a class="Included_title accordion mobile-block">What's Included?</a>
+        <div class="img_included accordion-content mobile-flex">
+            {%if product.handle=='duocover-for-microwave'%} 
+              <div class="inc_imgs">
+				<img src="{{ 'icon_duocover.svg' | asset_url }}" alt="DuoCover">
+                <p>DuoCover</p>
+              </div>
+            {%else%}
+              {% if product.handle=='unilid-set-of-5'%}
+                <div class="inc_imgs">
+                  <img src="{{ 'el.svg' | asset_url }}" alt="bag">
+                  <p>Extra Large Lid 21cm</p>
+                </div>
+                <div class="inc_imgs">
+                  <img src="{{ 'l.svg' | asset_url }}" alt="bag">
+                  <p>Large Lid 16.5cm</p>
+                </div>
+                <div class="inc_imgs">
+                  <img src="{{ 'm.svg' | asset_url }}" alt="bag">
+                  <p>Medium Lid 12cm</p>
+                </div>
+                <div class="inc_imgs">
+                  <img src="{{ 's.svg' | asset_url }}" alt="bag">
+                  <p>Small Lid 9.5cm</p>
+                </div>
+                <div class="inc_imgs">
+                  <img src="{{ 'es.svg' | asset_url }}" alt="bag">
+                  <p>Extra Small Lid 6.5cm</p>
+                </div>
+              {%else%}
+                    {%if product.handle=='mini-unilid-set-of-5'%}
+					  <div class="inc_imgs">
+                        <img src="{{ 'ico_included_unulidset4-1.svg' | asset_url }}" alt="bag">
+                        <p>Squared Lid</p>
+                      </div>
+                      <div class="inc_imgs">
+                        <img src="{{ 'ico_included_unulidset4-2.svg' | asset_url }}" alt="bag">
+                        <p>Rectangle Lid</p>
+                      </div>
+                    {%else%}
+                        {%if product.handle=='snack-zipbag'%}
+                            <div class="inc_imgs">
+                              {%if product.handle=='snack-zipbag'%} 
+                                 <img src="https://cdn.shopify.com/s/files/1/2609/5282/files/snack_bag-01.svg?v=1636106245" alt="bag">
+                              {%else%}
+                                 <img src="{{ 'ico_included1_1.svg' | asset_url }}" alt="bag">
+                              {%endif%}
+                              <p>{{product.title}}</p>
+                            </div>
+                          {% else %}
+          
+          					<div class="inc_imgs">
+                              <img src="{{ 'ico_included1_1.svg' | asset_url }}" alt="spork">
+                              <p>Everything ZipBag</p>
+                          </div>
+          
+                          <div class="inc_imgs">
+                              <img src="{{ 'ico_included2_2.svg' | asset_url }}" alt="spork">
+                              <p>Bamboo Spork</p>
+                          </div>
+
+                          <div class="inc_imgs">
+                              <img src="{{ 'ico_included3_3.svg' | asset_url }}" alt="hot_cold_pack">
+                              <p>Hot+Cold Pack</p>
+                          </div>
+                         {% endif %}
+          			{% endif %}
+          		{% endif %}
+          	{% endif %}
+        </div>
+      </div>
+  
+  
+
+  {% if product.available %}
+    {% if settings.display_inventory_left %}
+      <div class="items_left">
+        {% if variant.inventory_management != blank and variant.inventory_quantity > 0 %}
+          {% capture items_left_text %}
+            {% if variant.inventory_quantity == 1 %}
+              {{ 'products.product.items_left_count.one' | t }}
+            {% else %}
+              {{ 'products.product.items_left_count.other' | t }}
+            {% endif %}
+          {% endcapture %}
+          {% if variant.inventory_quantity <= settings.inventory_threshold %}
+            {{ variant.inventory_quantity }} {{ items_left_text }}
+          {% endif %}
+        {% endif %}
+      </div>
+    {% endif %}
+  {% endif %}
+  
+  
+  <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">
+  {% if product.available or product.tags[0] != 'cooming_soon' and product.available %}
+
+
+    <div class="purchase-details purchase-details-new">
+
+      {% if settings.display_product_quantity %}
+
+        <div class="purchase-details__quantity product-quantity-box">
+          <!-- span class="ss-icon product-minus js-change-quantity" data-func="minus"><span class="icon-minus"></span></span -->
+          <span class="product-minus js-change-quantity-new" onclick="quantityMinus()" data-quan="minus"></span>
+          <input type="number" min="1" size="2" class="quantity" name="quantity" id="quantity" value="1" {% if settings.limit_quantity and variant.inventory_management != blank and variant.inventory_policy == "deny" %}max="{{ variant.inventory_quantity }}"{% endif %} />
+          <!-- <span class="ss-icon product-plus js-change-quantity" onclick="quantityPlus()" data-quan="plus"><span class="icon-plus"></span></span> -->
+          <span class="product-plus js-change-quantity-new" onclick="quantityPlus()" data-quan="plus"></span>
+        </div>
+
+      {% endif %}
+      <div class="purchase-details__buttons  {% if product.available == false %}product-is-unavailable{% endif %}">
+        {% if settings.cart_action == 'reload_page' %}
+          <input type="hidden" name="return_to" value="back" />
+        {% elsif settings.cart_action == 'redirect_checkout' %}
+          <input type="hidden" name="return_to" value="{{ checkout_url }}" />
+        {% endif %}
+
+        {% capture add_to_cart_label %}{% if collection_handles contains 'pre-order' %}{{ 'collections.general.pre_order' | t }}{% else %}{{ 'products.product.add_to_cart' | t }}{% endif %}{% endcapture %}
+        <button type="submit" name="add" class="green__btn_cart">
+          {% if product.available %}
+          <i><img src="{{ 'cart_white_s.svg' | asset_url }}"></i>
+             Add to Cart
+          {% else %}
+              {{ settings.sold_out_text }}
+          {% endif %}
+
+          </span>
+        </button>
+
+      </div>
+    </div>
+	
+  {% endif %}
+{% endform %}
+        
+   {% for v in product.variants %}
+        {% if v.available == false %}
+           <div class="notify_form notify_formNew notify-form-{{ v.id }}" id="notify-form-{{ v.id }}">
+            <p class="message"></p>
+            {% form 'customer', id: "notify_me" %}
+              {% if form.errors %}
+                <p><em>{{ 'v.notify_form.post_error' | t }}</em></p>
+              {% else %}
+                <label aria-hidden="true" class="visuallyhidden" for="customer[email]">{{ 'v.notify_form.message_content' | t }}:</label>
+
+               
+                  <h5>Out of Stock</h5>
+                  <p>This product is currently out of stock. Enter your email below to be notified once the product is back in stock.</p>
+                
+                <div class="notify_form__inputs {% if customer %}customer--true{% endif %}"  data-url="{{ canonical_url }}">
+
+                    <input type="hidden" name="contact[tags]" value="{{ v.title }}">
+                  <input required type="email" class="notify_email" name="contact[email]" id="contact[email]" placeholder="{{ 'products.notify_form.email' | t }}" value="" />
+                  <input class="global-button global-button--primary" type="submit" value="{{ 'products.notify_form.send' | t }}" style="margin-bottom:0px" />
+
+                </div>
+              {% endif %}
+            {% endform %}
+          </div>
+        {% endif %}
+   {% endfor %}
+   
+        
+        
+</div>
