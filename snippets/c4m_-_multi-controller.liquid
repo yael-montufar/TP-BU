@@ -91,6 +91,7 @@
     {{ 'c4m-group_-_index.css' | asset_url | stylesheet_tag }}
     
   {%- when 'product' -%} {%- comment -%} Default Product Template {%- endcomment -%}
+      {{ 'c4m-section_-_product-reviews.css' | asset_url | stylesheet_tag }}
   
   {%- when 'product._custom_-_test' -%} {%- comment -%} Custom Product Template {%- endcomment -%}
 
@@ -106,6 +107,7 @@
       src="https://code.jquery.com/jquery-3.6.4.slim.min.js"
       integrity="sha256-a2yjHM4jnF9f54xUQakjZGaqYs/V1CYvWpoqZzC2/Bw="
       crossorigin="anonymous"
+      defer="defer"
     ></script>
 
   {%- else -%} {%- comment -%} Template - Everything Else {%- endcomment -%}
@@ -124,7 +126,7 @@
 {%- when 'head-top' -%} {%- comment -%} <head>|afterbegin {%- endcomment -%}
   <script type="text/javascript" async="" src="{{ 'c4m_-_design-pack.js' | asset_url}}"></script>
   
-  <script type="text/javascript" src="{{ 'c4m-block_-_faq-item.js' | asset_url }}"></script>
+  <script type="text/javascript" src="{{ 'c4m-block_-_faq-item.js' | asset_url }}" defer="defer"></script>
   
   <script src="{{ 'c4m-component_-_media-slider.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'c4m-component_-_banner--carousel-columns.js' | asset_url }}" defer="defer"></script>
@@ -175,14 +177,15 @@
   {%- when 'index' -%} {%- comment -%} Home Page {%- endcomment -%}
     
   {%- when 'product' -%} {%- comment -%} Default Product Template {%- endcomment -%}
+  <script src="{{ 'c4m-template_-_default-product.js' | asset_url }}" await></script>
   
   {%- when 'product._custom_-_test' -%} {%- comment -%} Custom Product Template {%- endcomment -%}
     
   {%- else -%} {%- comment -%} Template - Everything Else {%- endcomment -%}
+  <script src="{{ 'c4m_-_global.js' | asset_url }}" defer="defer"></script>
     
     {%- if template contains 'product' -%} {%- comment -%} All Other Product Pages {%- endcomment -%}
       <script src="{{ 'c4m-template_-_product.js' | asset_url }}" defer="defer"></script>
-      <script src="{{ 'c4m_-_global.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
   {%- endcase -%}
 

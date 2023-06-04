@@ -4187,7 +4187,7 @@ select.currencies {
   padding-top: 0;
   padding-bottom: 0;
   cursor: pointer;
-  background-image: url(//cdn.shopify.com/s/files/1/2609/5282/t/71/assets/select_light.png?41674);
+  background-image: url(//cdn.shopify.com/s/files/1/2609/5282/t/72/assets/select_light.png?41671);
 }
 @media only screen and (max-width: 798px) {
   select.currencies {
@@ -6654,7 +6654,7 @@ select::-ms-expand {
 }
 
 select {
-  background: #fff url(//cdn.shopify.com/s/files/1/2609/5282/t/71/assets/select.png?41674) no-repeat 96% 50%;
+  background: #fff url(//cdn.shopify.com/s/files/1/2609/5282/t/72/assets/select.png?41671) no-repeat 96% 50%;
   background-size: 18px 12px;
   border: 1px solid #d9dbdc;
   -webkit-appearance: none;
@@ -9179,7 +9179,7 @@ a.tag,
   height: 0;
   width: 0;
   transition: all 0.3s linear;
-  background: url(//cdn.shopify.com/s/files/1/2609/5282/t/71/assets/loader.gif) center center no-repeat;
+  background: url(//cdn.shopify.com/s/files/1/2609/5282/t/72/assets/loader.gif) center center no-repeat;
   background-size: 32px 32px;
   margin: 0 auto;
 }
@@ -13644,8 +13644,8 @@ h2 {
 }
 @font-face {
 /*   font-family: "turbo"; */
-  src: url(//cdn.shopify.com/s/files/1/2609/5282/t/71/assets/turbo.eot?41674);
-  src: url(//cdn.shopify.com/s/files/1/2609/5282/t/71/assets/turbo.eot?41674) format("embedded-opentype"), url(//cdn.shopify.com/s/files/1/2609/5282/t/71/assets/turbo.woff?41674) format("woff"), url(//cdn.shopify.com/s/files/1/2609/5282/t/71/assets/turbo.ttf?41674) format("truetype"), url(//cdn.shopify.com/s/files/1/2609/5282/t/71/assets/turbo.svg?41674) format("svg");
+  src: url(//cdn.shopify.com/s/files/1/2609/5282/t/72/assets/turbo.eot?41671);
+  src: url(//cdn.shopify.com/s/files/1/2609/5282/t/72/assets/turbo.eot?41671) format("embedded-opentype"), url(//cdn.shopify.com/s/files/1/2609/5282/t/72/assets/turbo.woff?41671) format("woff"), url(//cdn.shopify.com/s/files/1/2609/5282/t/72/assets/turbo.ttf?41671) format("truetype"), url(//cdn.shopify.com/s/files/1/2609/5282/t/72/assets/turbo.svg?41671) format("svg");
   font-weight: normal;
   font-style: normal;
   font-display: swap;

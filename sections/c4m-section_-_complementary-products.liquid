@@ -156,11 +156,14 @@ h2:has(+ c4m-complementary-products) {
   white-space: nowrap;
 }
 
+/* Fix hide/show if recomendations.performed */
+c4m-complementary-products:has(:nth-child(5)) {
+  display: block;
+  background-color: {{ section.settings.section_background }};
+  padding-top: 4rem;
+}
 </style>
 
-<div style="background-color: {{ section.settings.section_background }}; padding-top: 4rem;">
-  <h2 style="margin: 0;">{{ section.settings.title }}</h2>
-  
   <c4m-complementary-products
     class="complementary-products quick-add-hidden no-js-hidden{% if section.settings.enable_quick_add %} complementary-products-contains-quick-add{% endif %}"
     data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ section.settings.products_per_page }}&intent=complementary"
@@ -168,6 +171,8 @@ h2:has(+ c4m-complementary-products) {
     data-direction="{{ section.settings.carousel_direction }}"
   > 
     {%- if recommendations.performed and recommendations.products_count > 0 -%}
+    <h2 style="margin: 0;">{{ section.settings.title }}</h2>
+      
       <aside aria-label="{{ 'accessibility.complementary_products' | t }}" {{ section.shopify_attributes }}>
         <div class="complementary-products__container page-width">
           <div
@@ -233,8 +238,6 @@ h2:has(+ c4m-complementary-products) {
       <script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
   </c4m-complementary-products>
-</div>
-
 
 
 {% schema %}
