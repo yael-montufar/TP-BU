@@ -1,0 +1,15 @@
+/* CSS ⌘C Utilities
+*  rule: selector + declaration
+*  declaration: property + value
+*  property: an element's style property
+*  value: property value
+*/
+
+/*
+element.style {
+    grid-template-columns: 10rem 10rem 1fr;
+}
+grid-template-columns: 10rem 10rem 1fr;
+grid-template-columns
+10rem 10rem 1fr;
+*/

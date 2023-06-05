@@ -1,0 +1,345 @@
+<section class="exercises-banner">
+  <div class="exercises-container">
+    <div class="exercises-banner__position is-flex">
+      <div class="exercises-banner__title">
+        <div>
+          <h1>{{- section.settings.title -}}</h1>
+          <h3>{{- section.settings.subtitle -}}</h3>
+          <div class="flex-btn">
+            <a
+              class="btn_style global-button global-button--primary iframe-lightbox-link"
+              href="{{- section.settings.button_link_two -}}"
+            >
+              {{- section.settings.button_text_two -}}
+            </a>
+            <a
+              class="exercises-banner__button-first btn_style global-button global-button--primary"
+              href="{{- section.settings.button_link -}}"
+            >
+              {{- section.settings.button_text -}}
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="exercises-banner__img">
+        <div class="exercises-banner__img-position">
+          <img
+            class="exercises-banner__img-desk"
+            src="{{  section.settings.bg-img | img_url: 'master' }}"
+            alt="{{  section.settings.icon.alt }}"
+          >
+          <img
+            class="exercises-banner__img-mob"
+            src="{{  section.settings.bg-img-mob | img_url: 'master' }}"
+            alt="{{  section.settings.icon.alt }}"
+          >
+          {% for block in section.blocks %}
+            <div class="exercises-banner__dot-{{ block.id }} exercises-banner__dot">
+              <a href="{{- block.settings.pinpoint-url -}}">
+                <svg
+                  class="svg svg-def"
+                  width="32"
+                  height="32"
+                  viewBox="0 0 32 32"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g>
+                      <circle cx="16" cy="16" r="16" fill="white" fill-opacity="0.1"/>
+                      <circle cx="16" cy="16" r="15" stroke="white" stroke-width="2"/>
+                  </g>
+                  <circle cx="16" cy="16" r="6" fill="#FF7D54"/>
+                  <defs>
+                      <filter id="filter0_b_824_1500" x="-16" y="-16" width="64" height="64" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                          <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                          <feGaussianBlur in="BackgroundImage" stdDeviation="8"/>
+                          <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_824_1500"/>
+                          <feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_824_1500" result="shape"/>
+                      </filter>
+                  </defs>
+                </svg>
+                <svg
+                  class="svg svg-open"
+                  width="32"
+                  height="32"
+                  viewBox="0 0 32 32"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g>
+                      <circle cx="16" cy="16" r="16" fill="#FF7D54"/>
+                      <circle cx="16" cy="16" r="15" stroke="white" stroke-width="2"/>
+                  </g>
+                  <circle cx="16" cy="16" r="6" fill="white"/>
+                  <defs>
+                      <filter id="filter0_b_957_1342" x="-16" y="-16" width="64" height="64" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                          <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                          <feGaussianBlur in="BackgroundImage" stdDeviation="8"/>
+                          <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_957_1342"/>
+                          <feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_957_1342" result="shape"/>
+                      </filter>
+                  </defs>
+                </svg>
+              </a>
+              <div class="exercises-banner__modal" id="exercises-banner__modal-click">
+                <div class="exercises-banner__modal-top">
+                  <div class="exercises-banner__modal-top-title is-flex">
+                    <h4>{{- block.settings.modal_title -}}</h4>
+                    <svg
+                      class="modal-close"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M5.46967 5.46967C5.76256 5.17678 6.23744 5.17678 6.53033 5.46967L12 10.9393L17.4697 5.46967C17.7626 5.17678 18.2374 5.17678 18.5303 5.46967C18.8232 5.76256 18.8232 6.23744 18.5303 6.53033L13.0607 12L18.5303 17.4697C18.8232 17.7626 18.8232 18.2374 18.5303 18.5303C18.2374 18.8232 17.7626 18.8232 17.4697 18.5303L12 13.0607L6.53033 18.5303C6.23744 18.8232 5.76256 18.8232 5.46967 18.5303C5.17678 18.2374 5.17678 17.7626 5.46967 17.4697L10.9393 12L5.46967 6.53033C5.17678 6.23744 5.17678 5.76256 5.46967 5.46967Z" fill="#22272F"/>
+                    </svg>
+                  </div>
+                  <div class="exercises-banner__modal-top-content">
+                    <div class="is-flex">
+                      <p>{{- block.settings.option_1 -}}</p>
+                      <span>{{- block.settings.option_1_count -}}</span>
+                    </div>
+                    <div class="is-flex">
+                      <p>{{- block.settings.option_2 -}}</p>
+                      <span>{{- block.settings.option_2_count -}}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="exercises-banner__modal-link">
+                  <a
+                    class="btn_style global-button global-button--primary active-filter-on"
+                    data-handle="{{ block.settings.modal_active }}"
+                    href="{% if block.settings.button-url != blank %}{{- block.settings.button-url -}}#scroll{% else %}#scroll{% endif %}"
+                  >
+                    {{- block.settings['button-text'] -}}
+                  </a>
+                </div>
+              </div>
+              {% style %}
+                .exercises-banner__dot-{{ block.id }} {
+                    position: absolute;
+                    left: {{ block.settings.left }}%;
+                    top: {{ block.settings.top }}%;
+                }
+                @media (max-width: 991px) {
+                    .exercises-banner__dot-{{ block.id }} {
+                        left: {{ block.settings.left-mob }}%;
+                        top: {{ block.settings.top-mob }}%;
+                    }
+                }
+                .exercises-banner__dot-{{ block.id }} .exercises-banner__modal {
+                {% if block.settings.modal-position == 'bottom' %}
+                    left: -45%;
+                    margin-top: 10px;
+                    {% elsif block.settings.modal-position == 'left' %}
+                    left: -105%;
+                    margin-top: -50px;
+                    {% elsif block.settings.modal-position == 'right' %}
+                    right: -18%;
+                    margin-top: -40px;
+                    {% elsif block.settings.modal-position == 'top' %}
+                    left: -45%;
+                    margin-top: -110%;
+                {% endif %}
+                }
+              {% endstyle %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+"name": "Exercises Banner",
+"settings": [
+{
+"type": "image_picker",
+"id": "bg-img",
+"label": "Image Desktop"
+},
+{
+"type": "image_picker",
+"id": "bg-img-mob",
+"label": "Image Mobile"
+},
+{
+"type": "text",
+"id": "title",
+"label": "Title"
+},
+{
+"type": "text",
+"id": "subtitle",
+"label": "Subtitle"
+},
+{
+"type": "text",
+"id": "button_text",
+"label": "Button Text"
+},
+{
+"type": "url",
+"id": "button_link",
+"label": "Button Link"
+},
+{
+"type": "text",
+"id": "button_text_two",
+"label": "Button Text",
+"default": "Watch Intro Video"
+},
+{
+"type": "url",
+"id": "button_link_two",
+"label": "Button Link"
+}
+],
+"blocks": [
+{
+"name": "Modal item",
+"type": "text",
+"settings": [
+{
+"type": "select",
+"id": "modal_active",
+"label": "Filter dependency",
+"options": [
+{
+"value": "categoryNeck",
+"label": "Neck"
+},
+{
+"value": "categoryShoulders",
+"label": "Shoulders"
+},
+{
+"value": "categoryLowerBack",
+"label": "Lower Back"
+}
+]
+},
+{
+"type": "text",
+"id": "modal_title",
+"label": "Title"
+},
+{
+"type": "text",
+"id": "option_1",
+"label": "Option 1",
+"default": "With accessories:"
+},
+{
+"type": "text",
+"id": "option_1_count",
+"label": "Number of exercises",
+"default": "2"
+},
+{
+"type": "text",
+"id": "option_2",
+"label": "Option 2",
+"default": "Without accessories:"
+},
+{
+"type": "text",
+"id": "option_2_count",
+"label": "Number of exercises",
+"default": "4"
+},
+{
+"type": "text",
+"id": "button-text",
+"label": "Button text",
+"default": "View Exercises"
+},
+{
+"type": "url",
+"id": "button-url",
+"label": "Button Url"
+},
+  {
+  "type": "text",
+  "id": "pinpoint-url",
+  "label": "scroll-to id"
+  },
+{
+"type": "range",
+"id": "left",
+"min": 0,
+"max": 100,
+"step": 1,
+"unit": "%",
+"label": "Left",
+"default": 50
+},
+{
+"type": "range",
+"id": "top",
+"min": 0,
+"max": 100,
+"step": 1,
+"unit": "%",
+"label": "Top",
+"default": 50
+},
+{
+"type": "range",
+"id": "left-mob",
+"min": 0,
+"max": 100,
+"step": 1,
+"unit": "%",
+"label": "Left (on Mobile)",
+"default": 50
+},
+{
+"type": "range",
+"id": "top-mob",
+"min": 0,
+"max": 100,
+"step": 1,
+"unit": "%",
+"label": "Top (on Mobile)",
+"default": 50
+},
+{
+"type": "radio",
+"id": "modal-position",
+"label": "Modal Position",
+"options": [
+{
+"value": "left",
+"label": "Left"
+},
+{
+"value": "right",
+"label": "Right"
+},
+{
+"value": "top",
+"label": "Top"
+},
+{
+"value": "bottom",
+"label": "Bottom"
+}
+],
+"default": "bottom"
+}
+]
+}
+],
+"presets": [
+{
+"name": "Exercises Banner",
+"category": "New"
+}
+]
+}
+{% endschema %}

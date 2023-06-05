@@ -1,0 +1,394 @@
+{%- capture minify -%}
+{%- style -%}
+#LT--{{ section.id }} {
+  background: {{ section.settings.color_bg }};
+  border-top: {{ section.settings.border_width }}px solid {{ section.settings.color_border }};
+  border-bottom: {{ section.settings.border_width }}px solid {{ section.settings.color_border }};
+  color: {{ section.settings.color_text }};
+  padding-top: {{ section.settings.padding }}px;
+  padding-bottom: {{ section.settings.padding }}px;
+  position: relative;
+  overflow: hidden;
+  width: 100vw;
+  margin: -1px 0;
+}
+
+#LT--{{ section.id }} .luna-templates__marquee-bar {
+  display: flex;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  height: 100%;
+  min-width: 100%;
+}
+
+#LT--{{ section.id }} .luna-templates__marquee-item {
+  align-items: center;
+/*  Custom ∆  */
+/*   display: grid; */
+  display: flex;
+  max-height: {{section.settings.max_height}}px;
+}
+
+#LT--{{ section.id }} .luna-templates__marquee-bar-content {
+  animation: {% if section.settings.direction == "reverse" %}lt-marquee-right{% else %}lt-marquee{% endif %} {{ section.settings.speed }}s linear infinite;
+  display: flex;
+}
+
+#LT--{{ section.id }} p {
+  margin: 0;
+  color: {{ section.settings.color_text }};
+  font-size: {{ section.settings.text_size }}px;
+  padding-left: 20px;
+  padding-right: {{ section.settings.item_padding }}px;
+  line-height: 1;
+}
+
+#LT--{{ section.id }} a {
+  color: {{ section.settings.color_text }};
+}
+
+#LT--{{ section.id }} a {
+  text-decoration: none;
+}
+
+#LT--{{ section.id }} .luna-templates__marquee-item img {
+  display: inline-block;
+  height: auto;
+}
+
+@media screen and (max-width: 768px) {
+  #LT--{{ section.id }} p {
+    font-size: {{ section.settings.text_size_mobile }}px;
+  }
+
+{%- if section.settings.mobile_hide == true -%}
+  #LT--{{ section.id }} {
+    display: none;
+  }
+{%- endif -%}
+  
+}
+
+@keyframes lt-marquee {
+  0% {
+    -webkit-transform: translateX(0);
+    -moz-transform: translateX(0);
+    transform: translateX(0);
+  }
+  100% {
+    -webkit-transform: translateX(-100%);
+    -moz-transform: translateX(-100%);
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes lt-marquee-right {
+  0% {
+    -webkit-transform: translateX(-100%);
+    -moz-transform: translateX(-100%);
+    transform: translateX(-100%);
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    -moz-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .luna-templates__marquee-text-banner span {
+    animation: none;
+    width: auto;
+    display: block;
+    text-align: center;
+    white-space: normal;
+  }
+}
+
+{{ section.settings.custom_css }}
+
+{%- endstyle -%}
+
+<!-- This section is designed and built by Luna Templates. Find more at https://lunatemplates.co -->
+
+<section id="LT--{{ section.id }}" class="LT__section luna-templates__marquee-text-banner {{ section.settings.css_class }}">
+  {%- if section.settings.link_url != blank -%}
+      <a href="{{ section.settings.link_url }}">
+  {%- endif -%}
+  <div class="luna-templates__marquee-bar">
+    <span class="luna-templates__marquee-bar-content">
+      {%- for i in (1..5) -%}
+        {%- for block in section.blocks -%}
+          <span id="block-{{ block.id }}" class="luna-templates__marquee-item"  {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 500 | image_tag }}
+            {%- endif -%}
+            {%- if block.settings.text != blank -%}
+              {{ block.settings.text }}
+            {%- endif -%}
+            <style>
+            @media screen and (max-width: 768px) {
+              #block-{{ block.id }}.luna-templates__marquee-item img {
+                width: {{ block.settings.image_width_mobile }}px;
+              }
+              #block-{{ block.id }}.luna-templates__marquee-item {
+                grid-template-columns: {% if block.settings.image != blank %}{{ block.settings.image_width_mobile }}px {% endif %}auto;
+              }
+            }
+            @media screen and (min-width: 769px) {
+              #block-{{ block.id }}.luna-templates__marquee-item img {
+                width: {{ block.settings.image_width }}px;
+              }
+              #block-{{ block.id }}.luna-templates__marquee-item {
+                grid-template-columns: {% if block.settings.image != blank %}{{ block.settings.image_width }}px {% endif %}auto;
+              }
+            }
+            </style>
+          </span>
+        {%- endfor -%}
+      {%- endfor -%}
+    </span>
+    <span class="luna-templates__marquee-bar-content">
+      {%- for i in (1..5) -%}
+        {%- for block in section.blocks -%}
+          <span id="block-{{ block.id }}" class="luna-templates__marquee-item"  {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 500 | image_tag }}
+            {%- endif -%}
+            {%- if block.settings.text != blank -%}
+              {{ block.settings.text }}
+            {%- endif -%}
+            <style>
+            @media screen and (max-width: 768px) {
+              #block-{{ block.id }}.luna-templates__marquee-item img {
+                width: {{ block.settings.image_width_mobile }}px;
+              }
+              #block-{{ block.id }}.luna-templates__marquee-item {
+                grid-template-columns: {% if block.settings.image != blank %}{{ block.settings.image_width_mobile }}px {% endif %}auto;
+              }
+            }
+            @media screen and (min-width: 769px) {
+              #block-{{ block.id }}.luna-templates__marquee-item img {
+                width: {{ block.settings.image_width }}px;
+              }
+              #block-{{ block.id }}.luna-templates__marquee-item {
+                grid-template-columns: {% if block.settings.image != blank %}{{ block.settings.image_width }}px {% endif %}auto;
+              }
+            }
+            </style>
+          </span>
+        {%- endfor -%}
+      {%- endfor -%}
+    </span>
+  </div>
+  {%- if section.settings.link_url != blank -%}</a>{%- endif -%}
+</section>
+{%- endcapture -%}
+{{ minify | strip_newlines }}
+
+{% schema %}
+  {
+    "name": "💫 Marquee Text Banner",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Content"
+      },
+      {
+        "type": "url",
+        "id": "link_url",
+        "label": "Link"
+      },
+      {
+        "type": "header",
+        "content": "Color"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+      	"label": "Text Color",
+      	"default": "#fff"
+      },
+      {
+        "type": "color",
+        "id": "color_bg",
+      	"label": "Background Color",
+      	"default": "#000"
+      },
+      {
+        "type": "color",
+        "id": "color_border",
+      	"label": "Border Color",
+      	"default": "#000"
+      },
+      {
+        "type": "range",
+        "id": "border_width",
+        "min": 0,
+        "max": 6,
+        "step": 1,
+        "label": "Border Width (px)",
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "Size & Movement"
+      },
+      {
+        "type": "range",
+        "id": "text_size",
+        "label": "Text Size (Desktop)",
+        "default": 30,
+        "min": 10,
+        "max": 200,
+        "step": 2,
+        "unit": "px"
+      },
+      {
+        "type": "range",
+        "id": "text_size_mobile",
+        "label": "Text Size (Mobile)",
+        "default": 20,
+        "min": 10,
+        "max": 80,
+        "step": 2,
+        "unit": "px"
+      },
+      {
+        "type": "range",
+        "id": "item_padding",
+        "label": "Space after text",
+        "default": 20,
+        "min": 20,
+        "max": 100,
+        "step": 5,
+        "unit": "px"
+      },
+      {
+        "type": "select",
+        "id": "direction",
+        "label": "Direction",
+        "options": [
+          {
+            "label": "Left",
+            "value": "normal"
+          },
+          {
+            "label": "Right",
+            "value": "reverse"
+          }
+        ],
+        "default": "normal"
+      },
+      {
+        "type": "range",
+        "id": "speed",
+        "label": "Speed",
+        "min": 10,
+        "max": 400,
+        "step": 5,
+        "default": 100,
+        "unit": "sec",
+        "info": "Higher number is slower speed. When more blocks or text is added, the speed increases and you may wish to lower the speed"
+      },
+      {
+        "type": "range",
+        "id": "padding",
+        "min": 0,
+        "max": 40,
+        "step": 2,
+        "label": "Padding above and below",
+        "default": 10
+      },
+      {
+        "type": "header",
+        "content": "Mobile"
+      },
+      {
+        "type": "checkbox",
+        "id": "mobile_hide",
+        "label": "Hide on mobile", 
+        "info": "Text marquees can sometimes be glitchy on mobile due to browser performance issues, especially when using images. If experiencing problems, consider hiding on mobile."
+      },
+      {
+        "type": "header",
+        "content": "Advanced"
+      },
+      {
+        "type": "text",
+        "id": "css_class",
+        "label": "CSS Class"
+      },
+      {
+        "type": "html",
+        "id": "custom_css",
+        "label": "Custom CSS",
+        "info": "Write your CSS here. Use !important when necessary."
+      },
+      {
+        "type": "number",
+        "id": "max_height",
+        "label": "Max Height"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "item",
+        "name": "Marquee Item",
+        "settings": [
+          {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text",
+            "default": "<p>Free shipping and returns</p>"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "range",
+            "id": "image_width",
+            "label": "Image Width (Desktop)",
+            "min": 30,
+            "max": 200,
+            "step": 2,
+            "unit": "px",
+            "default": 40
+          },
+          {
+            "type": "range",
+            "id": "image_width_mobile",
+            "label": "Image Width (Mobile)",
+            "min": 30,
+            "max": 100,
+            "step": 1,
+            "unit": "px",
+            "default": 40
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "💫 Marquee Text Banner",
+        "category": "Luna Templates",
+        "blocks": [
+          {
+            "type": "item",
+            "settings": {
+              "text": "<p>New collection just released</p>"
+            }
+          },
+          {
+            "type": "item",
+            "settings": {
+              "text": "<p>Shop Now</p>"
+            }
+          }
+        ]
+      }
+	]
+  }
+{% endschema %}

@@ -1,0 +1,123 @@
+{% comment %}
+  ** Featured collection - dynamic **
+  - Draggable section
+{% endcomment %}
+
+{% comment %} Assign object as block or section {% endcomment %}
+{% if type == 'block' %}
+  {%- assign object = block -%}
+{% else %}
+  {%- assign object = section -%}
+{% endif %}
+
+{%- assign id = object.id -%}
+
+{% comment %} Content settings {% endcomment %}
+{%- assign title = object.settings.title | escape -%}
+{%- assign sub_title = object.settings.sub_title | escape -%}
+{%- assign collection = collections[object.settings.collection] -%}
+{% comment %} End content settings {% endcomment %}
+
+{% comment %} Advanced {% endcomment %}
+{%- assign css_class = object.settings.css_class -%}
+{%- assign custom_css = object.settings.custom_css -%}
+
+{% comment %} Section specific CSS {% endcomment %}
+{% style %}
+  {% render 'css-loop',
+      css: custom_css,
+      id: id
+  %}
+{% endstyle %}
+
+{% if collection == blank %}
+  {%- assign section_onboarding = true -%}
+  {% comment %} Assign product length to be selected limit for onboarding {% endcomment %}
+  {%- assign products_length = object.settings.products_limit | plus: 0 -%}
+{% else %}
+  {%- assign section_onboarding = false -%}
+{% endif %}
+
+<section class="exercises-recommendations">
+  <div class="exercises-container">
+    <div class="exercises-recommendations__title">
+      <p>{{- section.settings.subtitle -}}</p>
+      <h3>{{- section.settings.title -}}</h3>
+    </div>
+    <div class="exercises-recommendations__gallery">
+      <div
+        class="exercises-recommendations__gallery-position"
+        data-products-per-slide="{{ visible_products }}"
+        data-products-limit="{{ limit }}"
+        data-products-available="{{ products_length }}"
+      >
+        {% if section_onboarding == false %}
+          {% if collection.products.size > 0 %}
+            {% render 'exercise-product-recommendations-item',
+              limit: object.settings.products_limit,
+              products: collection.products,
+              per_slide: object.settings.products_per,
+              featured_collection: collection
+            %}
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+    <div class="exercises-recommendations__slider">
+      <div class="js-exercises-recommendations-slider">
+        {% if section_onboarding == false %}
+          {% if collection.products.size > 0 %}
+            {% render 'exercise-product-recommendations-item',
+              limit: object.settings.products_limit,
+              products: collection.products,
+              per_slide: object.settings.products_per,
+              featured_collection: collection
+            %}
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+"name": "Product Recommendations",
+"settings": [
+{
+"type": "text",
+"id": "subtitle",
+"label": "Subtitle"
+},
+{
+"type": "text",
+"id": "title",
+"label": "Title"
+},
+{
+"type": "collection",
+"id": "collection",
+"label": "Collection"
+},
+{
+"type": "header",
+"content": "Products"
+},
+{
+"type": "range",
+"id": "products_limit",
+"label": "Limit products",
+"min": 2,
+"max": 50,
+"step": 1,
+"default": 9
+}
+],
+"presets": [
+{
+"name": "Exercise Product Recommendations",
+"category": "New"
+}
+]
+}
+{% endschema %}

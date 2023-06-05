@@ -1,0 +1,37 @@
+{%- capture minify -%}
+  
+{%- style -%}
+  .block-{{ block.id }}_pulse-text__pulse {
+    display: inline-block;
+    background: {{color}};
+    border-radius: 50%;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
+    margin: 10px;
+    height: 10px;
+    width: 10px;
+    transform: scale(1);
+    animation: block-{{ block.id }}_pulse 2s infinite;
+  }
+  
+  @keyframes block-{{ block.id }}_pulse {
+    0% {
+      transform: scale(0.95);
+      box-shadow: 0 0 0 0 {{color | color_to_rgb | color_modify: 'alpha', 0.7}};
+    }
+    
+    70% {
+      transform: scale(1);
+      box-shadow: 0 0 0 7.5px {{color | color_to_rgb | color_modify: 'alpha', 0.0}};
+    }
+    
+    100% {
+      transform: scale(0.95);
+      box-shadow: 0 0 0 0 {{color | color_to_rgb | color_modify: 'alpha', 0.0}};
+    }
+  }
+{%- endstyle -%}
+  
+<span class="block-{{ block.id }}_pulse-text__pulse"></span>
+
+{%- endcapture -%}
+{{ minify | strip_newlines }}

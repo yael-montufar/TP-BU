@@ -1,0 +1,721 @@
+{%- comment -%}
+{
+  "pack_name": "FAQ - side headings",
+  "pack_author": "Design Packs"
+{%- endcomment -%}
+
+{% comment %} Security Code - hides section when app uninstalled {% endcomment %}
+{%- unless content_for_header contains 'design_packs_file.js' -%}
+  {%- if request.design_mode -%}
+    <div class="dsgn-pck__no-app-warning">
+      <div class="dsgn-pck__no-app-warning-background">
+      </div>
+      <div class="dsgn-pck__no-app-warning-text dsgn-pck__rte">
+        <p><strong>WARNING!</strong> This premium section will not display properly without an active subscription for <a href="https://apps.shopify.com/design-packs" target="_blank" rel="nofollow">Design Packs</a>. If you need any support please email <a href="mailto:info@design-packs.com" target="_blank">info@design-packs.com</a> with your questions.</p>
+      </div>
+    </div>
+  {%- endif -%}
+  {%- break -%}
+{%- endunless -%}
+
+{%- comment -%} Layout: has user entered measurement value into max-width field? {%- endcomment -%}
+{%- if section.settings.max_width contains 'px' or section.settings.max_width contains '%' -%}
+  {%- assign max_width = section.settings.max_width -%}
+{%- else -%}
+  {%- assign max_width = section.settings.max_width | append: 'px' -%}
+{%- endif -%}
+
+{%- comment -%} Text: custom font_picker values {%- endcomment -%}
+{%- capture font_settings_list -%}
+{{ section.settings.main_font | font_face: font_display: 'swap' }}~
+{{ section.settings.main_font | font_modify: 'weight', 'bolder' | font_face: font_display: 'swap' }}~
+{{ section.settings.main_font | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}~
+{{ section.settings.main_font | font_modify: 'style', 'italic' | font_modify: 'weight', 'bolder' | font_face: font_display: 'swap' }}
+{{ section.settings.heading_font | font_face: font_display: 'swap' }}~
+{{ section.settings.heading_font | font_modify: 'weight', 'bolder' | font_face: font_display: 'swap' }}~
+{{ section.settings.heading_font | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}~
+{{ section.settings.heading_font | font_modify: 'style', 'italic' | font_modify: 'weight', 'bolder' | font_face: font_display: 'swap' }}
+{%- endcapture -%}
+{%- assign font_array = font_settings_list | split: '~' -%}
+
+{%- capture minify -%}
+{%- comment -%} CSS {%- endcomment -%}
+<style>
+{%- if section.settings.override_theme_font != blank -%}
+  {%- for font in font_array -%}
+    {%- unless font contains 'error' -%}{{ font }}{%- endunless -%}
+  {%- endfor -%}
+  #DP--{{ section.id }} {
+    --main-font: {{ section.settings.main_font.family }}, {{ section.settings.main_font.fallback_families }};
+    --main-font-weight: {{ section.settings.main_font.weight }};
+    --main-font-style: {{ section.settings.main_font.style }};
+    --heading-font: {{ section.settings.heading_font.family }}, {{ section.settings.heading_font.fallback_families }};
+    --heading-font-weight: {{ section.settings.heading_font.weight }};
+    --heading-font-style: {{ section.settings.heading_font.style }};
+  }
+{%- endif -%}
+
+#DP--{{ section.id }} {
+  color: {{ section.settings.text_color }};
+  background: {{ section.settings.background_color }};
+  {%- if section.settings.override_theme_font != blank -%}
+  font-family: var(--main-font);
+  font-weight: var(--main-font-weight);
+  font-style: var(--main-font-style);
+  {%- endif -%}
+  margin-top: {{ section.settings.outer_margin }}px;
+  margin-bottom: {{ section.settings.outer_margin }}px;
+}
+
+#DP--{{ section.id }} .dsgn-pck__sizer {
+  padding-top: {{ section.settings.inner_padding }}px;
+  padding-bottom: {{ section.settings.inner_padding }}px;
+  width: {{ section.settings.base_width }}%;
+  max-width: {{ max_width }};
+  flex-wrap: wrap;
+}
+
+#DP--{{ section.id }} .dsgn-pck__faq-section {
+  grid-template-columns: 1fr 2fr;
+  gap: 10%;
+  width: 100%;
+}
+
+#DP--{{ section.id }} [aria-expanded="true"] .vert {
+  display: none;
+}
+
+#DP--{{ section.id }} [aria-expanded] rect {
+  fill: currentColor;
+}
+
+#DP--{{ section.id }} .dsgn-pck__heading-area {
+  min-width: 30%;
+}
+
+#DP--{{ section.id }} .dsgn-pck__heading {
+  margin: 0;
+  border-top: 2px solid {{ section.settings.border_color }};
+  padding-top: 0.5em;
+  color: {{ section.settings.heading_color }};
+  line-height: calc(3px + 2ex + 3px);
+  font-size: calc(var(--dp-g-small-heading-size, var(--dp-small-heading-size, 24px)) * {{ section.settings.text_size | times: 0.01 }});
+  {%- if section.settings.override_theme_font != blank -%}
+  font-family: var(--heading-font);
+  font-weight: var(--heading-font-weight);
+  font-style: var(--heading-font-style);
+  {%- endif -%}
+  {%- if section.settings.enable_sticky_headings -%}
+    position: sticky;
+    top: 0;
+  {%- endif -%}
+}
+
+#DP--{{ section.id }} .dsgn-pck__questions {
+  flex-direction: column;
+}
+
+.dsgn-pck__faq-section:last-child .dsgn-pck__questions:last-child {
+  border-bottom: 2px solid {{ section.settings.border_color }};
+}
+
+#DP--{{ section.id }} .dsgn-pck__question-block {
+  padding-top: calc(1em + 3px);
+  padding-bottom: calc(1em + 3px);
+  border-top: 2px solid {{ section.settings.border_color }};
+}
+
+#DP--{{ section.id }} .dsgn-pck__faq__expanded-true button svg {
+  display: none;
+}
+
+#DP--{{ section.id }} .dsgn-pck__faq__expanded-true .dsgn-pck__question button {
+  cursor: default;
+}
+
+#DP--{{ section.id }} .dsgn-pck__faq__expanded-true .dsgn-pck__text {
+  height: auto;
+}
+
+#DP--{{ section.id }} .dsgn-pck__question {
+  margin: 0;
+  color: {{ section.settings.heading_color }};
+  font-size: {{ section.settings.text_size | times: 0.012 }}em;
+  {%- if section.settings.override_theme_font != blank -%}
+  font-family: var(--heading-font);
+  font-weight: var(--heading-font-weight);
+  font-style: var(--heading-font-style);
+  {%- endif -%}
+}
+
+#DP--{{ section.id }} .dsgn-pck__question button {
+  color: inherit;
+  background: transparent;
+  border: none;
+  font-family: inherit;
+  font-size: inherit;
+  font-style: inherit;
+  font-weight: inherit;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+  cursor: pointer;
+  text-align: left;
+  text-transform: none;
+  margin: 0;
+  line-height: calc(3px + 2ex + 3px);
+  font-size: calc(var(--dp-g-small-heading-size, var(--dp-small-heading-size, 20px)) * {{ section.settings.text_size | times: 0.01 }});
+  {%- if section.settings.override_theme_font != blank -%}
+  font-family: var(--heading-font);
+  font-weight: var(--heading-font-weight);
+  font-style: var(--heading-font-style);
+  {%- endif -%}
+}
+
+#DP--{{ section.id }} .dsgn-pck__question button:focus {
+  outline: none;
+  /* background-color: rgba(255,255,255,0.25);
+  box-shadow: 0px 0px 0px 5px rgba(255,255,255,0.25); */
+}
+
+#DP--{{ section.id }} .dsgn-pck__question svg {
+  width: 20px;
+  min-width: 20px; /* seems to prevent it from shrinking when a lot of text */
+  margin-left: 5px;
+}
+
+#DP--{{ section.id }} .dsgn-pck__text {
+  width: 100%;
+  color: inherit;
+  font-family: inherit;
+  height: 0px;
+  transition: height 0.5s ease;
+  overflow: hidden;
+}
+
+#DP--{{ section.id }} .dsgn-pck__text *:first-child {
+  margin-top: 1em;
+}
+
+#DP--{{ section.id }} .dsgn-pck__text p {
+  margin-bottom: 1em;
+  line-height: calc(3px + 3ex + 3px);
+  font-size: calc(var(--dp-g-body-size, var(--dp-body-size, 18px)) * {{ section.settings.text_size | times: 0.01 }});
+  {%- if section.settings.override_theme_font != blank -%}
+  font-family: var(--main-font);
+  font-weight: var(--main-font-weight);
+  font-style: var(--main-font-style);
+  {%- endif -%}
+}
+
+#DP--{{ section.id }} .dsgn-pck__additional-content {
+  width: 100%;
+  padding-top: 1em;
+  margin-top: 2.5em;
+  margin-bottom: 1em;
+  border-top: thin solid {{ section.settings.border_color }};
+  color: {{ section.settings.text_color }};
+  line-height: calc(3px + 3ex + 3px);
+  font-size: calc(var(--dp-g-body-size, var(--dp-body-size, 18px)) * {{ section.settings.text_size | times: 0.01 }});
+  {%- if section.settings.override_theme_font != blank -%}
+  font-family: var(--main-font);
+  font-weight: var(--main-font-weight);
+  font-style: var(--main-font-style);
+  {%- endif -%}
+}
+
+{%- if section.settings.custom_css != blank -%}
+  {%- assign custom_section_declarations = section.settings.custom_css | split: '}' -%}
+  {%- for declaration in custom_section_declarations -%}
+    {%- if declaration contains '{' -%}
+      #DP--{{ section.id }} {{ declaration }} }
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) {
+  #DP--{{ section.id }} .dsgn-pck__faq-section {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+/* Landscape phones and down */
+@media (max-width: 480px) {
+  #DP--{{ section.id }} {
+    margin-top: {{ section.settings.outer_margin | divided_by: 2 }}px;
+    margin-bottom: {{ section.settings.outer_margin | divided_by: 2 }}px;
+  }
+
+  #DP--{{ section.id }} .dsgn-pck__sizer {
+    max-width: 95%;
+    min-width: 70%;
+    padding-top: {{ section.settings.inner_padding | divided_by: 2 }}px;
+    padding-bottom: {{ section.settings.inner_padding | divided_by: 2 }}px;
+  }
+
+  {%- if section.settings.mobile_custom_css != blank -%}
+    {%- assign mobile_custom_declarations = section.settings.mobile_custom_css | split: '}' -%}
+    {%- for declaration in mobile_custom_declarations -%}
+      {%- if declaration contains '{' -%}
+        #DP--{{ section.id }} {{ declaration }} }
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+}
+</style>
+
+{%- comment -%} HTML {%- endcomment -%}
+<section id="DP--{{ section.id }}"
+        class="DP--{{ section.id }} dsgn-pck__faq dsgn-pck__section">
+  <div class="dsgn-pck__sizer
+              dsgn-pck__flex
+              dsgn-pck__faq__expanded-{{ section.settings.show_answers }}">
+
+  {% comment %} Product FAQ {% endcomment %}
+  {%- if product.metafields.custom.product_faq -%}
+  {%- assign product_faq = product.metafields.custom.product_faq.value.json.value -%}
+  <div class="dsgn-pck__faq-section dsgn-pck__grid">
+    <div class="dsgn-pck__heading-area dsgn-pck__column">
+      <h2 class="dsgn-pck__heading" id="trigger-point-rocker-feel-good-and-build-muscle">{{ product.title }}</h2>
+    </div>
+    <div class="dsgn-pck__questions">
+      {%- for entry in product_faq -%}
+      <div class="dsgn-pck__question-block">
+        <h3 class="dsgn-pck__question">
+          <button aria-expanded="false" accordion-trigger="">
+            {{ entry.question }}
+            <svg aria-hidden="true" focusable="false" viewBox="0 0 10 10">
+              <rect class="vert" height="8" width="1" y="1" x="4.5"></rect>
+              <rect height="1" width="8" y="4.5" x="1"></rect>
+            </svg>
+          </button>
+        </h3>
+        <div class="dsgn-pck__text dsgn-pck__rte">
+          {{ entry.answer }}
+        </div>
+      </div>
+      {%- endfor -%}
+    
+    </div>
+  </div>
+  {%- endif -%}
+  
+  {% comment %} General FAQ {% endcomment %}
+  {%- if product.metafields.custom.general_faq -%}
+  {%- assign general_faq = product.metafields.custom.general_faq.value.json.value -%}
+  <div class="dsgn-pck__faq-section dsgn-pck__grid">
+    <div class="dsgn-pck__heading-area dsgn-pck__column">
+      <h2 class="dsgn-pck__heading" id="trigger-point-rocker-feel-good-and-build-muscle">{{ general_faq.heading }}</h2>
+    </div>
+    <div class="dsgn-pck__questions">
+      {%- for entry in general_faq.entries -%}
+      <div class="dsgn-pck__question-block">
+        <h3 class="dsgn-pck__question">
+          <button aria-expanded="false" accordion-trigger="">
+            {{ entry.question }}
+            <svg aria-hidden="true" focusable="false" viewBox="0 0 10 10">
+              <rect class="vert" height="8" width="1" y="1" x="4.5"></rect>
+              <rect height="1" width="8" y="4.5" x="1"></rect>
+            </svg>
+          </button>
+        </h3>
+        <div class="dsgn-pck__text dsgn-pck__rte">
+          {{ entry.answer }}
+        </div>
+      </div>
+      {%- endfor -%}
+    
+    </div>
+  </div>
+  {%- endif -%}
+
+
+
+    {%- for block in section.blocks -%}
+      {%- if block.type == "section_heading" -%}
+        {%- if forloop.first == true -%}
+          <div class="dsgn-pck__faq-section dsgn-pck__grid">
+        {%- endif -%}
+        {%- if previous_block == "question" -%}
+            </div>
+          </div>
+          <div class="dsgn-pck__faq-section dsgn-pck__grid">
+        {%- endif -%}
+          <div class="dsgn-pck__heading-area dsgn-pck__column" {{ block.shopify_attributes }}>
+            <h2 class="dsgn-pck__heading" id="{{ block.settings.title | handleize }}">{{ block.settings.title }}</h2>
+          </div>
+        {%- assign previous_block = "heading" -%}
+      {%- elsif block.type == "question" -%}
+        {%- if previous_block == "heading" -%}
+          <div class="dsgn-pck__questions">
+        {%- endif -%}
+        {%- if forloop.first == true -%}
+          <div class="dsgn-pck__faq-section dsgn-pck__grid">
+            <div class="dsgn-pck__questions">
+        {%- endif -%}
+          <div class="dsgn-pck__question-block" {{ block.shopify_attributes }}>
+            <h3 class="dsgn-pck__question">
+              <button aria-expanded="{{ section.settings.show_answers }}" accordion-trigger>
+                {{ block.settings.title }}
+                <svg aria-hidden="true" focusable="false" viewBox="0 0 10 10">
+                  <rect class="vert" height="8" width="1" y="1" x="4.5"/>
+                  <rect height="1" width="8" y="4.5" x="1"/>
+                </svg>
+              </button>
+            </h3>
+            <div class="dsgn-pck__text dsgn-pck__rte">
+              {{ block.settings.text }}
+            </div>
+          </div>
+        {%- if forloop.last == true -%}
+          </div>
+        {%- endif -%}
+        {%- assign previous_block = "question" -%}
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+  {%- if section.settings.additional_content != blank -%}
+    <div class="dsgn-pck__additional-content dsgn-pck__rte">
+      {{ section.settings.additional_content }}
+    </div>
+  {%- endif -%}
+</section>
+{%- endcapture -%}
+{{ minify | strip_newlines }}
+
+{% schema %}
+{
+  "name": "FAQ - side headings",
+  "class": "DP__faq-side-headings",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_answers",
+      "label": "Show answers expanded",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sticky_headings",
+      "label": "Enable sticky headings",
+      "default": false,
+      "info": "Each heading will remain visible on desktop page scroll for their question group."
+    },
+    {
+      "type": "richtext",
+      "id": "additional_content",
+      "label": "Additional content",
+      "default": "<p>Still have questions? Drop us a line and get in touch. </p>"
+    },
+    {
+      "type": "header",
+      "content": "✏️ Text appearance"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Text size",
+      "min": 80,
+      "max": 150,
+      "step": 5,
+      "default": 100,
+      "unit": "%"
+    },
+    {
+      "type": "header",
+      "content": "🎨 Design"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color_background",
+      "id": "background_color",
+      "label": "Background",
+      "default": "linear-gradient(184deg, rgba(0, 0, 0, 1) 7%, rgba(58, 58, 58, 1) 94%)"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Borders",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "🖼 Layout"
+    },
+    {
+      "type": "range",
+      "id": "base_width",
+      "label": "Size",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "default": 80,
+      "unit": "%"
+    },
+    {
+      "type": "text",
+      "id": "max_width",
+      "label": "Maximum width",
+      "placeholder": "eg. 1200px",
+      "info": "Sets width constraint for content."
+    },
+    {
+      "type": "range",
+      "id": "inner_padding",
+      "label": "Inner padding",
+      "info": "Only applies to top and bottom.",
+      "min": 0,
+      "max": 100,
+      "default": 100,
+      "step": 5,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "outer_margin",
+      "label": "Outer margin",
+      "info": "Only applies to top and bottom.",
+      "min": 0,
+      "max": 100,
+      "default": 0,
+      "step": 5,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "🚨 Advanced"
+    },
+    {
+      "type": "html",
+      "id": "custom_css",
+      "label": "CSS"
+    },
+    {
+      "type": "html",
+      "id": "mobile_custom_css",
+      "label": "Mobile CSS",
+      "info": "Applied on screens less than 480px."
+    },
+    {
+      "type": "checkbox",
+      "id": "override_theme_font",
+      "label": "Override default theme font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Headings and questions",
+      "default": "serif"
+    },
+    {
+      "type": "font_picker",
+      "id": "main_font",
+      "label": "Answers",
+      "default": "sans-serif"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "section_heading",
+      "name": "Section heading",
+      "settings": [
+        {
+          "type": "liquid",
+          "id": "title",
+          "label": "Heading",
+          "default": "Group heading"
+        }
+      ]
+    },
+    {
+      "type": "question",
+      "name": "Question block",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Question",
+          "default": "Do you ship internationally?"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Answer",
+          "default": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris nibh enim, ornare at consequat sed, placerat quis libero. Curabitur id nulla ut nunc aliquam sodales.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "🧵 FAQ - side headings",
+      "settings": {
+      },
+      "blocks": [
+        {
+          "type": "section_heading",
+          "settings": {
+            "title": "Getting started"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "title": "Where are your products manufactured?",
+            "text": "<p>We are a local company and all merchandise is made with love here in Toronto, Canada.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "title": "How do your sizes work?",
+            "text": "<p>Please take a look at our size chart for more information and how to take accurate measurements.</p>"
+          }
+        },
+        {
+          "type": "section_heading",
+          "settings": {
+            "title": "Shipping"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "title": "Do you ship internationally?",
+            "text": "<p>Currently we are only shipping to USA and Canada.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "title": "How much is shipping?",
+            "text": "<p>If you spend over $100, shipping is always free. For any other purchases, shipping will be calculated at checkout.</p>"
+          }
+        },
+        {
+          "type": "section_heading",
+          "settings": {
+            "title": "Returns"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "title": "What is your return policy?",
+            "text": "<p>Merchandise that is unworn and in the original packaging can be returned within 30 days with the packing slip included with the product.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+{%- comment -%} JSON Settings {%- endcomment -%}
+<script type="application/json" data-dsgn-pck="{{ section.id }}">
+  {
+    "id": {{ section.id | json }},
+    "show_answers": {{ section.settings.show_answers | json }}
+  }
+</script>
+
+{%- comment -%} JavaScript {%- endcomment -%}
+<script data-dsgn-pck-js="{{ section.id }}" type="module" defer>
+(function(){
+
+  const designPack = {
+    settings: {},
+    accordion: function (event) {
+      const btn = event.target.closest('[accordion-trigger]');
+      const target = btn.parentNode.nextElementSibling;
+
+      if (btn.getAttribute('aria-expanded') === 'false') {
+        target.classList.add('dsgn-pck__active');
+        target.style.height = "auto";
+
+        var height = target.clientHeight + "px";
+
+        target.style.height = "0px";
+
+        setTimeout(() => {
+          target.style.height = height;
+        }, 0)
+
+        btn.setAttribute('aria-expanded', 'true');
+
+        target.addEventListener('transitionend', () => {
+          target.classList.remove('dsgn-pck__active')
+        }, {once: true})
+
+      } else {
+        target.style.height = "0px";
+        btn.setAttribute('aria-expanded', 'false');
+      }
+
+    },
+    load: function(section){
+      if (designPack.settings.show_answers == true){
+        return false;
+      }
+
+      section.addEventListener('click', (event) => {
+        this.accordion(event);
+      });
+
+    },
+    unload: function(section){
+      section.removeEventListener('click', (event) => {
+        this.accordion(event);
+      });
+    }
+  }
+
+  window.addEventListener('shopify:section:unload', function (e) {
+    const settings = document.querySelector(`[data-dsgn-pck="${e.detail.sectionId}"]`);
+    const sectionId = e.detail.sectionId;
+    const section = document.querySelector(`#DP--${e.detail.sectionId}`);
+    if (sectionId == designPack.settings.id){
+      designPack.unload(section);
+    }
+  });
+
+  designPack.settings = JSON.parse(document.querySelector('[data-dsgn-pck="{{ section.id }}"]').innerHTML);
+  const sectionId = {{ section.id | json }};
+  const section = document.querySelector(`#DP--${sectionId}`);
+
+  if (sectionId == designPack.settings.id){
+    designPack.load(section);
+  }
+})()
+</script>
+
+{%- comment -%} SEO {%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {%- for block in section.blocks -%}
+      {%- if block.type == "question" -%}
+        {
+          "@type": "Question",
+          "name": "{{ block.settings.title | escape }}",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "{{ block.settings.text | escape }}"
+          }
+        }{%- if forloop.last != true -%},{%- endif -%}
+      {%- endif -%}
+    {%- endfor -%}
+  ]
+}
+</script>

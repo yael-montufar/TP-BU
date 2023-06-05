@@ -1,0 +1,29 @@
+/* NOT VALID CSS FOR SOME REASON
+@media screen and (max-width: 750px) {
+  .product__media-wrapper {
+    display: block !important;
+  }
+}
+*/
+.grid--1-col .grid__item {
+    max-width: unset;
+    width: calc(25% - var(--grid-mobile-horizontal-spacing) * 3 / 4);
+}
+@media (max-width: 750px) {
+  .product__media-wrapper {
+    display: block !important;
+  }
+}
+@media (max-width: 480px) {
+  .grid--1-col .grid__item {
+    max-width: 100%;
+    width: 100%;
+  }
+}
+
+.payment_methods {
+    padding-top: 0rem !important;
+}
+.shopify-payment-button__button--hidden {
+  display: none !important;
+}

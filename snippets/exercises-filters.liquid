@@ -1,0 +1,104 @@
+<div class="filters">
+  <div class="filters__title-box">
+    <h2 class="filters__title">{{ 'exercises.filters.title' | t }}</h2>
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M13.35 11L20.5167 3.85001C20.8305 3.53618 21.0068 3.11052 21.0068 2.66668C21.0068 2.22284 20.8305 1.79719 20.5167 1.48335C20.2028 1.16951 19.7772 0.993195 19.3333 0.993195C18.8895 0.993195 18.4638 1.16951 18.15 1.48335L11 8.65002L3.84999 1.48335C3.53615 1.16951 3.11049 0.993195 2.66666 0.993195C2.22282 0.993195 1.79716 1.16951 1.48332 1.48335C1.16948 1.79719 0.99317 2.22284 0.99317 2.66668C0.99317 3.11052 1.16948 3.53618 1.48332 3.85001L8.64999 11L1.48332 18.15C1.32711 18.305 1.20312 18.4893 1.1185 18.6924C1.03389 18.8955 0.990326 19.1133 0.990326 19.3333C0.990326 19.5534 1.03389 19.7712 1.1185 19.9743C1.20312 20.1774 1.32711 20.3617 1.48332 20.5167C1.63826 20.6729 1.8226 20.7969 2.0257 20.8815C2.22879 20.9661 2.44664 21.0097 2.66666 21.0097C2.88668 21.0097 3.10452 20.9661 3.30762 20.8815C3.51072 20.7969 3.69505 20.6729 3.84999 20.5167L11 13.35L18.15 20.5167C18.3049 20.6729 18.4893 20.7969 18.6924 20.8815C18.8955 20.9661 19.1133 21.0097 19.3333 21.0097C19.5533 21.0097 19.7712 20.9661 19.9743 20.8815C20.1774 20.7969 20.3617 20.6729 20.5167 20.5167C20.6729 20.3617 20.7969 20.1774 20.8815 19.9743C20.9661 19.7712 21.0097 19.5534 21.0097 19.3333C21.0097 19.1133 20.9661 18.8955 20.8815 18.6924C20.7969 18.4893 20.6729 18.305 20.5167 18.15L13.35 11Z" fill="#2E4261"></path>
+    </svg>
+  </div>
+
+  <div class="filters__group" data-group="1">
+    {%- assign filter_group_1 = 'exercises.filters.filter_group_1' | t -%}
+    {% if filter_group_1 != blank %}
+      <h3 class="filters__group-title">{{ filter_group_1 }}</h3>
+    {% endif %}
+
+    <ul class="filters__list">
+      <li class="filters__item filters__item--checkbox" data-handle="AllGr1">
+        <input type="checkbox" id="gr-1-fl-1" name="{{ 'exercises.filters.filter_group_1_filter_1' | t }}" value="{{ 'exercises.filters.filter_group_1_filter_1' | t }}">
+        <label for="gr-1-fl-1">
+          {{ 'exercises.filters.filter_group_1_filter_1' | t }}
+        </label>
+        <span class="filters__count" data-count="gr-1-cnt-1" >0</span>
+      </li>
+      <li class="filters__item filters__item--checkbox" data-handle="withAccesories">
+        <input type="checkbox" id="gr-1-fl-2" name="{{ 'exercises.filters.filter_group_1_filter_2' | t }}" value="{{ 'exercises.filters.filter_group_1_filter_2' | t }}">
+        <label for="gr-1-fl-2">
+          {{ 'exercises.filters.filter_group_1_filter_2' | t }}
+        </label>
+        <span class="filters__count" data-count="gr-1-cnt-2" >0</span>
+      </li>
+      <li class="filters__item filters__item--checkbox" data-handle="withoutAccesories">
+        <input type="checkbox" id="gr-1-fl-3" name="{{ 'exercises.filters.filter_group_1_filter_3' | t }}" value="{{ 'exercises.filters.filter_group_1_filter_3' | t }}">
+        <label for="gr-1-fl-3">
+          {{ 'exercises.filters.filter_group_1_filter_3' | t }}
+        </label>
+        <span class="filters__count" data-count="gr-1-cnt-3" >0</span>
+      </li>
+    </ul>
+  </div>
+  <div class="filters__group" data-group="2">
+    {%- assign filter_group_2 = 'exercises.filters.filter_group_2' | t -%}
+    {% if filter_group_2 != blank %}
+      <h3 class="filters__group-title">{{ filter_group_2 }}</h3>
+    {% endif %}
+    <ul class="filters__list">
+      <li class="filters__item filters__item--checkbox" data-handle="AllGr2">
+        <input type="checkbox" id="gr-2-fl-1" name="{{ 'exercises.filters.filter_group_2_filter_1' | t }}" value="{{ 'exercises.filters.filter_group_2_filter_1' | t }}">
+        <label for="gr-2-fl-1">
+          {{ 'exercises.filters.filter_group_2_filter_1' | t }}
+        </label>
+        <span class="filters__count" data-count="gr-2-cnt-1" >0</span>
+      </li>
+      <li class="filters__item filters__item--checkbox" data-handle="categoryNeck">
+        <input type="checkbox" id="gr-2-fl-2" name="{{ 'exercises.filters.filter_group_2_filter_2' | t }}" value="{{ 'exercises.filters.filter_group_2_filter_2' | t }}">
+        <label for="gr-2-fl-2">
+          {{ 'exercises.filters.filter_group_2_filter_2' | t }}
+        </label>
+        <span class="filters__count" data-count="gr-2-cnt-2" >0</span>
+      </li>
+      <li class="filters__item filters__item--checkbox" data-handle="categoryShoulders">
+        <input type="checkbox" id="gr-2-fl-3" name="{{ 'exercises.filters.filter_group_2_filter_3' | t }}" value="{{ 'exercises.filters.filter_group_2_filter_3' | t }}">
+        <label for="gr-2-fl-3">
+          {{ 'exercises.filters.filter_group_2_filter_3' | t }}
+        </label>
+        <span class="filters__count" data-count="gr-2-cnt-3" >0</span>
+      </li>
+      <li class="filters__item filters__item--checkbox" data-handle="categoryLowerBack">
+        <input type="checkbox" id="gr-2-fl-4" name="{{ 'exercises.filters.filter_group_2_filter_4' | t }}" value="{{ 'exercises.filters.filter_group_2_filter_4' | t }}">
+        <label for="gr-2-fl-4">
+          {{ 'exercises.filters.filter_group_2_filter_4' | t }}
+        </label>
+        <span class="filters__count" data-count="gr-2-cnt-4" >0</span>
+      </li>
+    </ul>
+  </div>
+  <div class="filters__group" data-group="3">
+    {%- assign filter_group_3 = 'exercises.filters.filter_group_3' | t -%}
+    {% if filter_group_3 != blank %}
+      <h3 class="filters__group-title">{{ filter_group_3 }}</h3>
+    {% endif %}
+     <ul class="filters__list">
+      <li class="filters__item filters__item--checkbox" data-handle="AllGr3">
+        <input type="checkbox" id="gr-3-fl-1" name="{{ 'exercises.filters.filter_group_3_filter_1' | t }}" value="{{ 'exercises.filters.filter_group_3_filter_1' | t }}">
+        <label for="gr-3-fl-1">
+          {{ 'exercises.filters.filter_group_3_filter_1' | t }}
+        </label>
+        <span class="filters__count" data-count="gr-3-cnt-1" >0</span>
+      </li>
+      <li class="filters__item filters__item--checkbox" data-handle="activityTrengthening">
+        <input type="checkbox" id="gr-3-fl-2" name="{{ 'exercises.filters.filter_group_3_filter_2' | t }}" value="{{ 'exercises.filters.filter_group_3_filter_2' | t }}">
+        <label for="gr-3-fl-2">
+          {{ 'exercises.filters.filter_group_3_filter_2' | t }}
+        </label>
+        <span class="filters__count" data-count="gr-3-cnt-2" >0</span>
+      </li>
+      <li class="filters__item filters__item--checkbox" data-handle="activityStretching">
+        <input type="checkbox" id="gr-3-fl-3" name="{{ 'exercises.filters.filter_group_3_filter_3' | t }}" value="{{ 'exercises.filters.filter_group_3_filter_3' | t }}">
+        <label for="gr-3-fl-3">
+          {{ 'exercises.filters.filter_group_3_filter_3' | t }}
+        </label>
+        <span class="filters__count" data-count="gr-3-cnt-3" >0</span>
+      </li>
+    </ul>
+  </div>
+</div>

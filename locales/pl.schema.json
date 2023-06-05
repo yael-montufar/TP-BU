@@ -425,18 +425,6 @@
         "options__4": {
           "label": "Bardzo duży"
         }
-      },
-      "animation": {
-        "content": "Animacje",
-        "image_behavior": {
-          "options__1": {
-            "label": "Brak"
-          },
-          "options__2": {
-            "label": "Ruch otoczenia"
-          },
-          "label": "Zachowanie obrazu"
-        }
       }
     },
     "announcement-bar": {
@@ -902,9 +890,6 @@
           },
           "options__2": {
             "label": "Mega menu"
-          },
-          "options__3": {
-            "label": "Szuflada"
           }
         },
         "mobile_layout": {
@@ -918,6 +903,9 @@
           "options__2": {
             "label": "Lewa strona"
           }
+        },
+        "logo_header": {
+          "content": "Logo"
         },
         "logo_help": {
           "content": "Edytuj logo w [theme settings](/editor?context=theme&category=logo)."
@@ -936,24 +924,6 @@
           "options__4": {
             "label": "Zawsze, zmniejsz rozmiar logo"
           }
-        },
-        "header__3": {
-          "content": "Selektor kraju/regionu"
-        },
-        "header__4": {
-          "info": "Aby dodać kraj/region, przejdź do swoich [ustawień rynku.](/admin/settings/markets)"
-        },
-        "enable_country_selector": {
-          "label": "Włącz selektor kraju/regionu"
-        },
-        "header__5": {
-          "content": "Selektor języka"
-        },
-        "header__6": {
-          "info": "Aby dodać język, przejdź do swoich [ustawień języka.](/admin/settings/languages)"
-        },
-        "enable_language_selector": {
-          "label": "Włącz selektor języka"
         }
       }
     },
@@ -981,6 +951,9 @@
         },
         "image_overlay_opacity": {
           "label": "Nieprzezroczystość nakładki obrazu"
+        },
+        "header": {
+          "content": "Układ na urządzeniu mobilnym"
         },
         "show_text_below": {
           "label": "Pokaż kontener na urządzeniu mobilnym"
@@ -1054,9 +1027,6 @@
             "label": "Prawa strona"
           },
           "label": "Wyrównanie treści na urządzeniu mobilnym"
-        },
-        "mobile": {
-          "content": "Układ na urządzeniu mobilnym"
         }
       },
       "blocks": {
@@ -1614,10 +1584,6 @@
             "show_dynamic_checkout": {
               "label": "Pokaż dynamiczne przyciski realizacji zakupu",
               "info": "Korzystając z metod płatności dostępnych w Twoim sklepie, klienci widzą swoją preferowaną opcję, np. PayPal lub Apple Pay. [Dowiedz się więcej](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)"
-            },
-            "show_gift_card_recipient": {
-              "label": "Pokaż formularz danych odbiorcy dla produktów typu karta prezentowa",
-              "info": "Produkty w postaci kart prezentowych mogą być wysyłane bezpośrednio do odbiorcy wraz z osobistą wiadomością."
             }
           }
         },
@@ -2377,7 +2343,8 @@
         },
         "video_url": {
           "label": "URL",
-          "info": "Użyj adresu URL do YouTube lub Vimeo"
+          "placeholder": "Użyj adresu URL do YouTube lub Vimeo",
+          "info": "Film jest odtwarzany na stronie."
         },
         "description": {
           "label": "Alternatywny tekst filmu",
@@ -2389,24 +2356,6 @@
         },
         "full_width": {
           "label": "Zrób sekcję na całą szerokość"
-        },
-        "video": {
-          "label": "Film"
-        },
-        "enable_video_looping": {
-          "label": "Odtwarzaj film w pętli"
-        },
-        "header__1": {
-          "content": "Film hostowany przez Shopify"
-        },
-        "header__2": {
-          "content": "Lub osadź film z adresu URL"
-        },
-        "header__3": {
-          "content": "Styl"
-        },
-        "paragraph": {
-          "content": "Pokazuje, gdy nie wybrano żadnego filmu hostowanego przez Shopify."
         }
       },
       "presets": {
@@ -2465,10 +2414,6 @@
             "show_dynamic_checkout": {
               "label": "Pokaż dynamiczne przyciski realizacji zakupu",
               "info": "Korzystając z metod płatności dostępnych w Twoim sklepie, klienci widzą swoją preferowaną opcję, np. PayPal lub Apple Pay. [Dowiedz się więcej](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)"
-            },
-            "show_gift_card_recipient": {
-              "label": "Pokaż formularz odbiorcy dla produktów typu karta prezentowa",
-              "info": "Po włączeniu, produkty w postaci kart prezentowych mogą być opcjonalnie wysyłane do odbiorcy z osobistą wiadomością."
             }
           }
         },

@@ -1,0 +1,41 @@
+{%- comment -%}
+  CUSTOM
+    Target stylesheets to corresponding templates
+{%- endcomment -%}
+
+{%- if template contains 'product' -%}
+  {%- comment -%} All Product Pages {%- endcomment -%}
+  {{ 'custom_-_product.css' | asset_url | stylesheet_tag }}
+  {{ 'custom_-_kaching.css' | asset_url | stylesheet_tag }}
+  <script type="lazyload2" data-src="{{ 'custom_-_product.js' | asset_url }}"></script>
+{%- endif -%}
+
+{%- if template contains 'collection' -%}
+  {%- comment -%} All Collection Pages {%- endcomment -%}
+  {{ 'custom_-_quick-add.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
+
+{%- case template -%}
+  {%- when 'index' -%}
+    {%- comment -%} Home Page {%- endcomment -%}
+    {{ 'custom_-_home.css' | asset_url | stylesheet_tag }}
+
+  {%- when 'product' -%}
+    {%- comment -%} Default Product Template {%- endcomment -%}
+
+  {%- when 'product.trigger-point-rocker', 'product.lifted-lumbar' -%}
+    {%- comment -%} TPR & LL Product Templates {%- endcomment -%}
+
+  {%- when 'page.how-to-use-trigger-point-rocker' -%}
+    {%- comment -%} How-To-Use Page {%- endcomment -%}
+    {{ 'custom_-_how-to-use.css' | asset_url | stylesheet_tag }}
+    {{ 'custom_-_how-to-use.js' | asset_url | script_tag }}
+
+  {%- when 'page.exercises', 'page.exercise' -%}
+    {%- comment -%} Exercises & Exercise Page Templates {%- endcomment -%}
+    {{ 'custom_-_exercises.css' | asset_url | stylesheet_tag }}
+    <script type="lazyload2" data-src="{{ 'custom.js' | asset_url }}"></script>
+
+  {%- else -%}
+    {%- comment -%} Everything Else {%- endcomment -%}
+{%- endcase -%}

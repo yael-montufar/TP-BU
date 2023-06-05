@@ -29,20 +29,23 @@ class CartNotification extends HTMLElement {
 
     removeTrapFocus(this.activeElement);
   }
-
+  
+  //CUSTOM
   renderContents(parsedState) {
     loadEgCartDrawer(true);
   }
-  // renderContents(parsedState) {
-  //     this.cartItemKey = parsedState.key;
-  //     this.getSectionsToRender().forEach((section => {
-  //       document.getElementById(section.id).innerHTML =
-  //         this.getSectionInnerHTML(parsedState.sections[section.id], section.selector);
-  //     }));
+  /*
+  renderContents(parsedState) {
+      this.cartItemKey = parsedState.key;
+      this.getSectionsToRender().forEach((section => {
+        document.getElementById(section.id).innerHTML =
+          this.getSectionInnerHTML(parsedState.sections[section.id], section.selector);
+      }));
 
-  //     if (this.header) this.header.reveal();
-  //     this.open();
-  // }
+      if (this.header) this.header.reveal();
+      this.open();
+  }
+  */
 
   getSectionsToRender() {
     return [

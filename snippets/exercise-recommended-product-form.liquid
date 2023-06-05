@@ -1,0 +1,210 @@
+{% if section.settings.show_payment_button %}
+  {% assign show_payment_button = true %}
+{% elsif show_payment_button_quickshop %}
+  {% assign show_payment_button = true %}
+{% else %}
+  {% assign show_payment_button = false %}
+{% endif %}
+
+{% assign variant = product.selected_or_first_available_variant %}
+
+{%- assign checkout_url = '/checkout' -%}
+{% for locale in shop.enabled_locales %}
+  {% if locale.primary == true %}
+    {%- assign defaultLocale = locale.iso_code -%}
+    {% if defaultLocale != request.locale.iso_code %}
+      {%- assign checkout_url = request.locale.iso_code | append: '/checkout' -%}
+    {% endif %}
+  {% endif %}
+{% endfor %}
+
+<div
+  class="product_form init smart-payment-button--{{ show_payment_button }} {% if product.variants.size > 1 or product.options.size > 1 %}product_form_options{% endif %} product_form--{{ settings.product_form_style }}"
+  id="product-form-{{ product.id }}"
+  data-product-form
+  data-options-size="{{ product.options.size }}"
+  data-money-format="{{ shop.money_format | strip_html }}"
+  data-shop-currency="{{ shop.currency }}"
+  data-select-id="product-select-{{ product.id }}{{ product-form }}{{ section.id }}{{ block.id }}"
+  data-enable-state="{% if template contains 'product' %}true{% else %}false{% endif %}"
+  data-product="{{ product | json | escape }}"
+  {% if settings.limit_quantity or settings.display_inventory_left %}
+    data-variant-inventory="[{%- for v in product.variants -%}{"id":{{v.id}},"inventory_quantity":{{v.inventory_quantity}},"inventory_management":"{{v.inventory_management}}","inventory_policy":"{{v.inventory_policy}}"}{% if forloop.last == false %},{% endif %}{%- endfor -%}]"
+  {% endif %}
+  data-product-id="{{ product.id }}"
+>
+  {% form 'product', product %}
+    {% if product.options.size > 1 %}
+      <div class="select hide_p">
+        <select
+          id="product-select-{{ product.id }}{{ product-form }}{{ section.id }}{{ block.id }}"
+          name="id"
+          class="multi_select"
+          data-variants
+        >
+          {% for v in product.variants %}
+            <option
+              {% if v == variant %}
+                selected="selected"
+              {% endif %}
+              value="{{ v.id }}"
+              data-featured-image="{{ v.featured_media }}"
+              data-image="{{ v.featured_media | product_img_url: '600x' }}"
+              data-sku="{{ v.sku }}"
+            >
+              {{ v.title }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+    {% elsif product.options.size == 1
+      and product.variants.size > 1
+      or product.options.size == 1
+      and product.options[0] != 'Title'
+    %}
+      <div class="select hide_p">
+        <label>{{ product.options[0] }}</label>
+        <select
+          id="product-select-{{ product.id }}{{ product-form }}{{ section.id }}{{ block.id }}"
+          name="id"
+          data-variants
+        >
+          {% for v in product.variants %}
+            <option
+              {% if v == variant %}
+                selected="selected"
+              {% endif %}
+              value="{{ v.id }}"
+              data-featured-image="{{ v.featured_media }}"
+              data-image="{{ v.featured_media | product_img_url: '600x' }}"
+              data-sku="{{ v.sku }}"
+            >
+              {{ v.title }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+    {% else %}
+      <input type="hidden" name="id" value="{{ variant.id }}">
+    {% endif %}
+
+    {% if settings.product_form_style == 'swatches'
+      and product.variants.size > 1
+      or settings.product_form_style == 'swatches'
+      and product.options[0] != 'Title'
+    %}
+      <div class="swatch_options hide_p">
+        {% for option in product.options %}
+          {% render 'product-swatch', option: option, product: product %}
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <div class="purchase-details">
+      <div
+        style=""
+        class="purchase-details__buttons purchase-details__spb--false {% if product.available == false %}product-is-unavailable{% endif %}"
+      >
+        {% capture add_to_cart_label %}
+          {% if collection_handles contains 'pre-order' %}
+            {{ 'collections.general.pre_order' | t }}
+          {% else %}
+            {{ 'products.product.add_to_cart' | t }}
+          {% endif %}
+        {% endcapture %}
+
+        <div class="qty_btn_p ">
+          <div class="purchase-details__quantity product-quantity-box ">
+            <input
+              style="display: none;"
+              type="number"
+              min="1"
+              class="quantity qty_h"
+              name="quantity"
+              id="quantity"
+              value="1"
+              max="1"
+            >
+
+<!--             <div style="display: none;" class="cart_btn_p">
+              <button
+                type="{% if settings.cart_action == 'ajax' %}button{% else %}submit{% endif %}"
+                name="add"
+                class="
+                  add_to_cart add_to_cart_btn_p
+                  global-button
+                  {% if show_payment_button %}
+                    global-button--secondary
+                  {% else %}
+                    global-button--primary
+                  {% endif %}
+                  {% if settings.cart_action == 'ajax' %}
+                    ajax-submit
+                  {% endif %}
+                  {% if product.available == false %}
+                    disabled
+                  {% endif %}
+                "
+                data-label="{{ add_to_cart_label | json }}"
+              >
+                <span class="text">
+                  {% if product.available %}{{ add_to_cart_label }}{% else %}{{ settings.sold_out_text }}{% endif %}
+                </span>
+                <svg x="0px" y="0px" width="32px" height="32px" viewBox="0 0 32 32" class="checkmark">
+                  <path fill="none" stroke-width="2" stroke-linecap="square" stroke-miterlimit="10" d="M9,17l3.9,3.9c0.1,0.1,0.2,0.1,0.3,0L23,11"/>
+                </svg>
+
+                <div class="prooduct_plus_icon">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7 0.25C7.41421 0.25 7.75 0.585786 7.75 1V6.25H13C13.4142 6.25 13.75 6.58579 13.75 7C13.75 7.41421 13.4142 7.75 13 7.75H7.75V13C7.75 13.4142 7.41421 13.75 7 13.75C6.58579 13.75 6.25 13.4142 6.25 13V7.75H1C0.585786 7.75 0.25 7.41421 0.25 7C0.25 6.58579 0.585786 6.25 1 6.25H6.25V1C6.25 0.585786 6.58579 0.25 7 0.25Z" fill="#2E4261"/>
+                  </svg>
+                </div>
+              </button>
+            </div> -->
+
+<!--             <span style="width: 100%; background-color: #F8F8F8 !important; font-size: .875rem; color: #2E4261;">
+              {% if product.available %}
+                {{ add_to_cart_label }}
+              {% else %}
+                {{ settings.sold_out_text }}
+              {% endif %}
+            </span> -->
+
+            <button
+            id = "ProductSubmitButton-{{ section_id }}"
+            type="submit"
+            name="add"
+            class="product-form__submit button button--full-width {% if block.settings.show_dynamic_checkout %}button--secondary{% else %}button--primary{% endif %}"
+            {% if product.selected_or_first_available_variant.available == false or quantity_rule_soldout %}
+              disabled
+            {% endif %}
+          >
+            <span>
+              {%- if product.selected_or_first_available_variant.available == false or quantity_rule_soldout -%}
+                {{ 'products.product.sold_out' | t }}
+              {%- else -%}
+                {{ 'products.product.add_to_cart' | t }}
+              {%- endif -%}
+            </span>
+            <div class="loading-overlay__spinner hidden">
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                class="spinner"
+                viewBox="0 0 66 66"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+              </svg>
+            </div>
+          </button>
+
+            <span class="ss-icon product-plus js-change-quantity" data-func="plus" data-recommended="true">
+              <span class="icon-plus"></span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endform %}
+</div>

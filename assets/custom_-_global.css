@@ -1,0 +1,260 @@
+@media screen and (min-width: 990px) {
+  .header--middle-left {
+    grid-template-columns: auto auto auto;
+  }
+}
+
+/* EXERCISE PAGE MAIN CONTENT Z INDEX */
+#MainContent {
+  position: relative;
+  z-index: 0;
+}
+
+@media (max-width: 575px) {
+  section.exercises-banner {
+    margin-top: 0px;
+  }
+}
+
+/* FOOTER */
+.credits.center,
+.al-footer .footer-menu ul,
+.al-footer p.credits.center {
+  margin: 0px !important;
+}
+
+footer.footer.center.al-footer > section {
+  padding-bottom: 60px;
+}
+
+.footer_menu ul {
+  list-style: none;
+}
+
+.footer_menu p:after {
+  color: white;
+}
+
+.credits.center {
+  color: white;
+}
+.credits.center a {
+  color: white;
+}
+.credits.center a:visited {
+  color: white;
+}
+
+/* HEADER LOGO SIZE */
+.header__heading-logo {
+    max-width: 14rem !important;
+}
+
+/* EXERCISE PRODUCT RECOMMENDATION LAYOUT */
+@media (max-width: 1120px) {
+    .exercises-recommendations__gallery-position .gallery-cell {
+    width: calc(40% - 12px) !important;
+  }
+}
+@media (max-width: 575px) {
+    .exercises-recommendations__gallery-position .gallery-cell {
+    width: calc(80% - 12px) !important;
+  }
+}
+.exercises-recommendations .gallery-cell img {
+    max-height: 220px;
+    width: 100%;
+    object-fit: contain;
+}
+img[data-sizes=auto].lazyloaded {
+    height: auto;
+}
+.transition--color.lazyloaded {
+    opacity: 1;
+}
+.thumbnail img {
+    max-width: 100%;
+    height: auto;
+}
+img[data-sizes=auto], img[data-sizes="100vw"] {
+    display: block;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.transition--color {
+    opacity: 0;
+    transition: opacity .2s ease-in;
+}
+
+/* TESTIMONIAL IMAGES */
+#DP--template--16671042732244__94b41486-95d5-43a6-bf96-e82c97d6c492 .dsgn-pck__image {
+  width: 10rem !important;
+}
+#DP--template--16671042732244__94b41486-95d5-43a6-bf96-e82c97d6c492 
+.dsgn-pck__image--circle {
+  border: 4px solid #486fcc;
+  position: relative;
+}
+#DP--template--16671042732244__94b41486-95d5-43a6-bf96-e82c97d6c492 
+.dsgn-pck__image--circle:after{
+  position: absolute;
+  background-color: transparent;
+  content: "";
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 2px solid white;
+  border-radius: 50%;
+}
+
+.is-flex {
+    display: flex;
+}
+/* HOME PAGE/ ---------------------------------------------------------------- */
+
+/**
+* [1] - Home page video fade effect
+*/
+
+#DP--template--16671042732244__17c35874-833f-4dfd-9870-bd0cf56b7250
+.dsgn-pck__background-image::before {
+  background: linear-gradient(
+    to top,
+    rgba(10, 26, 66, 1) 0%,
+    rgba(255, 255, 255, 0) 75%);
+}
+
+#DP--template--16671042732244__95825502-6453-4e15-9289-a8bd318b584d
+.dsgn-pck__background-image::before {
+  background: linear-gradient(
+    to top,
+    rgba(10, 26, 66, 1) 0%,
+    rgba(255, 255, 255, 0) 75%);
+}
+
+@media screen and (min-width: 750px) {
+  #DP--template--16671042732244__17c35874-833f-4dfd-9870-bd0cf56b7250 {
+    display: none !important;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  #DP--template--16671042732244__95825502-6453-4e15-9289-a8bd318b584d {
+    display: none !important;
+  }
+  #DP--template--16671042732244__12043ab9-dd62-484b-9c65-200348c9440a .dsgn-pck__text p {
+    font-size: 12px !important;
+  }
+}
+
+/* ---------------------------------------------------------------- /HOME PAGE */
+
+
+
+
+
+/* PRODUCT PAGE/ ---------------------------------------------------------------- */
+
+/**
+* [1] - Video embed responsive styles
+* [2] - Custom Rating layout style
+*/
+
+.responsive-video { /* [2] */
+  aspect-ratio: 16/9;
+  width: 100%;
+  height: auto;
+  object-fit: 'cover';
+}
+
+.custom-rating { /* [2] */
+  display: inline-block;
+  margin: 0px 8px;
+}
+/* ---------------------------------------------------------------- /PRODUCT PAGE */
+
+.dsgn-pck__text-badge {
+  background-color: black;
+  color: red;
+}
+
+.accordion__content.rte .metafield-rich_text_field ol { 
+    counter-reset: item;
+    list-style-type: none;
+    list-style-position: outside;
+}
+.accordion__content.rte .metafield-rich_text_field ol li { display: block; }
+.accordion__content.rte .metafield-rich_text_field ol li:before { 
+    content: counter(item) "  "; 
+    counter-increment: item;
+    font-size: 1.5rem;
+    background-color: #5472c0;
+    width: 3rem;
+    height: 3rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    color: white;
+    display: inline-block;
+    text-align: center;
+    margin-right: 1rem;
+}
+
+.accordion__content.rte .metafield-rich_text_field ol li {
+    text-indent: -40px;
+    transform: translate(40px, 10px);
+    margin-bottom: 2.5rem;
+}
+
+.accordion__content.rte .metafield-rich_text_field ol li::before {
+    text-indent: 0px;
+}
+
+
+/* MEGA MENU/ ---------------------------------------------------------------- */
+#MegaMenu-Content-1 .mega-menu__list {
+    grid-template-columns: 10rem 10rem 1fr !important;
+}
+#MegaMenu-Content-1 .mega-menu__list li:last-of-type {
+  display: grid;
+}
+#MegaMenu-Content-1 .mega-menu__list li:last-of-type ul {
+    grid-template-columns: repeat(3,minmax(0,1fr));
+    display: grid;
+    gap: 10rem;
+}
+
+#MegaMenu-Content-4 ul {
+    grid-template-columns: repeat(3, minmax(0px, 1fr)) !important;
+    display: grid;
+    gap: 10rem;
+}
+
+ul.mega-menu__list li a div {
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.header__icon--search {
+  display: none;
+}
+/* ---------------------------------------------------------------- /MEGA MENU */
+
+.dsgn-pck__faq.dsgn-pck__section, .al-footer {
+    background: url(https://cdn.shopify.com/s/files/1/0417/9781/2373/files/Mask_Group.png?v=1631965879) !important;
+    background-size: 1000% 100% !important;
+    background-repeat: no-repeat !important;
+    background-position: unset;
+}
+
+.payment_methods {
+  padding-top: 4rem;
+}
+/* DEFAULT DAWN CART DRAWER/ ---------------------------------------------------------------- */
+cart-drawer.drawer {
+  display: none !important;
+}
+/* ---------------------------------------------------------------- /DEFAULT DAWN CART DRAWER */

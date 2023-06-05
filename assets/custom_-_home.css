@@ -1,0 +1,38 @@
+.dsgn-pck__image--circle {
+  border: 4px solid #486fcc;
+  position: relative;
+  width: 10rem !important;
+}
+
+.dsgn-pck__image--circle:after {
+  position: absolute;
+  background-color: transparent;
+  content: "";
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 2px solid white;
+  border-radius: 50%;
+}
+
+.rating-star:before,
+.spr-icon-star:before,
+.dsgn-pck__star path
+{
+  --color-icon: #496fcf;
+  color: #496fcf;
+  fill: currentcolor !important;
+}
+
+#MainContent {
+  overflow-x: hidden;
+}
+
+#DP--template--16695393583316__12043ab9-dd62-484b-9c65-200348c9440a .dsgn-pck__sizer {
+  padding-bottom: 0px !important;
+}
+
+#DP--template--16695393583316__bd4ad5c6-49ef-4b10-a6f3-f7f6fa154acb {
+  padding-bottom: 50px !important;
+}

@@ -40,9 +40,9 @@
       "reset": "Borrar término de búsqueda"
     },
     "cart": {
-      "view": "Ver carrito ({{ count }})",
+      "view": "Ver mi carrito ({{ count }})",
       "item_added": "Artículo agregado a tu carrito",
-      "view_empty_cart": "Ver carrito"
+      "view_empty_cart": "Ver mi carrito"
     },
     "share": {
       "copy_to_clipboard": "Copiar enlace",
@@ -452,30 +452,17 @@
   },
   "gift_cards": {
     "issued": {
-      "title": "Este es el saldo de tu tarjeta de regalo de {{ value }} para {{ shop }}.",
+      "title": "¡Aquí está tu tarjeta de regalo de {{ value }} para {{ shop }}!",
       "subtext": "Tu tarjeta de regalo",
       "gift_card_code": "Código de tarjeta de regalo",
-      "shop_link": "Visitar la tienda online",
+      "shop_link": "Seguir comprando",
+      "remaining_html": "Saldo {{ balance }}",
       "add_to_apple_wallet": "Agregar a Apple Wallet",
       "qr_image_alt": "Código QR: escanea para canjear la tarjeta de regalo",
-      "copy_code": "Copiar el código de la tarjeta de regalo",
+      "copy_code": "Copiar código",
       "expired": "Vencido",
       "copy_code_success": "El código se copió correctamente",
-      "how_to_use_gift_card": "Usar el código de la tarjeta de regalo online o el código QR en la tienda",
-      "expiration_date": "Caduca el {{ expires_on }}"
-    }
-  },
-  "recipient": {
-    "form": {
-      "checkbox": "Quiero enviar esto como un regalo.",
-      "email_label": "Correo electrónico de la persona destinataria",
-      "email_label_optional": "Correo electrónico de la persona destinataria (opcional)",
-      "email": "Correo electrónico",
-      "name_label": "Nombre de la persona destinataria (opcional)",
-      "name": "Nombre",
-      "message_label": "Mensaje (opcional)",
-      "message": "Mensaje",
-      "max_characters": "{{ max_chars }} caracteres máx."
+      "print_gift_card": "Imprimir"
     }
   }
 }

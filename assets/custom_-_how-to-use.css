@@ -1,0 +1,111 @@
+:root {
+  /* --custom_resource__target */
+  --custom_product__primary-heading-color: #2E4261;
+  --custom_product__secondary-heading-color: #4F5E7A;
+  --custom_product__terciary-heading-color: #717C93;
+}
+
+html {
+   scroll-padding-top: 100px;
+}
+
+.accordion:after {
+    content: "";
+    background: url(https://cdn.shopify.com/s/files/1/0417/9781/2373/files/Union-plus.svg?v=1634740006) no-repeat;
+    width: 14px;
+    height: 14px;
+    display: block;
+    color: #2e4261;
+    font-weight: 700;
+    float: right;
+    margin-left: 5px;
+}
+
+#sidebar_p {
+    width: 100%;
+    background-color: white;
+    height: fit-content;
+    position: sticky;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    top: 10rem;
+    display: none;
+}
+
+
+
+.d_div {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+@media (min-width: 575px) {
+  #sidebar_p {
+      width: fit-content;
+      height: fit-content;
+      display: block;
+  }
+  .video-section {
+      padding-left: 8rem;
+      padding-right: 8rem;
+  }
+  .d_div {
+  width: 50%;
+  margin-left: 10rem;
+}
+}
+
+
+.detail_btn {
+    margin: 0px 0px 0px 0px;
+}
+
+
+.aj-side-btn {
+    width: 20rem;
+}
+
+a {
+  text-decoration: none;
+}
+
+.number_bdr {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+  
+    width: 48px;
+    height: 48px;
+    border: 1px solid #FF7D54;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    border-radius: 50%;
+    line-height: 48px;
+    color: #FF7D54;
+}
+
+/* Select all heading elements (h1) that are not decendants of the .dsgn-pck__faq & #eg-sticky-atc elements */
+:where(h1):not(.dsgn-pck__faq :is(h1), #eg-sticky-atc :is(h1))
+{
+  color: var(--custom_product__primary-heading-color) !important;
+/*   color: red !important; */
+}
+
+/* Select all heading elements (h2) that are not decendants of the .dsgn-pck__faq & #eg-sticky-atc elements */
+:where(h2):not(.dsgn-pck__faq :is(h2), #eg-sticky-atc :is(h2))
+{
+  color: var(--custom_product__secondary-heading-color) !important;
+/*   color: purple !important; */
+}
+
+/* Select all heading elements (h3-h6) that are not decendants of the .dsgn-pck__faq & #eg-sticky-atc elements */
+:where(h3,h4,h5,h6):not(.dsgn-pck__faq :is(h3,h4,h5,h6), #eg-sticky-atc :is(h3,h4,h5,h6))
+{
+  color: var(--custom_product__terciary-heading-color) !important;
+/*   color: blue !important; */
+}

@@ -1,0 +1,48 @@
+{% comment %}
+  ** Custom HTML - dynamic **
+  - Draggable section
+{% endcomment %}
+
+{% comment %} Assign object as block or section {% endcomment %}
+{% if type == 'block' %}
+  {%- assign object = block -%}
+{% else %}
+  {%- assign object = section -%}
+{% endif %}
+
+{%- assign id = object.id -%}
+
+{% comment %} Content settings {% endcomment %}
+{%- assign custom_html = object.settings.custom_html -%}
+{% comment %} End content settings {% endcomment %}
+
+{% comment %} Advanced {% endcomment %}
+{%- assign css_class = object.settings.css_class -%}
+{%- assign custom_css = object.settings.custom_css -%}
+
+{% comment %} Section specific CSS {% endcomment %}
+
+{% style %}
+  {%- if css != blank -%}
+    {%- assign declarations = custom_css | split: '}' -%}
+    {%- for declaration in declarations -%}
+      {%- if declaration != '' -%}
+        #shopify-section-{{ id }} {{ declaration }} }
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+{% endstyle %}
+
+<section class="section {{ css_class }}">
+  <div class="container">
+    <div class="one-whole column custom-html-container">
+      {% if custom_html != blank %}
+        {{ custom_html | replace: '<img src=', "<img class='lazy2' data-src=" }}
+      {% else %}
+        <p class="center">
+          {{ 'homepage.onboarding.no_content' | t }}
+        </p>
+      {% endif %}
+    </div>
+  </div>
+</section>

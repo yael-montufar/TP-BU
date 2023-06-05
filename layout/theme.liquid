@@ -1,68 +1,24 @@
 <!doctype html>
 <html class="no-js" lang="{{ request.locale.iso_code }}">
-  <head>{% comment %}START Partytown by Builder{% endcomment %}
-<script>
-  partytown = {
-    debug: false,
-    lib: "/apps/builder/partytown/0.6.4/",
-    forward: [],
-    resolveUrl: function (url) {
-      if ([].some((hostname)=>url.hostname.toLowerCase().includes(hostname))) {
-        var proxyUrl = new URL("https://cdn.builder.io/api/v1/proxy-api?apiKey=3497bf249dd3426fbd784e4a34743a4c");
-        proxyUrl.searchParams.append('url', url.href);
-        return proxyUrl;
-      }
-      return url;
-    },
-    swPath: "partytown-sw.js?apiKey=3497bf249dd3426fbd784e4a34743a4c",
-  };
-</script>
-<script src="/apps/builder/partytown/0.6.4/partytown.js?apiKey=3497bf249dd3426fbd784e4a34743a4c"></script>
-<script>
-  function isAcceptableScriptTagType(node) {
-    var javaScriptNodeTypes = ["application/javascript", "text/javascript"];
-    return (!node.type || javaScriptNodeTypes.includes(node.type))
-  }
-  var urlSearchParams = new URLSearchParams(window.location.search);
-  var partytownConfig = (urlSearchParams.get("partytown") || "").toLowerCase();
-  if (!partytownConfig) {
-    // Set default partytownConfig to default if user has enabled for production users
-    partytownConfig = false ? "default" : "none";
-  }
-
-  var patchedFn = {
-    apply(target, ctx, args) {
-      if (args[0].tagName === "SCRIPT" && isAcceptableScriptTagType(args[0])) {
-        if (partytownConfig === "all") {
-          // Enable Partytown for ALL plugins
-          args[0].type = "text/partytown";
-          console.debug("partytown: all");
-        } else if (partytownConfig === "default") {
-          console.debug("partytown: default", args[0].src);
-          const isAppVerified = [].find((url)=>{
-            return (args[0].src || "").includes(url)
-          })
-          if(isAppVerified) {
-            args[0].type = "text/partytown";
-            console.debug("partytown: default");
-          }
-        } else {
-          // Do nothing if partytownConfig is niether 'all' nor 'default'
-          console.debug("partytown: none");
-        }
-      }
-      return Reflect.apply(...arguments);
-    }
-  };
-  Node.prototype.appendChild = new Proxy(Node.prototype.appendChild, patchedFn);
-  Node.prototype.insertBefore = new Proxy(Node.prototype.insertBefore, patchedFn);
-
+  <head>
+    
+  <!-- Start of triggerpointsystems Zendesk Widget script -->
+    <script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=435b210b-9de9-425c-88c3-d66ded54ecdc"> </script>
+  <!-- End of triggerpointsystems Zendesk Widget script -->
+    
+  </script>
+  {% comment %}END Partytown by Builder{% endcomment %}
+  {% if template contains 'builder' %}
+    <!-- anti-flicker snippet (recommended)  -->
+    <style>.async-hide { opacity: 0 !important} </style>
+    <script>(function(a,s,y,n,c,h,i,d,e){s.className+=' '+y;h.start=1*new Date;
+    h.end=i=function(){s.className=s.className.replace(RegExp(' ?'+y),'')};
+    (a[n]=a[n]||[]).hide=h;setTimeout(function(){i();h.end=null},c);h.timeout=c;
+    })(window,document.documentElement,'async-hide','dataLayer',5000,
+    {'OPT-N8RGFW9':true});</script>
+  {% endif %}
   
-
-</script>
-{% comment %}END Partytown by Builder{% endcomment %}
-    {%- comment -%} <CUSTOM_MOD> {%- endcomment -%}
-    {%- render 'c4m_-_multi-controller', controller_type: 'head-top' -%}
+  <script async src="https://www.googleoptimize.com/optimize.js?id=OPT-N8RGFW9"></script>
     
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -283,8 +239,11 @@
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
 
-    {%- comment -%} <CUSTOM_MOD> {%- endcomment -%}
-    {%- render 'c4m_-_multi-controller', controller_type: 'style' -%}
+    <!-- CUSTOM -->
+    {{ 'custom_-_global.css' | asset_url | stylesheet_tag }}
+    {{ 'custom_-_old.css' | asset_url | stylesheet_tag }}
+<!--     {%- render 'custom_-_targeted-template-styles-test' -%} -->
+    {%- render 'custom_-_targeted-template-styles' -%}
 
     {%- unless settings.type_body_font.system? -%}
       <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
@@ -294,29 +253,43 @@
     {%- endunless -%}
 
     {%- if settings.predictive_search_enabled -%}
-      <link rel="stylesheet" href="{{ 'component-predictive-search.css' | asset_url }}" media="print" onload="this.media='all'">
+      <link
+        rel="stylesheet"
+        href="{{ 'component-predictive-search.css' | asset_url }}"
+        media="print"
+        onload="this.media='all'"
+      >
     {%- endif -%}
 
-    <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
-    if (Shopify.designMode) {
-      document.documentElement.classList.add('shopify-design-mode');
-    }
+    <script>
+      document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+      if (Shopify.designMode) {
+        document.documentElement.classList.add('shopify-design-mode');
+      }
     </script>
-    
-    {%- comment -%} <CUSTOM_MOD> {%- endcomment -%}
-    {%- render 'c4m_-_multi-controller', controller_type: 'head-bottom' -%}
-    
-  {% render 'builder-head' %}
+    <link rel="preload" href="{{ 'design-pack-styles.css' | asset_url }}" as="style">
+    {{ 'design-pack-styles.css' | asset_url | stylesheet_tag }}
 
-{% render 'gsf-conversion-pixels' %}
-{% if request.design_mode %}
-<script async src="https://cdn.builder.io/js/webcomponents"></script>
-{% endif %}
-        </head>
+    <!-- CUSTOM -->
+    <script
+      src="https://code.jquery.com/jquery-3.6.4.slim.min.js"
+      integrity="sha256-a2yjHM4jnF9f54xUQakjZGaqYs/V1CYvWpoqZzC2/Bw="
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      data-href="https://unpkg.com/iframe-lightbox@latest/css/iframe-lightbox.css"
+    >
+    <script
+      type="lazyload2"
+      data-src="https://unpkg.com/iframe-lightbox@latest/js/iframe-lightbox.js"
+    ></script>
+  {% render 'builder-head' %}
+</head>
 
   <body class="gradient">
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
-      {{ "accessibility.skip_to_text" | t }}
+      {{ 'accessibility.skip_to_text' | t }}
     </a>
 
     {%- if settings.cart_type == 'drawer' -%}
@@ -337,6 +310,8 @@
     </ul>
 
     <script>
+      
+      
       window.shopUrl = '{{ request.origin }}';
       window.routes = {
         cart_add_url: '{{ routes.cart_add_url }}',
@@ -364,24 +339,19 @@
         pauseSlideshow: `{{ 'sections.slideshow.pause_slideshow' | t }}`,
         playSlideshow: `{{ 'sections.slideshow.play_slideshow' | t }}`,
       }
+
+
     </script>
 
     {%- if settings.predictive_search_enabled -%}
       <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
 
-    {%- comment -%} <CUSTOM_MOD> {%- endcomment -%}
-    {%- render 'c4m_-_multi-controller', controller_type: 'body-bottom' -%}
-    
+    <script src="{{ 'eg-megamenu-image.js' | asset_url }}" defer="defer"></script>
+
+    <!-- CUSTOM -->
+    {{ 'custom_-_optimization.js' | asset_url | script_tag }}
   
-  
- 
-  
- 
-  
- 
-  
- 
  {% render 'simply-insurance' %} 
  </body>
 </html>

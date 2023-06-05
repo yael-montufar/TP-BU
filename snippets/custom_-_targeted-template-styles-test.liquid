@@ -1,0 +1,31 @@
+{%- comment -%}
+  CUSTOM
+    visually verify that a specific template is being targeted by changing the sticky-header background color.
+{%- endcomment -%}
+
+{%- style -%}
+  sticky-header {
+    {%- if template contains 'product' -%} /* All Product Pages */
+      background: pink !important;
+    {%- endif -%}
+
+    {%- if template contains 'collection' -%} /* All Collection Pages */
+      background: purple !important;
+    {%- endif -%}
+
+    {%- case template -%}
+    {%- when 'index' -%} /* Home Page */
+      background: red !important;
+    {%- when 'product' -%} /* Default Product Template */
+      background: blue !important;
+    {%- when 'product.trigger-point-rocker' or 'product.lifted-lumbar' -%} /* TPR & LL Product Templates */
+      background: magenta !important;
+    {%- when 'page.exercises' or 'page.exercise' -%} /* TPR & LL Product Templates */
+      background: cyan !important;
+    {%- when 'page.how-to-use-trigger-point-rocker' -%} /* How-To-Use Page */
+      background: green !important;
+    {%- else -%} /* Everything Else */
+      background: yellow;
+    {%- endcase -%}
+  }
+{%- endstyle -%}

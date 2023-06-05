@@ -1,0 +1,201 @@
+<div class="exercises-container">
+  <div class="exercise-page">
+    <div>
+      <a class="exercise-page__back-link" href="{{- section.settings.url-back-link -}}">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M12.3738 5.12627C12.7643 5.5168 12.7643 6.14996 12.3738 6.54048L5.91423 13H24.5C25.0523 13 25.5 13.4477 25.5 14C25.5 14.5522 25.0523 15 24.5 15H5.91421L12.3738 21.4595C12.7643 21.85 12.7643 22.4832 12.3738 22.8737C11.9832 23.2643 11.3501 23.2643 10.9596 22.8737L2.79289 14.7071C2.60536 14.5195 2.5 14.2652 2.5 14C2.5 13.7347 2.60536 13.4804 2.7929 13.2928L10.9596 5.12626C11.3501 4.73574 11.9833 4.73574 12.3738 5.12627Z" fill="#2E4261"/>
+        </svg>
+        {{- section.settings.back-link -}}</a>
+    </div>
+    <div class="exercise-page__position is-flex">
+      <div class="exercise-page__video">
+        <div class="how-works-block__video-position" style="background-image: url('{{ page.metafields.exercise.video_img.value | img_url: "575x" }}')">
+          <a href="{{ page.metafields.exercise.video.value }}" class="iframe-lightbox-link how-works-block__play d-flex flex-column align-items-center">
+            <div id="play-button" class="play-button">
+              <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g filter="url(#filter0_b_830_6242)">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M40 80C62.0914 80 80 62.0914 80 40C80 17.9086 62.0914 0 40 0C17.9086 0 0 17.9086 0 40C0 62.0914 17.9086 80 40 80ZM41.6899 37.0239L36.6669 34.1667V39.9271V45.6875L41.6899 42.7842L46.6669 39.9271L41.6899 37.0239Z" fill="white" fill-opacity="0.2"/>
+                </g>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M36.667 34.1667L41.69 37.0239L46.667 39.9271L41.69 42.7843L36.667 45.6875V39.9271V34.1667Z" fill="#FF7D54"/>
+                <g filter="url(#filter1_d_830_6242)">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M40 60C51.0457 60 60 51.0457 60 40C60 28.9543 51.0457 20 40 20C28.9543 20 20 28.9543 20 40C20 51.0457 28.9543 60 40 60ZM41.6899 37.0239L36.6669 34.1667V39.9271V45.6875L41.6899 42.7842L46.6669 39.9271L41.6899 37.0239Z" fill="white"/>
+                </g>
+                <defs>
+                  <filter id="filter0_b_830_6242" x="-60" y="-60" width="200" height="200" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                    <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                    <feGaussianBlur in="BackgroundImage" stdDeviation="30"/>
+                    <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_830_6242"/>
+                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_830_6242" result="shape"/>
+                  </filter>
+                  <filter id="filter1_d_830_6242" x="4" y="8" width="72" height="72" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                    <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                    <feOffset dy="4"/>
+                    <feGaussianBlur stdDeviation="8"/>
+                    <feComposite in2="hardAlpha" operator="out"/>
+                    <feColorMatrix type="matrix" values="0 0 0 0 0.241705 0 0 0 0 0.347828 0 0 0 0 0.620718 0 0 0 0.14 0"/>
+                    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_830_6242"/>
+                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_830_6242" result="shape"/>
+                  </filter>
+                </defs>
+              </svg>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="exercise-page__info">
+        <h2>{{ page.title }}</h2>
+        <div class="exercise-page__text exercises__tile-text">
+          <span class="d-flex mb-16">
+                <span>
+                  <svg class="difficulty-svg" width="54" height="18" viewBox="0 0 54 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="54" height="18" rx="9" fill="#F4F5F9"/>
+                    <circle cx="9" cy="9" r="3" fill="white"/>
+                    <circle cx="18" cy="9" r="3" fill="white"/>
+                    <circle cx="27" cy="9" r="3" fill="white"/>
+                    <circle cx="36" cy="9" r="3" fill="white"/>
+                    <circle cx="45" cy="9" r="3" fill="white"/>
+
+                    {% for i in (1..page.metafields.exercise.difficulty.value) limit: 5 %}
+                      <circle cx="{{ i | times: 9 }}" cy="9" r="3" fill="#FF7D54"/>
+                    {% endfor %}
+
+                  </svg>
+                </span>
+                <span class="page-text difficulty-margin">{{- section.settings.difficulty -}}</span>
+              </span>
+          <span class="is-flex">
+          <span class="page-text text-bold">{{- section.settings.what_is -}}</span>
+          <span class="page-light-text mb-16">{{ page.metafields.exercise.what_good_for.value }}</span>
+        </span>
+          <span class="is-flex">
+          <div class="page-text text-bold">{{- section.settings.accesories -}}</div>
+            {% if page.metafields.exercise.accessories.value.title != blank %}
+              <div class="exercise-page__product">
+                <div class="exercise-page__product-text">
+                  <h3>{{ page.metafields.exercise.accessories.value.title }}</h3>
+                  <a href="{{ page.metafields.exercise.accessories.value.url }}">View Product Details</a>
+                </div>
+                <img src="{{ page.metafields.exercise.accessories_img.value | img_url: "300x" }}" alt="">
+              </div>
+              {% else %}
+              <span class="page-light-text">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 0.1875C2.78906 0.1875 0.1875 2.78906 0.1875 6C0.1875 9.21094 2.78906 11.8125 6 11.8125C9.21094 11.8125 11.8125 9.21094 11.8125 6C11.8125 2.78906 9.21094 0.1875 6 0.1875ZM8.85 7.52578C8.96016 7.63594 8.96016 7.81406 8.85 7.92422L7.92188 8.85C7.81172 8.96016 7.63359 8.96016 7.52344 8.85L6 7.3125L4.47422 8.85C4.36406 8.96016 4.18594 8.96016 4.07578 8.85L3.15 7.92188C3.03984 7.81172 3.03984 7.63359 3.15 7.52344L4.6875 6L3.15 4.47422C3.03984 4.36406 3.03984 4.18594 3.15 4.07578L4.07812 3.14766C4.18828 3.0375 4.36641 3.0375 4.47656 3.14766L6 4.6875L7.52578 3.15C7.63594 3.03984 7.81406 3.03984 7.92422 3.15L8.85234 4.07812C8.9625 4.18828 8.9625 4.36641 8.85234 4.47656L7.3125 6L8.85 7.52578Z" fill="#CF4949"/>
+                </svg>
+                None
+              </span>
+            {% endif %}
+          </span>
+        </div>
+        <div class="exercise-page__steps">
+          <div class="exercise-page__steps-title is-flex">
+            <h4>{{- section.settings.steps -}}</h4>
+          </div>
+          <div class="exercise-page__steps-ol">
+            {{ page.metafields.exercise.steps.value }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% comment %}
+<ul>
+  <li>TITLE: {{ page.title }}</li>
+  <li></li>
+  <li>Video: {{ page.metafields.exercise.video.value }}</li>
+  <li> {{ page.metafields.exercise.video_img.value }}</li>
+
+  <li>banner: {{ page.metafields.exercise.preview.value }}</li>
+  <li></li>
+  <li>
+
+    {{ page.metafields.exercise.difficulty.value }}
+
+    <span>
+      <svg width="54" height="18" viewBox="0 0 54 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="54" height="18" rx="9" fill="#F4F5F9"/>
+        <circle cx="9" cy="9" r="3" fill="white"/>
+        <circle cx="18" cy="9" r="3" fill="white"/>
+        <circle cx="27" cy="9" r="3" fill="white"/>
+        <circle cx="36" cy="9" r="3" fill="white"/>
+        <circle cx="45" cy="9" r="3" fill="white"/>
+
+        {% for i in (1..page.metafields.exercise.difficulty.value) limit: 5 %}
+          <circle cx="{{ i | times: 9 }}" cy="9" r="3" fill="#FF7D54"/>
+        {% endfor %}
+        
+      </svg>
+    </span>
+  </li>
+  <li>What is this good for: {{ page.metafields.exercise.what_good_for.value }}</li>
+  <li> Accessories:{{ page.metafields.exercise.accesories_img.value }}</li>
+  <li>{{ page.metafields.exercise.accessories.value.title }}</li>
+  <li>{{ page.metafields.exercise.accessories.value.url }}</li>
+  <li> STEPS: {{ page.metafields.exercise.steps.value }}</li>
+</ul>
+{% endcomment %}
+
+
+
+
+
+
+
+
+
+
+{% schema %}
+  {
+    "name": "Page exercise",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Appearance"
+      },
+      {
+        "type": "url",
+        "id": "url-back-link",
+        "label": "Back Link"
+      },
+      {
+        "type": "text",
+        "id": "back-link",
+        "label": "Label Back Link",
+        "default": "Back to exercises"
+      },
+      {
+        "type": "text",
+        "id": "difficulty",
+        "label": "Text",
+        "default": "Difficulty"
+      },
+      {
+        "type": "text",
+        "id": "what_is",
+        "label": "Text",
+        "default": "What is this good for:"
+      },
+      {
+        "type": "text",
+        "id": "accesories",
+        "label": "Text",
+        "default": "Accesories:"
+      },
+      {
+        "type": "text",
+        "id": "steps",
+        "label": "Text",
+        "default": "Steps"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Exercise Details"
+      }
+    ]
+  }
+{% endschema %}

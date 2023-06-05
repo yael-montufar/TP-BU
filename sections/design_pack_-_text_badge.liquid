@@ -5,7 +5,7 @@
 }
 {%- endcomment -%}
 
-{% comment %} Security Code - hides section when app uninstalled
+{% comment %} Security Code - hides section when app uninstalled {% endcomment %}
 {%- unless content_for_header contains 'design_packs_file.js' -%}
   {%- if request.design_mode -%}
     <div class="dsgn-pck__no-app-warning">
@@ -18,7 +18,6 @@
   {%- endif -%}
   {%- break -%}
 {%- endunless -%}
-{% endcomment %}
 
 {%- comment -%} Text: custom font_picker values {%- endcomment -%}
 {%- capture font_settings_list -%}

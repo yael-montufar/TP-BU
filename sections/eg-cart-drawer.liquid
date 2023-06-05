@@ -353,11 +353,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
         }, 250)
     }
 
-    // Fix Body Scroll On Drawer Close
-    window.fixBodyScrollOnDrawerClose = () => {
-      document.body.classList.remove('overflow-hidden');
-    }
-
     // Load cart drawer on ajax add/update
     window.loadEgCartDrawer = async () => {
         const $cartDrawer = document.querySelector('#cart-drawer')
@@ -504,8 +499,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 </script>
 
 {% unless request.page_type == 'cart' %}
-    <div
-        data-test="eg"
+    <div 
         id="cart-drawer" 
         class="offcanvas offcanvas-end" 
         tabindex="-1" 
@@ -519,8 +513,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                         ({{ cart.item_count }})
                     </div>
                 </h3>
-                <button
-                    onClick="fixBodyScrollOnDrawerClose()"
+                <button 
                     type="button" 
                     class="btn-close {% if section.settings.header_bg_color contains 'text-white' %}btn-close-white{% endif %}" 
                     data-bs-dismiss="offcanvas" 
@@ -538,7 +531,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 </div>
                 <div class="offcanvas-footer py-4 px-4">
                     <button
-                        onClick="fixBodyScrollOnDrawerClose()"
                         type="button"
                         class="button button--secondary w-100 d-flex align-items-center justify-content-center"
                         data-bs-dismiss="offcanvas">
@@ -835,7 +827,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
 {% schema %}
 {
-    "name": "🎓 EG Cart Drawer",
+    "name": "EG Cart Drawer",
     "settings": [
         {
             "type": "header",
@@ -995,10 +987,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
             "default": "Save note"
         }
     ],
-    "presets": [
-      {
-        "name": "🎓 EG Cart Drawer"
-      }
-    ]
+  "presets": [
+    {
+      "name": "EG Cart Drawer"
+    }
+  ]
 }
 {% endschema %}

@@ -1,0 +1,30 @@
+{%- if section.settings.section_id != blank -%}
+  {%- assign section_id = section.settings.section_id -%}
+{%- endif -%}
+
+<div id="shopify-product-reviews" data-scroll="{{ section_id }}" data-id="{{product.id}}">
+  {{ product.metafields.spr.reviews }}
+</div>
+{% schema %}
+{
+  "name": "Custom Shopify Reviews",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_id",
+      "label": "Section ID"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Shopify Reviews"
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,162 @@
+<div class="exercises-box">
+  <div class="exercises-container">
+    <div class="exercises__mobile-filters">
+      <a class="btn_style global-button global-button--primary" href="#">{{ section.settings['mob-filters'] }}</a>
+    </div>
+    <div class="exercises__position is-flex">
+      <div class="exercises__sidebar">
+        {%- render 'exercises-filters' with page: page, blocks: section.blocks -%}
+        <div class="exercises__filters-buttons">
+          <a class="btn_style global-button exercises__filters-buttons-first" id="filter-reset" href="#">Reset</a>
+          <a class="btn_style global-button exercises__filters-buttons-second" href="#">Apply</a>
+        </div>
+      </div>
+      <div class="exercises__list">
+        <div class="exercises-status show">
+          <ul class="exercises-status__list">
+            All
+          </ul>
+          <span class="exercises-status__count">(<i>0</i>)</span>
+        </div>
+
+        {% for block in section.blocks %}
+          {%- assign this_page = block.settings.exercise_page -%}
+          {%- assign url = this_page.url -%}
+          {%- assign title = this_page.title -%}
+          {%- assign banner = this_page.metafields.exercise.preview.value -%}
+          {%- assign difficulty = this_page.metafields.exercise.difficulty.value | plus: 0 -%}
+          {%- assign what_good_for = this_page.metafields.exercise.what_good_for.value -%}
+          {%- assign accesories = this_page.metafields.exercise.accessories.value -%}
+
+          {%- comment -%}
+            !* filters
+          {%- endcomment -%}
+          {%- assign with_accessories = this_page.metafields.filters.with_accessories.value -%}
+          {%- assign without_accessories = this_page.metafields.filters.without_accessories.value -%}
+
+          {%- assign category_neck = this_page.metafields.filters_category.neck.value -%}
+          {%- assign category_shoulders = this_page.metafields.filters_category.shoulders.value -%}
+          {%- assign category_lower_back = this_page.metafields.filters_category.lower_back.value -%}
+
+          {%- assign activity_trengthening = this_page.metafields.filters_activity.strengthening.value -%}
+          {%- assign activity_stretching = this_page.metafields.filters_activity.stretching.value -%}
+
+          <div
+            class="exercises__tile show"
+            data-with-accesories="{{ with_accessories }}"
+            data-without-accesories="{{ without_accessories }}"
+            data-category-neck="{{ category_neck }}"
+            data-category-shoulders="{{ category_shoulders }}"
+            data-category-lower-back="{{ category_lower_back }}"
+            data-activity-trengthening="{{ activity_trengthening }}"
+            data-activity-stretching="{{ activity_stretching }}"
+          >
+            <a class="is-flex" href="{{- url -}}#scroll">
+              <span class="exercises__tile-img-box">
+                <span
+                  class="exercises__tile-img"
+                  style="background-image: url('{{  banner | img_url: '570x' }}')"
+                ></span>
+              </span>
+              <span class="exercises__tile-text">
+                <span class="exercises__tile-title">{{- title -}}</span>
+                <span class="d-flex mb-16">
+                  <span>
+                    <svg width="54" height="18" viewBox="0 0 54 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect width="54" height="18" rx="9" fill="#F4F5F9"/>
+                      <circle cx="9" cy="9" r="3" fill="white"/>
+                      <circle cx="18" cy="9" r="3" fill="white"/>
+                      <circle cx="27" cy="9" r="3" fill="white"/>
+                      <circle cx="36" cy="9" r="3" fill="white"/>
+                      <circle cx="45" cy="9" r="3" fill="white"/>
+
+                      {% for i in (1..difficulty) limit: 5 %}
+                        <circle cx="{{ i | times: 9 }}" cy="9" r="3" fill="#FF7D54"/>
+                      {% endfor %}
+                    </svg>
+                  </span>
+                  <span class="tile-text difficulty-margin">{{- section.settings.difficulty -}}</span>
+                </span>
+                <span class="is-flex">
+                  <span class="tile-text text-bold">{{- section.settings.what_is -}}</span>
+                  <span class="tile-light-text mb-16">{{- what_good_for -}}</span>
+                </span>
+
+                <span class="is-flex">
+                  <span class="tile-text text-bold">{{- section.settings.accesories -}}</span>
+                  {% if accesories != blank %}
+                    <span class="tile-light-text mb-16">
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M11.8125 6C11.8125 9.21016 9.21016 11.8125 6 11.8125C2.78984 11.8125 0.1875 9.21016 0.1875 6C0.1875 2.78984 2.78984 0.1875 6 0.1875C9.21016 0.1875 11.8125 2.78984 11.8125 6ZM5.32767 9.07767L9.64017 4.76517C9.78661 4.61873 9.78661 4.38129 9.64017 4.23485L9.10985 3.70453C8.96341 3.55807 8.72597 3.55807 8.57951 3.70453L5.0625 7.22152L3.42049 5.57951C3.27405 5.43307 3.03661 5.43307 2.89015 5.57951L2.35983 6.10983C2.21339 6.25627 2.21339 6.49371 2.35983 6.64015L4.79733 9.07765C4.94379 9.22411 5.18121 9.22411 5.32767 9.07767Z" fill="#496FCF"/>
+                      </svg>
+                      {{- accesories.title -}}
+                    </span>
+                  {% else %}
+                    <span class="tile-light-text">
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6 0.1875C2.78906 0.1875 0.1875 2.78906 0.1875 6C0.1875 9.21094 2.78906 11.8125 6 11.8125C9.21094 11.8125 11.8125 9.21094 11.8125 6C11.8125 2.78906 9.21094 0.1875 6 0.1875ZM8.85 7.52578C8.96016 7.63594 8.96016 7.81406 8.85 7.92422L7.92188 8.85C7.81172 8.96016 7.63359 8.96016 7.52344 8.85L6 7.3125L4.47422 8.85C4.36406 8.96016 4.18594 8.96016 4.07578 8.85L3.15 7.92188C3.03984 7.81172 3.03984 7.63359 3.15 7.52344L4.6875 6L3.15 4.47422C3.03984 4.36406 3.03984 4.18594 3.15 4.07578L4.07812 3.14766C4.18828 3.0375 4.36641 3.0375 4.47656 3.14766L6 4.6875L7.52578 3.15C7.63594 3.03984 7.81406 3.03984 7.92422 3.15L8.85234 4.07812C8.9625 4.18828 8.9625 4.36641 8.85234 4.47656L7.3125 6L8.85 7.52578Z" fill="#CF4949"/>
+                      </svg>
+                      None
+                    </span>
+                  {% endif %}
+                </span>
+              </span>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- {{ 'manual-style.css' | asset_url | stylesheet_tag }} -->
+
+{% schema %}
+  {
+  "name": "Exercises Section",
+  "settings": [
+    {
+    "type": "text",
+    "id": "mob-filters",
+    "label": "Filters button label",
+    "default": "Filter by"
+    },
+    {
+      "type": "text",
+      "id": "difficulty",
+      "label": "Text",
+      "default": "Difficulty"
+    },
+    {
+      "type": "text",
+      "id": "what_is",
+      "label": "Text",
+      "default": "What is this good for:"
+    },
+    {
+      "type": "text",
+      "id": "accesories",
+      "label": "Text",
+      "default": "Accesories:"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Exercise page",
+      "type": "page",
+      "settings": [
+        {
+          "type": "page",
+          "id": "exercise_page",
+          "label": "Exercise"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Exercises List"
+    }
+  ]
+}
+{% endschema %}

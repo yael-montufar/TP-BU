@@ -6,6 +6,7 @@
   {{ 'section-main-product.css' | asset_url | stylesheet_tag }}
   {{ 'component-accordion.css' | asset_url | stylesheet_tag }}
   {{ 'component-price.css' | asset_url | stylesheet_tag }}
+  {{ 'component-rte.css' | asset_url | stylesheet_tag }}
   {{ 'component-slider.css' | asset_url | stylesheet_tag }}
   {{ 'component-rating.css' | asset_url | stylesheet_tag }}
   {{ 'component-loading-overlay.css' | asset_url | stylesheet_tag }}
@@ -21,6 +22,12 @@
       .section-{{ section.id }}-padding {
         padding-top: {{ section.settings.padding_top }}px;
         padding-bottom: {{ section.settings.padding_bottom }}px;
+      }
+    }
+
+    @media screen and (max-width: 750px) {
+      .product__media-wrapper {
+        display: none;
       }
     }
   {%- endstyle -%}
@@ -74,7 +81,7 @@
               {% render block %}
             {%- when 'text' -%}
               <p
-                class="product__text inline-richtext{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}"
+                class="product__text{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}"
                 {{ block.shopify_attributes }}
               >
                 {{- block.settings.text -}}
@@ -82,12 +89,6 @@
             {%- when 'title' -%}
               <div class="product__title" {{ block.shopify_attributes }}>
                 <h1>{{ product.title | escape }}</h1>
-{% comment %}Start automatically added Judge.me widget{% endcomment %}
-  <div class="product__text">
-    {% render 'judgeme_widgets', widget_type: 'judgeme_preview_badge', concierge_install: true, product: product %}
-  </div>
-{% comment %}End automatically added Judge.me widget{% endcomment %}
-
                 <a href="{{ product.url }}" class="product__title">
                   <h2 class="h1">
                     {{ product.title | escape }}
@@ -167,6 +168,23 @@
                   {%- endif -%}
                 {%- endif -%}
               </p>
+            {%- when 'custom_pulse_text' -%}
+              <div class="pulse-text__container">
+                {% render 'custom_-_pulse', block: block, color: block.settings.pulse_color %}
+                <p class="pulse-text__text">
+                  {{ block.settings.pulse_text_liquid }}
+                <p>
+              </div>
+
+              <style>
+                .pulse-text__container {
+                  display: flex;
+                  flex-direction: row;
+                  align-items: center;
+                  
+                  margin: 0;
+                }
+              </style>
             {%- when 'description' -%}
               {%- if product.description != blank -%}
                 <div class="product__description rte quick-add-hidden" {{ block.shopify_attributes }}>
@@ -190,18 +208,61 @@
                   <summary>
                     <div class="summary__title">
                       {% render 'icon-accordion', icon: block.settings.icon %}
-                      <h2 class="h4 accordion__title inline-richtext">
+                      <h2 class="h4 accordion__title">
                         {{ block.settings.heading | default: block.settings.page.title }}
                       </h2>
                     </div>
                     {% render 'icon-caret' %}
                   </summary>
                   <div class="accordion__content rte" id="ProductAccordion-{{ block.id }}-{{ section.id }}">
-                    {{ block.settings.content }}
+                    {{ block.settings.content }}                    
                     {{ block.settings.page.content }}
                   </div>
                 </details>
               </div>
+            {%- when 'custom_collapsible_tab' -%}
+              {%- if block.settings.liquid != empty -%}
+              <div class="product__accordion accordion quick-add-hidden" {{ block.shopify_attributes }}>
+                
+                {%- if block.settings.block_id != blank -%}
+                  {%- assign block-section_id = block.settings.block_id -%}
+                {%- else -%}
+                  {%- capture block-section_id -%}
+                    Details-{{ block.id }}-{{ section.id }}
+                  {%- endcapture -%}
+                {%- endif -%}
+                
+                <details id="{{ block-section_id }}" {{ block.settings.default_open_close_state }}>
+                  <summary>
+                    <div class="summary__title">
+                      {%- if product.metafields.custom.product_sticker -%}
+                        {%- assign icon = product.metafields.custom.product_sticker -%}
+                      {%- else -%}
+                        {%- assign icon = block.settings.icon -%}
+                      {%- endif -%}
+                      {% render 'custom_-_icon-accordion', icon: icon, icon_size: block.settings.icon_size, block: block %}
+                      <h2 class="h4 accordion__title custom_collapsible-tab__accordion-title">
+                        {{ block.settings.heading | default: block.settings.page.title }}
+                      </h2>
+<!--                       <p>{{ product.metafields.custom.product_sticker }}</p> -->
+            
+                      <!-- Custom Style -->
+                      <style>
+                        .custom_collapsible-tab__accordion-title {
+                          align-self: center;
+                        }
+                      </style>
+                    </div>
+                    {% render 'icon-caret' %}
+                  </summary>
+                  <div class="accordion__content rte" id="ProductAccordion-{{ block.id }}-{{ section.id }}">
+                    {{ block.settings.content }}
+                    {{ block.settings.liquid }}
+                    {{ block.settings.page.content }}
+                  </div>
+                </details>
+              </div>
+              {%- endif -%}
             {%- when 'quantity_selector' -%}
               <div
                 id="Quantity-Form-{{ section.id }}"
@@ -353,6 +414,15 @@
                   </span>
                 </p>
               {%- endif -%}
+            {%- when 'custom_rating' -%}
+              <div class="custom-rating__container">
+                {{ block.settings.liquid }}
+              </div>
+              <style>
+                .custom-rating__container {
+                  display: block;
+                }
+              </style>
             {%- when 'complementary' -%}
               <product-recommendations class="complementary-products quick-add-hidden no-js-hidden{% if block.settings.make_collapsible_row %} is-accordion{% endif %}{% if block.settings.enable_quick_add %} complementary-products-contains-quick-add{% endif %}" data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ block.settings.product_list_limit }}&intent=complementary">
                 {%- if recommendations.performed and recommendations.products_count > 0 -%}
@@ -430,7 +500,7 @@
                 {{ 'component-card.css' | asset_url | stylesheet_tag }}
                 {{ 'component-complementary-products.css' | asset_url | stylesheet_tag }}
                 {%- if block.settings.enable_quick_add -%}
-                  {{ 'quick-add.css' | asset_url | stylesheet_tag }}
+                  <link rel="stylesheet" href="{{ 'quick-add.css' | asset_url }}" media="print" onload="this.media='all'">
                   <script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
                 {%- endif -%}
               </product-recommendations>
@@ -573,10 +643,6 @@
       ]
     }
   </script>
-
-{% comment %}Start automatically added Judge.me widget{% endcomment %}
-  {% render 'judgeme_widgets', widget_type: 'judgeme_review_widget', concierge_install: true, product: product %}
-{% comment %}End automatically added Judge.me widget{% endcomment %}
 </section>
 
 {% schema %}
@@ -593,7 +659,7 @@
       "name": "t:sections.main-product.blocks.text.name",
       "settings": [
         {
-          "type": "inline_richtext",
+          "type": "text",
           "id": "text",
           "default": "Text block",
           "label": "t:sections.main-product.blocks.text.settings.text.label"
@@ -701,6 +767,52 @@
       ]
     },
     {
+      "type": "custom_pulse_text",
+      "name": "t:sections.main-product.blocks.custom_pulse_text.name",
+      "settings": [
+        {
+          "type": "select",
+          "id": "text_style",
+          "options": [
+            {
+              "value": "body",
+              "label": "t:sections.main-product.blocks.custom_pulse_text.settings.text_style.options__1.label"
+            },
+            {
+              "value": "subtitle",
+              "label": "t:sections.main-product.blocks.custom_pulse_text.settings.text_style.options__2.label"
+            },
+            {
+              "value": "uppercase",
+              "label": "t:sections.main-product.blocks.custom_pulse_text.settings.text_style.options__3.label"
+            }
+          ],
+          "default": "body",
+          "label": "t:sections.main-product.blocks.custom_pulse_text.settings.text_style.label"
+        },
+        {
+          "type": "range",
+          "id": "inventory_threshold",
+          "label": "t:sections.main-product.blocks.custom_pulse_text.settings.inventory_threshold.label",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "info": "t:sections.main-product.blocks.custom_pulse_text.settings.inventory_threshold.info",
+          "default": 10
+        },
+        {
+          "type": "color",
+          "id": "pulse_color",
+          "label": "t:sections.main-product.blocks.custom_pulse_text.settings.pulse_color.label"
+        },
+        {
+          "type": "liquid",
+          "id": "pulse_text_liquid",
+          "label": "t:sections.main-product.blocks.custom_pulse_text.settings.pulse_text_liquid.label"
+        }
+      ]
+    },
+    {
       "type": "quantity_selector",
       "name": "t:sections.main-product.blocks.quantity_selector.name",
       "limit": 1
@@ -739,13 +851,6 @@
           "default": true,
           "label": "t:sections.main-product.blocks.buy_buttons.settings.show_dynamic_checkout.label",
           "info": "t:sections.main-product.blocks.buy_buttons.settings.show_dynamic_checkout.info"
-        },
-        {
-          "type": "checkbox",
-          "id": "show_gift_card_recipient",
-          "default": false,
-          "label": "t:sections.main-product.blocks.buy_buttons.settings.show_gift_card_recipient.label",
-          "info": "t:sections.main-product.blocks.buy_buttons.settings.show_gift_card_recipient.info"
         }
       ]
     },
@@ -995,6 +1100,67 @@
       ]
     },
     {
+      "type": "custom_collapsible_tab",
+      "name": "t:sections.main-product.blocks.custom_collapsible_tab.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "default": "Custom collapsible row",
+          "info": "t:sections.main-product.blocks.custom_collapsible_tab.settings.heading.info",
+          "label": "t:sections.main-product.blocks.custom_collapsible_tab.settings.heading.label"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "info": "t:sections.main-product.blocks.custom_collapsible_tab.settings.icon.info",
+          "label": "t:sections.main-product.blocks.custom_collapsible_tab.settings.icon.label"
+        },
+        {
+          "type": "number",
+          "id": "icon_size",
+          "label": "t:sections.main-product.blocks.custom_collapsible_tab.settings.icon_size.label",
+          "default": 20
+        },
+        {
+          "type": "select",
+          "id": "default_open_close_state",
+          "label": "t:sections.main-product.blocks.custom_collapsible_tab.settings.default_open_close_state.label",
+          "options": [
+            {
+              "value": "open",
+              "label": "Open"
+            },
+            {
+              "value": "",
+              "label": "Closed"
+            }
+          ],
+          "default": ""
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "t:sections.main-product.blocks.custom_collapsible_tab.settings.content.label"
+        },
+        {
+          "type": "liquid",
+          "id": "liquid",
+          "label": "t:sections.main-product.blocks.custom_collapsible_tab.settings.liquid.label"
+        },
+        {
+          "type": "page",
+          "id": "page",
+          "label": "t:sections.main-product.blocks.custom_collapsible_tab.settings.page.label"
+        },
+        {
+          "type": "text",
+          "id": "block_id",
+          "label": "Block ID"
+        }
+      ]
+    },
+    {
       "type": "popup",
       "name": "t:sections.main-product.blocks.popup.name",
       "settings": [
@@ -1019,6 +1185,21 @@
         {
           "type": "paragraph",
           "content": "t:sections.main-product.blocks.rating.settings.paragraph.content"
+        }
+      ]
+    },
+    {
+      "type": "custom_rating",
+      "name": "t:sections.main-product.blocks.custom_rating.name",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "t:sections.main-product.blocks.custom_rating.settings.paragraph.content"
+        },
+        {
+          "type": "liquid",
+          "id": "liquid",
+          "label": "t:sections.main-product.blocks.custom_rating.settings.liquid.label"
         }
       ]
     },
@@ -1509,7 +1690,7 @@
           "label": "t:sections.main-product.blocks.icon_with_text.settings.image_1.label"
         },
         {
-          "type": "inline_richtext",
+          "type": "text",
           "id": "heading_1",
           "default": "Heading",
           "label": "t:sections.main-product.blocks.icon_with_text.settings.heading_1.label",
@@ -1705,7 +1886,7 @@
           "label": "t:sections.main-product.blocks.icon_with_text.settings.image_2.label"
         },
         {
-          "type": "inline_richtext",
+          "type": "text",
           "id": "heading_2",
           "default": "Heading",
           "label": "t:sections.main-product.blocks.icon_with_text.settings.heading_2.label",
@@ -1901,7 +2082,7 @@
           "label": "t:sections.main-product.blocks.icon_with_text.settings.image_3.label"
         },
         {
-          "type": "inline_richtext",
+          "type": "text",
           "id": "heading_3",
           "default": "Heading",
           "label": "t:sections.main-product.blocks.icon_with_text.settings.heading_3.label",
@@ -2015,17 +2196,12 @@
           "label": "t:sections.main-product.settings.image_zoom.options__1.label"
         },
         {
-          "value": "hover",
-          "label": "t:sections.main-product.settings.image_zoom.options__2.label"
-        },
-        {
           "value": "none",
           "label": "t:sections.main-product.settings.image_zoom.options__3.label"
         }
       ],
       "default": "lightbox",
-      "label": "t:sections.main-product.settings.image_zoom.label",
-      "info": "t:sections.main-product.settings.image_zoom.info"
+      "label": "t:sections.main-product.settings.image_zoom.label"
     },
     {
       "type": "select",

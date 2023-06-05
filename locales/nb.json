@@ -40,9 +40,9 @@
       "reset": "Fjern søket"
     },
     "cart": {
-      "view": "Vis handlekurv ({{ count }})",
+      "view": "Vis handlekurven ({{ count }})",
       "item_added": "Vare lagt i handlekurven",
-      "view_empty_cart": "Vis handlekurv"
+      "view_empty_cart": "Vis handlekurven"
     },
     "share": {
       "copy_to_clipboard": "Kopier kobling",
@@ -412,7 +412,7 @@
     "orders": {
       "title": "Bestillingshistorikk",
       "order_number": "Bestilling",
-      "order_number_link": "Ordrenummer {{ number }}",
+      "order_number_link": "Bestillingsnummer {{ number }}",
       "date": "Dato",
       "payment_status": "Betalingsstatus",
       "fulfillment_status": "Distribusjonsstatus",
@@ -442,30 +442,17 @@
   },
   "gift_cards": {
     "issued": {
-      "title": "Her er gavekortsaldoen {{ value }} for {{ shop }}.",
+      "title": "Her er {{ value }} gavekortet ditt for {{ shop }}!",
       "subtext": "Ditt gavekort",
       "gift_card_code": "Gavekortkode",
-      "shop_link": "Besøk nettbutikken",
+      "shop_link": "Fortsett å handle",
+      "remaining_html": "Gjenstår {{ balance }}",
       "add_to_apple_wallet": "Legg til i Apple Wallet",
       "qr_image_alt": "QR-kode – skann for å løse inn gavekortet",
-      "copy_code": "Kopier gavekortkoden",
+      "copy_code": "Kopier kode",
       "expired": "Utløpt",
       "copy_code_success": "Koden er kopiert",
-      "how_to_use_gift_card": "Bruk gavekortet på nettet eller QR-koden i butikken",
-      "expiration_date": "Utløper {{ expires_on }}"
-    }
-  },
-  "recipient": {
-    "form": {
-      "checkbox": "Jeg vil sende dette som en gave",
-      "email_label": "Mottakerens e-post",
-      "email_label_optional": "Mottakerens e-post (valgfritt)",
-      "email": "E-post",
-      "name_label": "Mottakerens navn (valgfritt)",
-      "name": "Navn",
-      "message_label": "Melding (valgfritt)",
-      "message": "Melding",
-      "max_characters": "Maks. {{ max_chars }} tegn"
+      "print_gift_card": "Skriv ut"
     }
   }
 }

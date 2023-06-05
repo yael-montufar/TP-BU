@@ -1,0 +1,693 @@
+{%- comment -%}
+{
+  "pack_name": "Blog - simple",
+  "pack_author": "Design Packs"
+}
+{%- endcomment -%}
+
+{% comment %} Security Code - hides section when app uninstalled {% endcomment %}
+{%- unless content_for_header contains 'design_packs_file.js' -%}
+  {%- if request.design_mode -%}
+    <div class="dsgn-pck__no-app-warning">
+      <div class="dsgn-pck__no-app-warning-background">
+      </div>
+      <div class="dsgn-pck__no-app-warning-text dsgn-pck__rte">
+        <p><strong>WARNING!</strong> This section or template will not display properly without the <a href="https://apps.shopify.com/design-packs" target="_blank" rel="nofollow">Design Packs</a> app installed. Please email <a href="mailto:info@design-packs.com" target="_blank">info@design-packs.com</a> with any questions.</p>
+      </div>
+    </div>
+  {%- endif -%}
+  {%- break -%}
+{%- endunless -%}
+
+{% comment %} Content: check whether to automatically pull content {% endcomment %}
+{% assign blog = blogs[section.settings.blog] | default: blog %}
+
+{%- comment -%} Images: check image crop aspect ratio {%- endcomment -%}
+{%- assign image_crop_width = section.settings.image_crop | split: ':' | first | times: 1000 -%}
+{%- assign image_crop_height = section.settings.image_crop | split: ':' | last | times: 1000 -%}
+
+{% comment %} Images: responsive image widths {% endcomment %}
+{%- assign widths = '180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 1950, 2100, 2260, 2450, 2700, 3000, 3350, 3750, 4100' -%}
+
+{%- comment -%} Layout: has user entered measurement value into max-width field? {%- endcomment -%}
+{%- if section.settings.max_width contains 'px' or section.settings.max_width contains '%' -%}
+  {%- assign max_width = section.settings.max_width -%}
+{%- else -%}
+  {%- assign max_width = section.settings.max_width | append: 'px' -%}
+{%- endif -%}
+
+{%- comment -%} Text: custom font_picker values {%- endcomment -%}
+{%- capture font_settings_list -%}
+{{ section.settings.main_font | font_face: font_display: 'block' }}~
+{{ section.settings.main_font | font_modify: 'weight', 'bolder' | font_face: font_display: 'block' }}~
+{{ section.settings.main_font | font_modify: 'style', 'italic' | font_face: font_display: 'block' }}~
+{{ section.settings.main_font | font_modify: 'style', 'italic' | font_modify: 'weight', 'bolder' | font_face: font_display: 'block' }}~
+{{ section.settings.heading_font | font_face: font_display: 'swap' }}~
+{{ section.settings.heading_font | font_modify: 'weight', 'normal' | font_face: font_display: 'swap' }}~
+{{ section.settings.heading_font | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}~
+{{ section.settings.heading_font | font_modify: 'style', 'italic' | font_modify: 'weight', 'bolder' | font_face: font_display: 'swap' }}
+{%- endcapture -%}
+{%- assign font_array = font_settings_list | split: '~' -%}
+
+{%- comment -%} CSS {%- endcomment -%}
+<style>
+{%- if section.settings.override_theme_font != blank -%}
+  {%- for font in font_array -%}
+    {%- unless font contains 'error' -%}{{ font }}{%- endunless -%}
+  {%- endfor -%}
+  #DP--{{ section.id }} {
+    --main-font: {{ section.settings.main_font.family }}, {{ section.settings.main_font.fallback_families }};
+    --main-font-weight: {{ section.settings.main_font.weight }};
+    --main-font-style: {{ section.settings.main_font.style }};
+    --heading-font: {{ section.settings.heading_font.family }}, {{ section.settings.heading_font.fallback_families }};
+    --heading-font-weight: {{ section.settings.heading_font.weight }};
+    --heading-font-style: {{ section.settings.heading_font.style }};
+  }
+{%- endif -%}
+
+#DP--{{ section.id }} {
+  background: {{ section.settings.background_color }};
+  --gutter: 30px;
+}
+
+#DP--{{ section.id }} .dsgn-pck__grid {
+  gap: var(--gutter);
+  margin-bottom: 80px;
+  padding-bottom: 2px;
+}
+
+#DP--{{ section.id }} .dsgn-pck__grid-item {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all .5s;
+  border-radius: {{ section.settings.text_background_border_radius }}px;
+  display: flex;
+  flex-direction: column;
+  background: {{ section.settings.article_background_color }};
+  border: thin solid {{ section.settings.text_color | color_modify: 'alpha', 0.2 }};
+}
+
+#DP--{{ section.id }} .dsgn-pck__grid-item-content {
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1 0 auto;
+}
+
+#DP--{{ section.id }} .dsgn-pck__inner-content {
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  color: {{ section.settings.text_color }};
+}
+
+#DP--{{ section.id }} .dsgn-pck__text-content {
+  width: 100%;
+}
+
+#DP--{{ section.id }} .dsgn-pck__small-heading {
+  text-align: left;
+  margin-bottom: 0.5em;
+  line-height: calc(3px + 2ex + 3px);
+  color: {{ section.settings.text_color }};
+  font-size: calc(var(--dp-g-small-heading-size, var(--dp-small-heading-size, 24px)) * {{ section.settings.text_size | times: 0.01 }});
+  {%- if section.settings.override_theme_font != blank -%}
+  font-family: var(--heading-font);
+  font-weight: var(--heading-font-weight);
+  font-style: var(--heading-font-style);
+  {%- endif -%}
+}
+
+#DP--{{ section.id }} .dsgn-pck__author {
+  display: inline;
+  text-align: left;
+  color: {{ section.settings.text_color }};
+  {%- if section.settings.override_theme_font != blank -%}
+  font-family: var(--main-font);
+  font-weight: var(--main-font-weight);
+  font-style: var(--main-font-style);
+  {%- endif -%}
+  font-size: calc(var(--dp-g-body-size, var(--dp-body-size, 18px)) * {{ section.settings.text_size | times: 0.007 }});
+}
+
+#DP--{{ section.id }} .dsgn-pck__date {
+  display: inline;
+  text-align: left;
+  color: {{ section.settings.text_color }};
+  {%- if section.settings.override_theme_font != blank -%}
+  font-family: var(--main-font);
+  font-weight: var(--main-font-weight);
+  font-style: var(--main-font-style);
+  {%- endif -%}
+  font-size: calc(var(--dp-g-body-size, var(--dp-body-size, 18px)) * {{ section.settings.text_size | times: 0.007 }});
+}
+
+#DP--{{ section.id }} .dsgn-pck__author + .dsgn-pck__date::before {
+  content: " | "
+}
+
+#DP--{{ section.id }} .dsgn-pck__excerpt {
+  text-align: left;
+  margin-top: 1.5em;
+  color: {{ section.settings.text_color }};
+  {%- if section.settings.override_theme_font != blank -%}
+  font-family: var(--main-font);
+  font-weight: var(--main-font-weight);
+  font-style: var(--main-font-style);
+  {%- endif -%}
+  font-size: calc(var(--dp-g-body-size, var(--dp-body-size, 18px)) * {{ section.settings.text_size | times: 0.01 }});
+}
+
+#DP--{{ section.id }} .dsgn-pck__upper-area {
+  text-decoration: none;
+}
+
+#DP--{{ section.id }} .dsgn-pck__lower-area {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-decoration: none;
+}
+
+#DP--{{ section.id }} .dsgn-pck__lower-area p {
+  margin-bottom: 0;
+  color: {{ section.settings.text_color }};
+  {%- if section.settings.override_theme_font != blank -%}
+  font-family: var(--main-font);
+  font-weight: var(--main-font-weight);
+  font-style: var(--main-font-style);
+  {%- endif -%}
+  font-size: calc(var(--dp-g-body-size, var(--dp-body-size, 18px)) * {{ section.settings.text_size | times: 0.01 }});
+}
+
+#DP--{{ section.id }} p.dsgn-pck__button {
+  margin-top: 1.5em;
+  display: inline-block;
+  text-decoration: none;
+  text-transform: uppercase;
+  margin-left: auto;
+  font-weight: bold;
+  position: relative;
+}
+
+#DP--{{ section.id }} p.dsgn-pck__button:after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: 1px;
+  background: black;
+  top: 100%;
+  left: 0;
+  width: 0;
+  transition: width 0.3s ease-out;
+}
+
+#DP--{{ section.id }} p.dsgn-pck__button:hover:after {
+  width: 100%;
+}
+
+#DP--{{ section.id }} .dsgn-pck__pagination {
+  text-align: center;
+  margin-top: 1.5rem;
+  margin-bottom: 3em;
+  {%- if section.settings.override_theme_font != blank -%}
+  font-family: var(--main-font);
+  font-weight: var(--main-font-weight);
+  font-style: var(--main-font-style);
+  {%- endif -%}
+  font-size: calc(var(--dp-g-body-size, var(--dp-body-size, 18px)) * {{ section.settings.text_size | times: 0.01 }});
+}
+
+#DP--{{ section.id }} .dsgn-pck__pagination .page {
+  padding: 0.5em 1em;
+  margin: 0 auto;
+  transition: 0.3s;
+  display: inline-block;
+  border-bottom: 1px solid transparent;
+}
+
+#DP--{{ section.id }} .dsgn-pck__pagination .page:hover {
+  border-bottom: 1px solid;
+  font-style: italic;
+}
+
+#DP--{{ section.id }} .dsgn-pck__pagination .prev,
+#DP--{{ section.id }} .dsgn-pck__pagination .next {
+  padding: 0.5em 1em;
+}
+
+#DP--{{ section.id }} .dsgn-pck__pagination .prev a,
+#DP--{{ section.id }} .dsgn-pck__pagination .next a,
+#DP--{{ section.id }} .dsgn-pck__pagination .page a {
+  text-decoration: none;
+  color: {{ section.settings.text_color }};
+}
+
+#DP--{{ section.id }} .dsgn-pck__pagination .current {
+  border-bottom: 1px solid ;
+  font-style: italic;
+}
+
+/* Animation */
+{%- if section.settings.animation != 'none' -%}
+  #DP--{{ section.id }} .dsgn-pck__grid.dsgn-pck__animation-applied [style*="--dsgn-pck-animate"] {
+    animation-name: dsgn-pck__animation--{{ section.settings.animation }};
+  }
+{%- else -%}
+  #DP--{{ section.id }} [style*="--dsgn-pck-animate"] {
+    opacity: 1;
+  }
+{% endif %}
+
+#DP--{{ section.id }} .dsgn-pck__sizer {
+  padding-top: {{ section.settings.inner_padding }}px;
+  padding-bottom: {{ section.settings.inner_padding }}px;
+  width: {{ section.settings.base_width }}%;
+  max-width: {{ max_width }};
+}
+
+{%- if section.settings.custom_css != blank -%}
+  {%- assign custom_section_declarations = section.settings.custom_css | split: '}' -%}
+  {%- for declaration in custom_section_declarations -%}
+    {%- if declaration contains '{' -%}
+      #DP--{{ section.id }} {{ declaration }} }
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+
+/* Landscape phones and down */
+@media (max-width: 480px) {
+  #DP--{{ section.id }} .dsgn-pck__grid {
+    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
+  }
+
+  #DP--{{ section.id }} .dsgn-pck__sizer {
+    min-width: 70%;
+    padding-top: {{ section.settings.inner_padding | divided_by: 2 }}px;
+    padding-bottom: {{ section.settings.inner_padding | divided_by: 2 }}px;
+  }
+
+  {%- if section.settings.mobile_custom_css != blank -%}
+    {%- assign mobile_custom_declarations = section.settings.mobile_custom_css | split: '}' -%}
+    {%- for declaration in mobile_custom_declarations -%}
+      {%- if declaration contains '{' -%}
+        #DP--{{ section.id }} {{ declaration }} }
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+}
+</style>
+
+{%- if blog == blank -%}
+  <div class="dsgn-pck__justify-center">
+    <p>Please choose blog to display content.</p>
+  </div>
+  {%- break -%}
+{%- endif -%}
+
+{%- comment -%} HTML {%- endcomment -%}
+<section id="DP--{{ section.id }}" class="DP--{{ section.id }} dsgn-pck__blog-fade-in dsgn-pck__section">
+  <div class="dsgn-pck__sizer">
+    <div class="dsgn-pck__grid dsgn-pck__grid--{{ section.settings.per_row }}-per-row">
+
+    {%- if template.name == 'blog' -%}
+      {% assign paginate_count = section.settings.per_page %}
+    {%- else -%}
+      {% assign limit = section.settings.per_page %}
+    {%- endif -%}
+
+    {% paginate blog.articles by paginate_count %}
+      {% for article in blog.articles limit: limit %}
+
+        {%- comment -%} Crop based on initial image width and height{%- endcomment -%}
+        {%- if section.settings.image_crop == 'none' -%}
+          {%- assign image_crop_width = article.image.width | default: '1000' -%}
+          {%- assign image_crop_height = article.image.height | default: '1200' -%}
+        {%- endif -%}
+
+        <div class="dsgn-pck__grid-item dsgn-pck__block-{{ article.id }}"
+          style="--dsgn-pck-animate: {{ forloop.index }};">
+          {%- if section.settings.show_image != blank and article.image != blank -%}
+            <a href="{{ article.url }}">
+              <div class="dsgn-pck__image__wrapper">
+                <svg class="dsgn-pck__svg-sizer" viewBox="0 0 {{ image_crop_width }} {{ image_crop_height }}"></svg>
+                {%- if article.image != blank -%}
+                  {%- capture sizes -%}
+                    (max-width: 480px) 90vw,(max-width: 767px) 50vw, {{ section.settings.base_width | divided_by: section.settings.per_row | round | append: 'vw' | default: '33vw' }}
+                  {%- endcapture -%}
+                  {{ article.image | image_url: width: 2800 | image_tag: loading: 'lazy', widths: widths, sizes: sizes }}
+                {%- endif -%}
+              </div>
+            </a>
+          {%- endif -%}
+          <div class="dsgn-pck__grid-item-content">
+            <a href="{{ article.url }}" class="dsgn-pck__upper-area">
+              <h3 class="dsgn-pck__small-heading">{{ article.title }}</h3>
+              {%- if section.settings.show_author -%}
+                <p class="dsgn-pck__author">{{ 'by' | t }} {{ article.author }}</p>
+              {%- endif -%}
+              {%- if section.settings.show_date -%}
+                <p class="dsgn-pck__date">{{ article.published_at | date: "%b %d, %Y" }}</p>
+              {%- endif -%}
+              {%- if section.settings.show_excerpt -%}
+                <p class="dsgn-pck__excerpt">{{ article.excerpt_or_content | strip_html | truncatewords: 15, '...' }}</p>
+              {%- endif -%}
+            </a>
+            {%- if section.settings.show_read_more -%}
+              <a href="{{ article.url }}" class="dsgn-pck__lower-area">
+                {%- if section.settings.show_read_more -%}
+                  <p class="dsgn-pck__button">{{ 'read_more' | t }}</p>
+                {%- endif -%}
+              </a>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+    {% if paginate.pages > 1 and template contains 'blog' %}
+      <div class="dsgn-pck__pagination">
+        {{ paginate | default_pagination | replace: '&laquo; Previous', '&larr;' | replace: 'Next &raquo;', '&rarr;' }}
+      </div>
+    {% endif %}
+  {% endpaginate %}
+
+  </div>
+
+</section>
+
+{% schema %}
+{
+  "name": "Blog posts - simple",
+  "class": "DP__blog-simple DP__shift",
+  "settings": [
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "Blog",
+      "info": "Not seeing any articles? Set a blog here."
+    },
+    {
+      "type": "range",
+      "id": "per_row",
+      "label": "Posts per row",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "per_page",
+      "label": "Posts per page",
+      "min": 1,
+      "max": 25,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "label": "Show image",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "image_crop",
+      "label": "Image aspect ratio",
+      "default": "1:1",
+      "options": [
+        {
+          "value": "16:9",
+          "label": "Cinema (16:9)"
+        },
+        {
+          "value": "4:3",
+          "label": "Landscape (4:3)"
+        },
+        {
+          "value": "2:3",
+          "label": "Portrait (2:3)"
+        },
+        {
+          "value": "1:1",
+          "label": "Square (1:1)"
+        },
+        {
+          "value": "none",
+          "label": "Original"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "label": "Show author",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "label": "Show date",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_excerpt",
+      "label": "Show excerpt",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_read_more",
+      "label": "Show read more",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "✏️ Text appearance"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Text size",
+      "min": 80,
+      "max": 120,
+      "step": 5,
+      "default": 100,
+      "unit": "%"
+    },
+    {
+      "type": "header",
+      "content": "🎨 Design"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#3A3A3A"
+    },
+    {
+      "type": "color_background",
+      "id": "article_background_color",
+      "label": "Article background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "text_background_border_radius",
+      "label": "Article background border radius",
+      "min": 0,
+      "max": 20,
+      "default": 8,
+      "unit": "px"
+    },
+    {
+      "type": "color_background",
+      "id": "background_color",
+      "label": "Background"
+    },
+    {
+      "type": "select",
+      "id": "animation",
+      "label": "Animation",
+      "default": "none",
+      "options": [
+        {
+          "value": "fade-in",
+          "label": "Fade-in"
+        },
+        {
+          "value": "fade-in-left",
+          "label": "Fade-in left"
+        },
+        {
+          "value": "fade-in-right",
+          "label": "Fade-in right"
+        },
+        {
+          "value": "fade-in-down",
+          "label": "Fade-in down"
+        },
+        {
+          "value": "fade-in-up",
+          "label": "Fade-in up"
+        },
+        {
+          "value": "none",
+          "label": "None"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "🖼 Layout"
+    },
+    {
+      "type": "range",
+      "id": "base_width",
+      "label": "Size",
+      "min": 70,
+      "max": 100,
+      "step": 5,
+      "default": 95,
+      "unit": "%"
+    },
+    {
+      "type": "text",
+      "id": "max_width",
+      "label": "Maximum width",
+      "placeholder": "eg. 1200px",
+      "info": "Sets width constraint for content.",
+      "default": "1000px"
+    },
+    {
+      "type": "range",
+      "id": "inner_padding",
+      "label": "Inner padding",
+      "info": "Only applies to top and bottom.",
+      "min": 0,
+      "max": 100,
+      "default": 40,
+      "step": 5,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "🚨 Advanced"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "CSS"
+    },
+    {
+      "type": "textarea",
+      "id": "mobile_custom_css",
+      "label": "Mobile CSS",
+      "info": "Applied on screens less than 480px."
+    },
+    {
+      "type": "checkbox",
+      "id": "override_theme_font",
+      "label": "Override default theme font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Headings",
+      "default": "serif"
+    },
+    {
+      "type": "font_picker",
+      "id": "main_font",
+      "label": "Text",
+      "default": "sans-serif"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Blog posts - simple 🎒"
+    }
+  ],
+  "locales": {
+    "en": {
+      "read_more": "Read more",
+      "by": "By"
+    }
+  }
+}
+{% endschema %}
+
+{%- comment -%} JSON Settings {%- endcomment -%}
+<script type="application/json" data-dsgn-pck="{{ section.id }}">
+  {
+    "id": {{ section.id | json }},
+    "animation": {{ section.settings.animation | json }}
+  }
+</script>
+{%- comment -%} JavaScript {%- endcomment -%}
+<script data-dsgn-pck-js="{{ section.id }}" type="module" defer>
+(function(){
+  'use strict';
+
+  const designPack = {
+    settings: {
+    },
+    animateSection: function(entries, observer){
+      // Target the first entry available.
+      let observedSection = entries[0];
+
+      if (observedSection.isIntersecting) {
+        observedSection.target.classList.add('dsgn-pck__animation-applied');
+      }
+    },
+    load: function (section) {
+      if (this.settings.animation !== 'none'){
+        const options = {
+          root: null,
+          rootMargin: '0px',
+          threshold: 0
+        };
+        // Construct Intersection Observer.
+        const observer = new IntersectionObserver( this.animateSection, options );
+
+        // Observe if element is present.
+        if (section) {
+          observer.observe(section);
+        }
+      }
+    },
+    unload: function (section) {
+      section.classList.remove('dsgn-pck__animation-applied')
+    }
+  }
+
+  window.addEventListener('shopify:section:unload', function (e) {
+    const settings = document.querySelector(`[data-dsgn-pck="${e.detail.sectionId}"]`);
+    const sectionId = e.detail.sectionId;
+    const section = document.querySelector(`#DP--${e.detail.sectionId}`);
+    if (sectionId == designPack.settings.id){
+      designPack.unload(section);
+    }
+  });
+
+  designPack.settings = JSON.parse(document.querySelector('[data-dsgn-pck="{{ section.id }}"]').innerHTML);
+  const sectionId = {{ section.id | json }};
+  const sections = document.querySelectorAll(`#DP--${sectionId} .dsgn-pck__grid`);
+
+  sections.forEach((section) => {
+    if (sectionId == designPack.settings.id){
+      designPack.load(section);
+    }
+  })
+
+})();
+</script>

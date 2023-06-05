@@ -1,0 +1,581 @@
+{%- comment -%}
+{
+  "pack_name": "Features - pinpoint",
+  "pack_author": "Design Packs"
+}
+{%- endcomment -%}
+
+{% comment %} Security Code - hides section when app uninstalled {% endcomment %}
+{%- unless content_for_header contains 'design_packs_file.js' -%}
+  {%- if request.design_mode -%}
+    <div class="dsgn-pck__no-app-warning">
+      <div class="dsgn-pck__no-app-warning-background">
+      </div>
+      <div class="dsgn-pck__no-app-warning-text dsgn-pck__rte">
+        <p><strong>WARNING!</strong> This premium section will not display properly without an active subscription for <a href="https://apps.shopify.com/design-packs" target="_blank" rel="nofollow">Design Packs</a>. If you need any support please email <a href="mailto:info@design-packs.com" target="_blank">info@design-packs.com</a> with your questions.</p>
+      </div>
+    </div>
+  {%- endif -%}
+  {%- break -%}
+{%- endunless -%}
+
+{%- comment -%} Images: all placeholders {%- endcomment -%}
+{%- assign placeholder_image_id = 'Bs-zngH79Ds' -%}
+
+{% comment %} Images: responsive image widths {% endcomment %}
+{%- assign widths = '180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 1950, 2100, 2260, 2450, 2700, 3000, 3350, 3750, 4100' -%}
+
+{%- comment -%} Text: custom font_picker values {%- endcomment -%}
+{%- capture font_settings_list -%}
+{{ section.settings.heading_font | font_face: font_display: 'swap' }}~
+{{ section.settings.heading_font | font_modify: 'weight', 'bolder' | font_face: font_display: 'swap' }}~
+{{ section.settings.heading_font | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}~
+{{ section.settings.heading_font | font_modify: 'style', 'italic' | font_modify: 'weight', 'bolder' | font_face: font_display: 'swap' }}
+{%- endcapture -%}
+{%- assign font_array = font_settings_list | split: '~' -%}
+
+{%- capture minify -%}
+{%- comment -%} CSS {%- endcomment -%}
+<style>
+{%- if section.settings.enable_lightbox != blank -%}
+  .bp-img-wrap,.bp-wrap{top:0;left:0;width:100%;height:100%;contain:strict}.bp-controls,.bp-zoomed.bp-small .bp-controls button{pointer-events:none}.bp-cap,.bp-count{color:rgba(255,255,255,.9)}.bp-cap,.bp-controls{transition:opacity .3s}@keyframes bp-fadein{from{opacity:.01}to{opacity:1}}@keyframes bp-bar{from{transform:translateX(-100%)}to{transform:translateX(0)}}@keyframes bp-o{from{transform:rotate(0)}to{transform:rotate(360deg)}}.bp-wrap{position:fixed;z-index:999;touch-action:none;-webkit-tap-highlight-color:transparent}.bp-img,.bp-img-wrap,.bp-inner,.bp-vid audio{position:absolute}.bp-wrap>div:first-child{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.75);animation:.48s cubic-bezier(.215,.61,.355,1) bp-fadein; display: block}.bp-vid audio{left:14px;width:calc(100% - 28px);bottom:14px;height:50px}.bp-inner{top:0;left:0;width:100%;height:100%;display:flex}.bp-html{display:contents}.bp-html>:first-child{margin:auto}.bp-img-wrap.bp-drag .bp-img{cursor:grabbing}.bp-img,.bp-noclose:not(.bp-zoomed) .bp-img-wrap{cursor:zoom-in}.bp-close{contain:layout size}.bp-img{top:50%;left:50%;user-select:none;background-size:100% 100%}.bp-controls,.bp-img div,.bp-img img{top:0;width:100%;position:absolute;height:100%}.bp-img div,.bp-img img{left:0}.bp-img .bp-o,.bp-noclose .bp-x{display:none}.bp-zoomed .bp-img{cursor:grab}.bp-zoomed .bp-cap{opacity:0;animation:none!important}.bp-zoomed.bp-small .bp-controls{opacity:0}.bp-controls{left:0;text-align:left;animation:.3s bp-fadein}.bp-controls button{pointer-events:auto;cursor:pointer;position:absolute;border:0;background:rgba(0,0,0,.15);opacity:.9;transition:.1s;contain:content}.bp-controls button:hover{background-color:rgba(0,0,0,.2);opacity:1}.bp-controls svg{fill:#fff}.bp-count{position:absolute;line-height:1;margin:16px;height:50px;width:100px}.bp-next,.bp-prev{top:50%;right:0;margin-top:-32px;height:64px;width:58px;border-radius:3px 0 0 3px}.bp-next:hover:before,.bp-prev:hover:before{transform:translateX(-2px)}.bp-next:before,.bp-prev:before{content:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23fff'%3E%3Cpath d='M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z'/%3E%3C/svg%3E");position:absolute;left:7px;top:9px;width:46px;transition:.2s}.bp-prev{right:auto;left:0;transform:scalex(-1)}.bp-x{top:0;right:0;height:55px;width:58px;border-radius:0 0 0 3px}.bp-x:before{content:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' fill='%23fff'%3E%3Cpath d='M24 10l-2-2-6 6-6-6-2 2 6 6-6 6 2 2 6-6 6 6 2-2-6-6z'/%3E%3C/svg%3E");position:absolute;width:37px;top:8px;right:10px}.bp-if,.bp-vid{position:relative;margin:auto;background:0 0/100% 100% #000}.bp-bar,.bp-cap,.bp-inline{position:absolute}.bp-if div,.bp-if iframe,.bp-if video,.bp-vid div,.bp-vid iframe,.bp-vid video{top:0;left:0;width:100%;height:100%;position:absolute;border:0}.bp-load{display:flex;background-size:100% 100%;overflow:hidden;z-index:1}.bp-bar{top:0;left:0;height:3px;width:100%;transform:translateX(-100%);background:rgba(255,255,255,.9);border-radius:0 3px 3px 0;animation:4s both bp-bar}.bp-o,.bp-o:after{border-radius:50%;width:90px;height:90px}.bp-o{margin:auto;border:10px solid rgba(255,255,255,.2);border-left-color:rgba(255,255,255,.9);animation:1s linear infinite bp-o}.bp-cap{bottom:2%;background:rgba(9,9,9,.8);border-radius:4px;max-width:95%;line-height:1.3;padding:.6em 1.2em;left:50%;transform:translateX(-50%);width:fit-content;width:-moz-fit-content;display:table;animation:.2s bp-fadein}.bp-cap a{color:inherit}.bp-lock{overflow-y:hidden}.bp-lock body{overflow:scroll}.bp-noclose:not(.bp-zoomed){touch-action:pan-y}@media (prefers-reduced-motion){.bp-wrap *{animation-duration:0s!important}}@media (max-width:500px){.bp-x{height:47px;width:47px}.bp-x:before{width:34px;top:6px;right:6px}.bp-next,.bp-prev{margin-top:-27px;height:54px;width:45px}.bp-next:before,.bp-prev:before{top:7px;left:2px;width:43px}.bp-o,.bp-o:after{border-width:6px;width:60px;height:60px}.bp-count{margin:12px 10px}}
+{%- endif -%}
+
+{%- if section.settings.override_theme_font != blank -%}
+  {%- for font in font_array -%}
+    {%- unless font contains 'error' -%}{{ font }}{%- endunless -%}
+  {%- endfor -%}
+  {%- capture heading_font -%}{{ section.settings.heading_font.family }}, {{ section.settings.heading_font.fallback_families }}{%- endcapture -%}
+{%- endif -%}
+
+#DP--{{ section.id }} {
+  --pin-size: 16px;
+  background: {{ section.settings.background_color }};
+  margin-bottom: {{ section.settings.outer_margin }}px;
+  margin-top: {{ section.settings.outer_margin }}px;
+}
+
+#DP--{{ section.id }} .dsgn-pck__sizer {
+  padding-top: {{ section.settings.inner_padding }}px;
+  padding-bottom: {{ section.settings.inner_padding }}px;
+}
+
+#DP--{{ section.id }} a {
+  text-decoration: none;
+}
+
+#DP--{{ section.id }} .dsgn-pck__image {
+  width: 50%;
+  margin: 0 auto;
+  position: relative;
+}
+
+#DP--{{ section.id }} .dsgn-pck__image img {
+  display: block;
+  height: auto;
+}
+
+/* Pins */
+
+#DP--{{ section.id }} .dsgn-pck__pin {
+  position: absolute;
+  width: var(--pin-size);
+  height: var(--pin-size);
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  display: block;
+  transition: transform 0.5s cubic-bezier(0.15,0.99,0.18,0.99);
+  background: {{ section.settings.pin_highlight_color }};
+}
+
+#DP--{{ section.id }} .dsgn-pck__pin:not([href]),
+#DP--{{ section.id }} .dsgn-pck__pin-label:not([href]) {
+  cursor: default;
+}
+
+#DP--{{ section.id }} .dsgn-pck__pin-label {
+  content: var(--content);
+  text-align: right;
+  line-height: 1.2;
+  position: absolute;
+  top: calc(50% - 1.5px);
+  left: 0;
+  width: 400px;
+  height: 0;
+  transform-origin: 50% 50%;
+  transition: background .5s linear,transform .5s cubic-bezier(.15,.99,.18,.99),border-color .2s linear;
+  font-size: calc(var(--dp-g-body-size, var(--dp-body-size, 18px)) * {{ section.settings.text_size | times: 0.01 }});
+  {%- if section.settings.override_theme_font != blank -%}
+  font-family: var(--heading-font);
+  font-weight: var(--heading-font-weight);
+  font-style: var(--heading-font-style);
+  {%- endif -%}
+  padding-top: 5px;
+  border-top: 3px solid {{ section.settings.pin_highlight_color }};
+}
+
+#DP--{{ section.id }} .dsgn-pck__pin-label::after {
+  content: '';
+  display: block;
+  height: 0;
+  width: 0;
+  top: 0;
+  left: 0;
+  position: absolute;
+  border-top: 3px solid {{ section.settings.pin_highlight_hover_color }};
+  transition: width 0.3s linear;
+  transform: translateY(-3px);
+}
+
+#DP--{{ section.id }} .dsgn-pck__pin-label:hover::after {
+  width: calc(100% - var(--pin-size));
+}
+
+#DP--{{ section.id }} .dsgn-pck__info-tab--right .dsgn-pck__pin-label::after {
+  left: auto;
+  right: 0;
+}
+
+#DP--{{ section.id }} .dsgn-pck__info-tab--right .dsgn-pck__pin-label:hover::after {
+  width: calc(100% - var(--pin-size));
+}
+
+#DP--{{ section.id }} .dsgn-pck__pin-label {
+  color: {{ section.settings.text_color }};
+}
+
+#DP--{{ section.id }} .dsgn-pck__pin-image {
+  position: absolute;
+  transform: scale(2);
+  border-radius: 50%;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+  border: 2px solid currentColor;
+  cursor: zoom-in;
+  transition: transform 0.3s linear;
+}
+
+#DP--{{ section.id }} .dsgn-pck__pin-image:hover {
+  transform: scale(3);
+}
+
+#DP--{{ section.id }} .dsgn-pck__info-tab--left {
+  left: 35px;
+}
+
+#DP--{{ section.id }} .dsgn-pck__info-tab--right {
+  right: 35px;
+}
+
+#DP--{{ section.id }} .dsgn-pck__dot-area {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+#DP--{{ section.id }} .dsgn-pck__placeholder {
+  background-color: {{ section.settings.text_background_color | color_darken: 10 }};
+  fill: {{ section.settings.text_background_color | color_lighten: 10 }};
+}
+
+{%- if section.settings.custom_css != blank -%}
+  {%- assign custom_section_declarations = section.settings.custom_css | split: '}' -%}
+  {%- for declaration in custom_section_declarations -%}
+    {%- if declaration contains '{' -%}
+      #DP--{{ section.id }} {{ declaration }} }
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) {
+
+  #DP--{{ section.id }} .dsgn-pck__info-tab {
+    max-width: 45vw;
+  }
+
+  #DP--{{ section.id }} .dsgn-pck__info-tab--left {
+    left: 20px;
+  }
+
+  #DP--{{ section.id }} .dsgn-pck__info-tab--right {
+    right: 20px;
+  }
+
+  #DP--{{ section.id }} .dsgn-pck__pin-label {
+    font-size: clamp(10px, 3vw, 16px);
+  }
+}
+
+/* Landscape phones and down */
+@media (max-width: 480px) {
+  #DP--{{ section.id }} {
+    --pin-size: 12px;
+    margin-top: {{ section.settings.outer_margin | divided_by: 2 }}px;
+    margin-bottom: {{ section.settings.outer_margin | divided_by: 2 }}px;
+  }
+
+  {%- if section.settings.mobile_custom_css != blank -%}
+    {%- assign mobile_custom_declarations = section.settings.mobile_custom_css | split: '}' -%}
+    {%- for declaration in mobile_custom_declarations -%}
+      {%- if declaration contains '{' -%}
+        #DP--{{ section.id }} {{ declaration }} }
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+}
+</style>
+
+{%- comment -%} HTML {%- endcomment -%}
+<section id="DP--{{ section.id }}" class="DP--{{ section.id }} dsgn-pck__features-pinpoint dsgn-pck__section">
+  <div class="dsgn-pck__sizer">
+    <div class="dsgn-pck__image">
+        {%- if section.settings.image != blank -%}
+          {{ section.settings.image | image_url: width: 5000 | image_tag: loading: 'lazy', widths: widths, sizes: '(max-width: 480px) 60vw, 50vw' }}
+        {%- else -%}
+          <img src="https://cdn.shopify.com/s/files/1/0577/7673/4361/files/{{ placeholder_image_id }}_1000x1000.jpg"
+            style="aspect-ratio: 1 / 1;
+            object-fit: cover;
+            object-position: top;"
+            alt=""
+            loading="lazy"
+            width="1000"
+            height="1000">
+        {%- endif -%}
+        <div class="dsgn-pck__dot-area">
+          {%- for block in section.blocks -%}
+            {%- capture pin_location -%}
+              dsgn-pck__info-tab--{%- if block.settings.horizontal > 50 -%}right{%- else -%}left{%- endif -%}
+            {%- endcapture -%}
+            <style>
+              #DP--{{ block.id }} .dsgn-pck__pin-label {
+                --line-length: 66vw;
+                --padding-offset: 50vw;
+                width: calc(var(--line-length) - ({{ block.settings.horizontal }}vw/2));
+                padding-left:  calc(var(--padding-offset) - ({{ block.settings.horizontal }}vw/2));
+              }
+
+              #DP--{{ block.id }}.dsgn-pck__info-tab--left .dsgn-pck__pin-label {
+                --line-length: 72vw;
+                --padding-offset: 51vw;
+                right: 0;
+                left: unset;
+                text-align: left;
+                width: calc(var(--line-length) - ((100vw - {{ block.settings.horizontal }}vw)/2));
+                padding-right: calc(var(--padding-offset) - ((100vw - {{ block.settings.horizontal }}vw)/2));
+                padding-left: unset;
+              }
+
+              @media (max-width: 767px) {
+                #DP--{{ block.id }} .dsgn-pck__pin-label {
+                  --line-length: 72vw;
+                  --padding-offset: 40vw;
+                  width: calc(var(--line-length) - ({{ block.settings.horizontal }}vw/2));
+                  padding-left:  calc(var(--padding-offset) - ({{ block.settings.horizontal }}vw/2));
+                }
+
+                #DP--{{ block.id }}.dsgn-pck__info-tab--left .dsgn-pck__pin-label {
+                  --line-length: 72vw;
+                  --padding-offset: 41vw;
+                  width: calc(var(--line-length) - ((100vw - {{ block.settings.horizontal }}vw)/2));
+                  padding-right: calc(var(--padding-offset) - ((100vw - {{ block.settings.horizontal }}vw)/2));
+                }
+              }
+
+            </style>
+            <div id="DP--{{ block.id }}" class="dsgn-pck__pin dsgn-pck__block dsgn-pck__block-id-{{ block.id }} dsgn-pck__block--{{ block.type }} dsgn-pck__block--{{ forloop.index }} {{ pin_location }}" style="top:{{ block.settings.vertical }}%; left:{{ block.settings.horizontal }}%; color: {{ section.settings.text_color }}" {{ block.shopify_attributes }}>
+              <a {% if block.settings.link != blank %}href="{{ block.settings.link }}"{% endif %} class="dsgn-pck__pin-label">
+                  {{ block.settings.title }}
+              </a>
+              <a {% if block.settings.link != blank %}href="{{ block.settings.link }}" {% endif %} class="dsgn-pck__pinpoint">
+              </a>
+              {%- if block.settings.image != blank -%}
+                <a {% if block.settings.link != blank and section.settings.enable_lightbox == false %}href="{{ block.settings.link }}"{% else %}href="#"{% endif %}
+                  class="dsgn-pck__pin-image dsgn-pck__lightbox-{{ section.settings.enable_lightbox }}"
+                  data-dsgn-pck-lightbox="{{ section.settings.enable_lightbox }}"
+                  data-img="{{ block.settings.image | image_url: width: 5000 }}"
+                  data-alt="{{ block.settings.image.alt }}"
+                  data-height="{{ block.settings.image.height | default: placeholder_height }}"
+                  data-width="{{ block.settings.image.width | default: placeholder_width }}">
+                  {{ block.settings.image | image_url: width: 500 | image_tag: loading: 'lazy' }}
+                </a>
+              {%- endif -%}
+            </div>
+
+          {% endfor %}
+        </div>
+    </div>
+  </div>
+</section>
+{%- endcapture -%}
+{{ minify | strip_newlines }}
+
+{% schema %}
+{
+  "name": "Features - pinpoint",
+  "class": "DP__features-pinpoint",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Main image"
+    },
+    {
+      "type": "header",
+      "content": "✏️ Text appearance"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Text size",
+      "min": 80,
+      "max": 150,
+      "step": 5,
+      "default": 100,
+      "unit": "%"
+    },
+    {
+      "type": "header",
+      "content": "🎨 Design"
+    },
+    {
+      "type": "color",
+      "id": "pin_highlight_color",
+      "label": "Pin highlight",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "pin_highlight_hover_color",
+      "label": "Pin highlight hover",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#121212"
+    },
+    {
+      "type": "color_background",
+      "id": "background_color",
+      "label": "Background"
+    },
+    {
+      "type": "header",
+      "content": "🖼 Layout"
+    },
+    {
+      "type": "range",
+      "id": "inner_padding",
+      "label": "Inner padding",
+      "info": "Only applies to top and bottom.",
+      "min": 10,
+      "max": 100,
+      "default": 40,
+      "step": 5,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "outer_margin",
+      "label": "Outer margin",
+      "info": "Only applies to top and bottom.",
+      "min": 0,
+      "max": 100,
+      "default": 0,
+      "step": 5,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "🚨 Advanced"
+    },
+    {
+      "type": "html",
+      "id": "custom_css",
+      "label": "CSS"
+    },
+    {
+      "type": "html",
+      "id": "mobile_custom_css",
+      "label": "Mobile CSS",
+      "info": "Applied on screens less than 480px."
+    },
+    {
+      "type": "checkbox",
+      "id": "override_theme_font",
+      "label": "Override default theme font",
+      "default": true
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Font",
+      "default": "serif"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Feature"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link (optional)"
+        },
+        {
+          "type": "range",
+          "id": "horizontal",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Horizontal position",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "vertical",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Vertical position",
+          "default": 50
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Features - pinpoint 🎒",
+      "settings": {
+        "text_size": 100,
+        "pin_highlight_color": "#cbcbcb",
+        "pin_highlight_hover_color": "#121212",
+        "text_color": "#121212",
+        "background_color": "",
+        "inner_padding": 40,
+        "outer_margin": 0,
+        "custom_css": "",
+        "mobile_custom_css": "",
+        "override_theme_font": false,
+        "heading_font": "serif"
+      },
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "title": "iMac",
+            "link": "",
+            "horizontal": 11,
+            "vertical": 9
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Apple Watch",
+            "link": "",
+            "horizontal": 39,
+            "vertical": 50
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "MacBook",
+            "link": "",
+            "horizontal": 88,
+            "vertical": 33
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "iPhone",
+            "link": "",
+            "horizontal": 70,
+            "vertical": 81
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<script type="application/json" data-dsgn-pck="{{ section.id }}">
+  {
+    "id": {{ section.id | json }},
+    "enable_lightbox": {{ section.settings.enable_lightbox | json }}
+  }
+</script>
+{%- comment -%} External scripts {%- endcomment -%}
+{%- if section.settings.enable_lightbox != blank -%}
+  <script data-dsgn-pck-external-js="{{ section.id }}" src="https://cdn.shopify.com/s/files/1/0577/7673/4361/files/bigger-picture.min.js?v=1661823226" defer></script>
+{%- endif -%}
+{%- comment -%} JavaScript {%- endcomment -%}
+<script data-dsgn-pck-js="{{ section.id }}" type="module" defer>
+(function(){
+
+  const designPack = {
+    settings: {},
+    enableLightbox: function(section){
+      const bp = BiggerPicture({
+        target: document.body
+      });
+
+      const imageLinks = section.querySelectorAll('[data-dsgn-pck-lightbox="true"]');
+
+      for (let link of imageLinks) {
+        link.addEventListener('click', openGallery);
+      }
+
+      function openGallery(e) {
+        e.preventDefault();
+        bp.open({
+          items: imageLinks,
+          el: e.currentTarget
+        });
+      }
+    },
+    load: function(section){
+      if (designPack.settings.enable_lightbox === true){
+        designPack.enableLightbox(section);
+      }
+    },
+    unload: function(section){
+
+    }
+  }
+
+  window.addEventListener('shopify:section:unload', function (e) {
+    const settings = document.querySelector(`[data-dsgn-pck="${e.detail.sectionId}"]`);
+    const sectionId = e.detail.sectionId;
+    const section = document.querySelector(`#DP--${e.detail.sectionId}`);
+    if (sectionId == designPack.settings.id){
+      designPack.unload(section);
+    }
+  });
+
+  designPack.settings = JSON.parse(document.querySelector('[data-dsgn-pck="{{ section.id }}"]').innerHTML);
+  const sectionId = {{ section.id | json }};
+  const section = document.querySelector(`#DP--${sectionId}`);
+
+  if (sectionId == designPack.settings.id){
+    designPack.load(section);
+  }
+})()
+</script>

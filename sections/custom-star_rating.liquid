@@ -1,0 +1,69 @@
+{% comment %} /CSS {% endcomment %}
+
+<style>
+  #custom_{{ section.id }} {
+    
+  }
+
+  #custom_{{ section.id }} .star-rating_root {
+    
+  }
+</style>
+
+{% comment %} CSS/ {% endcomment %}
+
+
+
+
+
+{% comment %} /HTML {% endcomment %}
+
+<section id="custom_{{ section.id }}" class="custom_{{ section.id }}">
+  <div class="star-rating_root">
+    {%- for block in section.blocks -%}
+      <div id="custom_{{ block.id }}" class="custom_{{ block.id }} custom_block-type--{{ block.type }} custom__block-index--{{ forloop.index }}" {{ block.shopify_attributes }}>
+        {%- case block.type -%}
+          {%- when '' -%}
+        {%- endcase -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% comment %} HTML/ {% endcomment %}
+
+
+
+
+
+{% comment %} /SCHEMA {% endcomment %}
+
+{% schema %}
+  {
+    "name": "Star Rating",
+    "settings": [],
+    "blocks": [
+      {
+        "type": "stars",
+        "name": "Stars",
+        "settings": [
+          {
+            "type": "range",
+            "id": "rating",
+            "label": "star count",
+            "default": 4,
+            "min": 1,
+            "max": 5
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Star Rating 🧵"
+      }
+    ]
+  }
+{% endschema %}
+
+{% comment %} SCHEMA/ {% endcomment %}

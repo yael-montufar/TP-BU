@@ -1,0 +1,31 @@
+<section class="section ">
+  <div class="container">
+    <div class="one-whole column">
+      <div class="video-section ">
+        <video autoplay="false" muted width="100%" height="100%" controls>
+          <source src="{{ section.settings.video_link }}" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+ {
+   "name": "Video How to page",
+   "settings": [
+           {
+           "type": "text",
+           "id": "video_link",
+           "label": "html5 Video link",
+           "default": "https:"
+           },
+           {
+           "type": "checkbox",
+           "id": "video_auto_play",
+           "label": "Video Auto Play",
+           "default": false
+           }
+]
+ }
+{% endschema %}

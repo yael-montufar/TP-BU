@@ -42,7 +42,7 @@
     "cart": {
       "view": "Zobrazit košík ({{ count }})",
       "item_added": "Položka byla přidána do košíku",
-      "view_empty_cart": "Zobrazit košík"
+      "view_empty_cart": "Zobrazit můj košík"
     },
     "share": {
       "copy_to_clipboard": "Kopírovat odkaz",
@@ -462,30 +462,17 @@
   },
   "gift_cards": {
     "issued": {
-      "title": "Zůstatek vaší dárkové karty pro obchod {{ shop }} je: {{ value }}!",
+      "title": "Zde je vaše dárková karta v hodnotě {{ value }} pro obchod {{ shop }}!",
       "subtext": "Vaše dárková karta",
       "gift_card_code": "Kód dárkové karty",
-      "shop_link": "Navštívit online obchod",
+      "shop_link": "Pokračovat v nákupu",
+      "remaining_html": "Zbývající částka: {{ balance }}",
       "add_to_apple_wallet": "Přidat do Apple Wallet",
       "qr_image_alt": "QR kód: po naskenování můžete uplatnit svou dárkovou kartu",
-      "copy_code": "Zkopírovat kód dárkové karty",
+      "copy_code": "Kopírovat kód",
       "expired": "Platnost vypršela",
       "copy_code_success": "Kód byl úspěšně zkopírován",
-      "how_to_use_gift_card": "Použijte kód dárkové karty online nebo QR kód na prodejně",
-      "expiration_date": "Platnost skončí {{ expires_on }}"
-    }
-  },
-  "recipient": {
-    "form": {
-      "checkbox": "Chci zboží poslat jako dárek",
-      "email_label": "E-mail příjemce",
-      "email_label_optional": "E-mail příjemce (volitelné)",
-      "email": "E-mail",
-      "name_label": "Jméno příjemce (volitelné)",
-      "name": "Jméno",
-      "message_label": "Zpráva (volitelné)",
-      "message": "Zpráva",
-      "max_characters": "Maximální počet znaků: {{ max_chars }}"
+      "print_gift_card": "Vytisknout"
     }
   }
 }
